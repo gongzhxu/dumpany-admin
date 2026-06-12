@@ -145,7 +145,7 @@ const AlipayConfig: React.FC = () => {
         width={520}
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}
-          onValuesChange={(changed, all) => setValues({ ...values, ...changed })}>
+          onValuesChange={(changed: any) => setValues({ ...values, ...changed })}>
           <Form.Item name="app_id" label={t('payment.app_id')}
             rules={[{ required: true, message: t('payment.app_id_required') }]}>
             <Input placeholder={t('payment.app_id_placeholder')}
