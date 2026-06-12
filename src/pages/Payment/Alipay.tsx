@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Card, Form, Input, Button, message, Typography, Modal, Descriptions, Tag } from 'antd';
-import { EditOutlined, SettingOutlined } from '@ant-design/icons';
+import { EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
@@ -29,15 +29,7 @@ const AlipayConfig: React.FC = () => {
 
   useEffect(() => { fetchConfig(); }, [fetchConfig]);
 
-  const openEdit = () => {
-    form.setFieldsValue({
-      app_id: config?.app_id || '',
-      private_key: '',
-      gateway_url: config?.gateway_url || 'https://openapi.alipay.com/gateway.do',
-      public_key: config?.public_key || '',
-    });
-    setModalOpen(true);
-  };
+  const openEdit = () => setModalOpen(true);
 
   const handleSubmit = async (values: any) => {
     setSubmitting(true);
@@ -54,6 +46,25 @@ const AlipayConfig: React.FC = () => {
   };
 
   const configured = config?.app_id;
+
+  // 没记录时自动弹出配置 Modal
+  useEffect(() => {
+    if (!loading && !config?.app_id && !modalOpen) {
+      setModalOpen(true);
+    }
+  }, [loading, config?.app_id, modalOpen]);
+
+  // Modal 打开时初始化表单值
+  useEffect(() => {
+    if (modalOpen) {
+      form.setFieldsValue({
+        app_id: config?.app_id || '',
+        private_key: '',
+        gateway_url: config?.gateway_url || 'https://openapi.alipay.com/gateway.do',
+        public_key: config?.public_key || '',
+      });
+    }
+  }, [modalOpen]);
 
   return (
     <div className="page-container">
@@ -78,19 +89,11 @@ const AlipayConfig: React.FC = () => {
                 {config.public_key ? `${config.public_key.substring(0, 40)}...` : '-'}
               </Descriptions.Item>
             </Descriptions>
-            <Button type="primary" icon={<EditOutlined />} onClick={openEdit}>
+            <Button type="primary" icon={<EditOutlined />} onClick={() => openEdit()}>
               {t('app.edit')}
             </Button>
           </>
-        ) : (
-          <div style={{ textAlign: 'center', padding: '40px 0' }}>
-            <SettingOutlined style={{ fontSize: 48, color: '#ccc', marginBottom: 16 }} />
-            <p style={{ color: '#999', marginBottom: 20 }}>{t('payment.not_configured')}</p>
-            <Button type="primary" onClick={openEdit}>
-              {t('payment.configure')}
-            </Button>
-          </div>
-        )}
+        ) : null}
       </Card>
 
       <Modal
