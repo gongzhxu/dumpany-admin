@@ -9,7 +9,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 // 实时对比初始值与当前表单值
-const isDirty = (initial: any, form: any, name: string) => {
+const isDirty = (initial: any, form: any, name: string, _tick: number) => {
   if (!initial) return true;
   const current = form.getFieldsValue();
   return initial[name] !== current?.[name];
@@ -24,6 +24,7 @@ const AlipayConfig: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [initialValues, setInitialValues] = useState<any>(null);
+  const [tick, setTick] = useState(0);
   const [form] = Form.useForm();
 
   const fetchData = useCallback(async () => {
@@ -143,27 +144,28 @@ const AlipayConfig: React.FC = () => {
         footer={null}
         width={520}
       >
-        <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Form form={form} layout="vertical" onFinish={handleSubmit}
+          onValuesChange={() => setTick(t => t + 1)}>
           <Form.Item name="app_id" label={t('payment.app_id')}
             rules={[{ required: true, message: t('payment.app_id_required') }]}>
             <Input placeholder={t('payment.app_id_placeholder')}
-              className={isDirty(initialValues, form, 'app_id') ? '' : 'form-gray'} />
+              className={isDirty(initialValues, form, 'app_id', tick) ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="private_key" label={t('payment.private_key')}
             rules={editing ? [] : [{ required: true, message: t('payment.private_key_required') }]}>
             <TextArea rows={6} placeholder={editing ? t('payment.private_key_edit_placeholder') : t('payment.private_key_placeholder')}
-              className={isDirty(initialValues, form, 'private_key') ? '' : 'form-gray'} />
+              className={isDirty(initialValues, form, 'private_key', tick) ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="gateway_url" label={t('payment.gateway_url')}>
             <Input placeholder={t('payment.gateway_url_placeholder')}
-              className={isDirty(initialValues, form, 'gateway_url') ? '' : 'form-gray'} />
+              className={isDirty(initialValues, form, 'gateway_url', tick) ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="public_key" label={t('payment.public_key')}>
             <TextArea rows={4} placeholder={t('payment.public_key_placeholder')}
-              className={isDirty(initialValues, form, 'public_key') ? '' : 'form-gray'} />
+              className={isDirty(initialValues, form, 'public_key', tick) ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item>
