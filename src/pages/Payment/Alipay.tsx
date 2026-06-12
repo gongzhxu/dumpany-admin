@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import './Alipay.css';
 import { Table, Button, Modal, Form, Input, message, Typography, Card, Tag, Space } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
@@ -7,13 +6,6 @@ import request from '../../api/request';
 
 const { Title } = Typography;
 const { TextArea } = Input;
-
-// 实时对比初始值与当前表单值
-const isDirty = (initial: any, form: any, name: string, _tick: number) => {
-  if (!initial) return true;
-  const current = form.getFieldsValue();
-  return initial[name] !== current?.[name];
-};
 
 const AlipayConfig: React.FC = () => {
   const { t } = useTranslation();
@@ -23,9 +15,11 @@ const AlipayConfig: React.FC = () => {
   const [editing, setEditing] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  const [initialValues, setInitialValues] = useState<any>(null);
-  const [tick, setTick] = useState(0);
   const [form] = Form.useForm();
+
+  // 收集每个字段的初始值和当前值，每次输入变化时更新
+  const [init, setInit] = useState<Record<string, string>>({});
+  const [curr, setCurr] = useState<Record<string, string>>({});
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -49,9 +43,10 @@ const AlipayConfig: React.FC = () => {
     }
   }, [loading, data.length, modalOpen, dismissed]);
 
+  // Modal 打开时设置初始值和表单
   useEffect(() => {
     if (modalOpen) {
-      let vals: any;
+      let vals: Record<string, string> = {};
       if (editing) {
         vals = {
           app_id: editing.app_id || '',
@@ -62,7 +57,8 @@ const AlipayConfig: React.FC = () => {
       } else {
         vals = { gateway_url: 'https://openapi.alipay.com/gateway.do' };
       }
-      setInitialValues(vals);
+      setInit(vals);
+      setCurr(vals);
       form.setFieldsValue(vals);
     }
   }, [modalOpen, editing]);
@@ -143,29 +139,34 @@ const AlipayConfig: React.FC = () => {
         onCancel={() => { setModalOpen(false); setDismissed(true); }}
         footer={null}
         width={520}
+        destroyOnClose
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}
-          onValuesChange={() => setTick(t => t + 1)}>
+          onValuesChange={(changed) => {
+            const next = { ...curr, ...changed };
+            setCurr(next);
+            console.log('init:', init, 'curr:', next, 'changed:', changed);
+          }}>
           <Form.Item name="app_id" label={t('payment.app_id')}
             rules={[{ required: true, message: t('payment.app_id_required') }]}>
             <Input placeholder={t('payment.app_id_placeholder')}
-              className={isDirty(initialValues, form, 'app_id', tick) ? '' : 'form-gray'} />
+              style={{ color: init.app_id !== curr.app_id ? undefined : '#bbb' }} />
           </Form.Item>
 
           <Form.Item name="private_key" label={t('payment.private_key')}
             rules={editing ? [] : [{ required: true, message: t('payment.private_key_required') }]}>
             <TextArea rows={6} placeholder={editing ? t('payment.private_key_edit_placeholder') : t('payment.private_key_placeholder')}
-              className={isDirty(initialValues, form, 'private_key', tick) ? '' : 'form-gray'} />
+              style={{ color: init.private_key !== curr.private_key ? undefined : '#bbb' }} />
           </Form.Item>
 
           <Form.Item name="gateway_url" label={t('payment.gateway_url')}>
             <Input placeholder={t('payment.gateway_url_placeholder')}
-              className={isDirty(initialValues, form, 'gateway_url', tick) ? '' : 'form-gray'} />
+              style={{ color: init.gateway_url !== curr.gateway_url ? undefined : '#bbb' }} />
           </Form.Item>
 
           <Form.Item name="public_key" label={t('payment.public_key')}>
             <TextArea rows={4} placeholder={t('payment.public_key_placeholder')}
-              className={isDirty(initialValues, form, 'public_key', tick) ? '' : 'form-gray'} />
+              style={{ color: init.public_key !== curr.public_key ? undefined : '#bbb' }} />
           </Form.Item>
 
           <Form.Item>
