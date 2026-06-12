@@ -65,7 +65,7 @@ const AdminsPage: React.FC = () => {
 
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
-    { title: t('login.username'), dataIndex: 'username', key: 'username' },
+    { title: t('app.username'), dataIndex: 'username', key: 'username' },
     { title: t('admin.nickname'), dataIndex: 'nickname', key: 'nickname' },
     {
       title: t('app.status'),
@@ -125,14 +125,14 @@ const AdminsPage: React.FC = () => {
         <Form form={form} layout="vertical" onFinish={handleCreate}>
           <Form.Item
             name="username"
-            label={t('login.username')}
+            label={t('app.username')}
             rules={[{ required: true, min: 3, max: 64 }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             name="password"
-            label={t('login.password')}
+            label={t('app.password')}
             rules={[{ required: true, min: 6 }]}
           >
             <Input.Password />
