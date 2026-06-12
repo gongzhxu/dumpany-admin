@@ -221,8 +221,8 @@ const LicensesPage: React.FC = () => {
               style={{ width: 120 }}
               allowClear
             >
-              <Select.Option value="trial">Trial</Select.Option>
-              <Select.Option value="paid">Paid</Select.Option>
+              <Select.Option value="trial">{t('license.trial')}</Select.Option>
+              <Select.Option value="paid">{t('license.paid')}</Select.Option>
             </Select>
             <Select
               placeholder={t('app.status')}
@@ -326,10 +326,10 @@ const LicensesPage: React.FC = () => {
         {detail && (
           <Descriptions column={2} size="small" bordered>
             <Descriptions.Item label="ID">{detail.id}</Descriptions.Item>
-            <Descriptions.Item label={t('license.type')}>{detail.type}</Descriptions.Item>
+            <Descriptions.Item label={t('license.type')}>{t(`license.${detail.type}`)}</Descriptions.Item>
             <Descriptions.Item label={t('license.license_key')} span={2}>{detail.license_key}</Descriptions.Item>
             <Descriptions.Item label={t('license.subscriber')} span={2}>{detail.subscriber}</Descriptions.Item>
-            <Descriptions.Item label={t('license.tier')}>{detail.tier}</Descriptions.Item>
+            <Descriptions.Item label={t('license.tier')}>{t(`license.${detail.tier}`)}</Descriptions.Item>
             <Descriptions.Item label={t('license.max_devices')}>{detail.max_devices}</Descriptions.Item>
             <Descriptions.Item label={t('app.status')}>
               <Tag color={statusColorMap[detail.status]}>{detail.status}</Tag>
