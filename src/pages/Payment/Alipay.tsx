@@ -8,6 +8,12 @@ import request from '../../api/request';
 const { Title } = Typography;
 const { TextArea } = Input;
 
+// 对比当前值与初始值，相同返回 gray class
+const fieldClass = (initial: any, values: any, name: string) => {
+  if (!initial) return '';
+  return initial[name] !== values?.[name] ? '' : 'form-gray';
+};
+
 const AlipayConfig: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<any[]>([]);
@@ -16,8 +22,8 @@ const AlipayConfig: React.FC = () => {
   const [editing, setEditing] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
   const [dismissed, setDismissed] = useState(false);
-  const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
-  const [populating, setPopulating] = useState(false);
+  const [initialValues, setInitialValues] = useState<any>(null);
+  const [values, setValues] = useState<any>({});
   const [form] = Form.useForm();
 
   const fetchData = useCallback(async () => {
@@ -34,7 +40,6 @@ const AlipayConfig: React.FC = () => {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  // 没记录时自动弹出 Modal（用户主动关闭后不再弹出）
   useEffect(() => {
     if (!loading && data.length === 0 && !modalOpen && !dismissed) {
       setEditing(null);
@@ -43,24 +48,22 @@ const AlipayConfig: React.FC = () => {
     }
   }, [loading, data.length, modalOpen, dismissed]);
 
-  // Modal 打开时填充表单，重置修改标记
   useEffect(() => {
     if (modalOpen) {
-      setDirtyFields(new Set());
-      setPopulating(true);
+      let vals: any;
       if (editing) {
-        form.setFieldsValue({
+        vals = {
           app_id: editing.app_id || '',
           private_key: editing.private_key || '',
           gateway_url: editing.gateway_url || 'https://openapi.alipay.com/gateway.do',
           public_key: editing.public_key || '',
-        });
+        };
       } else {
-        form.resetFields();
-        form.setFieldsValue({ gateway_url: 'https://openapi.alipay.com/gateway.do' });
+        vals = { gateway_url: 'https://openapi.alipay.com/gateway.do' };
       }
-      // 下一个 tick 恢复 onValuesChange，避免初始化时全标记 dirty
-      setTimeout(() => setPopulating(false), 0);
+      setInitialValues(vals);
+      setValues(vals);
+      form.setFieldsValue(vals);
     }
   }, [modalOpen, editing]);
 
@@ -69,10 +72,10 @@ const AlipayConfig: React.FC = () => {
     setModalOpen(true);
   };
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (vals: any) => {
     setSubmitting(true);
     try {
-      await request.put('/settings/payment/alipay', values);
+      await request.put('/settings/payment/alipay', vals);
       message.success(t('payment.save_success'));
       setModalOpen(false);
       fetchData();
@@ -142,39 +145,27 @@ const AlipayConfig: React.FC = () => {
         width={520}
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}
-          onValuesChange={(changed) => {
-            if (populating) return;
-            setDirtyFields(prev => {
-              let next = prev;
-              for (const k of Object.keys(changed)) {
-                if (!prev.has(k)) {
-                  if (next === prev) next = new Set(prev);
-                  next.add(k);
-                }
-              }
-              return next;
-            });
-          }}>
+          onValuesChange={(changed, all) => setValues({ ...values, ...changed })}>
           <Form.Item name="app_id" label={t('payment.app_id')}
             rules={[{ required: true, message: t('payment.app_id_required') }]}>
             <Input placeholder={t('payment.app_id_placeholder')}
-              className={dirtyFields.has('app_id') ? '' : 'form-gray'} />
+              className={fieldClass(initialValues, values, 'app_id')} />
           </Form.Item>
 
           <Form.Item name="private_key" label={t('payment.private_key')}
             rules={editing ? [] : [{ required: true, message: t('payment.private_key_required') }]}>
             <TextArea rows={6} placeholder={editing ? t('payment.private_key_edit_placeholder') : t('payment.private_key_placeholder')}
-              className={dirtyFields.has('private_key') ? '' : 'form-gray'} />
+              className={fieldClass(initialValues, values, 'private_key')} />
           </Form.Item>
 
           <Form.Item name="gateway_url" label={t('payment.gateway_url')}>
             <Input placeholder={t('payment.gateway_url_placeholder')}
-              className={dirtyFields.has('gateway_url') ? '' : 'form-gray'} />
+              className={fieldClass(initialValues, values, 'gateway_url')} />
           </Form.Item>
 
           <Form.Item name="public_key" label={t('payment.public_key')}>
             <TextArea rows={4} placeholder={t('payment.public_key_placeholder')}
-              className={dirtyFields.has('public_key') ? '' : 'form-gray'} />
+              className={fieldClass(initialValues, values, 'public_key')} />
           </Form.Item>
 
           <Form.Item>
