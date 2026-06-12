@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Card, Form, Input, Button, message, Typography, Modal, Descriptions, Tag } from 'antd';
+import { Table, Button, Modal, Form, Input, message, Typography, Card, Tag, Space } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
@@ -9,27 +9,58 @@ const { TextArea } = Input;
 
 const AlipayConfig: React.FC = () => {
   const { t } = useTranslation();
-  const [config, setConfig] = useState<any>(null);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
+  const [editing, setEditing] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [form] = Form.useForm();
 
-  const fetchConfig = useCallback(async () => {
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
       const res: any = await request.get('/settings/payment/alipay');
-      setConfig(res.data);
+      setData(res.data ? [res.data] : []);
     } catch {
-      setConfig(null);
+      setData([]);
     } finally {
       setLoading(false);
     }
   }, []);
 
-  useEffect(() => { fetchConfig(); }, [fetchConfig]);
+  useEffect(() => { fetchData(); }, [fetchData]);
 
-  const openEdit = () => setModalOpen(true);
+  // 没记录时自动弹出 Modal（用户主动关闭后不再弹出）
+  useEffect(() => {
+    if (!loading && data.length === 0 && !modalOpen && !dismissed) {
+      setEditing(null);
+      form.resetFields();
+      setModalOpen(true);
+    }
+  }, [loading, data.length, modalOpen, dismissed]);
+
+  // Modal 打开时填充表单
+  useEffect(() => {
+    if (modalOpen) {
+      if (editing) {
+        form.setFieldsValue({
+          app_id: editing.app_id || '',
+          private_key: '',
+          gateway_url: editing.gateway_url || 'https://openapi.alipay.com/gateway.do',
+          public_key: editing.public_key || '',
+        });
+      } else {
+        form.resetFields();
+        form.setFieldsValue({ gateway_url: 'https://openapi.alipay.com/gateway.do' });
+      }
+    }
+  }, [modalOpen, editing]);
+
+  const openEdit = (record?: any) => {
+    setEditing(record || null);
+    setModalOpen(true);
+  };
 
   const handleSubmit = async (values: any) => {
     setSubmitting(true);
@@ -37,7 +68,7 @@ const AlipayConfig: React.FC = () => {
       await request.put('/settings/payment/alipay', values);
       message.success(t('payment.save_success'));
       setModalOpen(false);
-      fetchConfig();
+      fetchData();
     } catch (err: any) {
       message.error(err?.response?.data?.msg || err.message || t('payment.save_failed'));
     } finally {
@@ -45,26 +76,29 @@ const AlipayConfig: React.FC = () => {
     }
   };
 
-  const configured = config?.app_id;
-
-  // 没记录时自动弹出配置 Modal
-  useEffect(() => {
-    if (!loading && !config?.app_id && !modalOpen) {
-      setModalOpen(true);
-    }
-  }, [loading, config?.app_id, modalOpen]);
-
-  // Modal 打开时初始化表单值
-  useEffect(() => {
-    if (modalOpen) {
-      form.setFieldsValue({
-        app_id: config?.app_id || '',
-        private_key: '',
-        gateway_url: config?.gateway_url || 'https://openapi.alipay.com/gateway.do',
-        public_key: config?.public_key || '',
-      });
-    }
-  }, [modalOpen]);
+  const columns = [
+    { title: t('payment.app_id'), dataIndex: 'app_id', key: 'app_id', render: (text: string) => <Tag color="blue">{text}</Tag> },
+    { title: t('payment.gateway_url'), dataIndex: 'gateway_url', key: 'gateway_url', ellipsis: true },
+    {
+      title: t('payment.public_key'),
+      dataIndex: 'public_key',
+      key: 'public_key',
+      ellipsis: true,
+      render: (text: string) => text ? `${text.substring(0, 40)}...` : '-',
+    },
+    {
+      title: t('app.action'),
+      key: 'action',
+      width: 100,
+      render: (_: any, record: any) => (
+        <Space>
+          <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(record)}>
+            {t('app.edit')}
+          </Button>
+        </Space>
+      ),
+    },
+  ];
 
   return (
     <div className="page-container">
@@ -75,31 +109,21 @@ const AlipayConfig: React.FC = () => {
         </Title>
       </div>
 
-      <Card loading={loading} style={{ maxWidth: 600 }}>
-        {configured ? (
-          <>
-            <Descriptions column={1} size="small" style={{ marginBottom: 16 }}>
-              <Descriptions.Item label={t('payment.app_id')}>
-                <Tag color="blue">{config.app_id}</Tag>
-              </Descriptions.Item>
-              <Descriptions.Item label={t('payment.gateway_url')}>
-                {config.gateway_url || 'https://openapi.alipay.com/gateway.do'}
-              </Descriptions.Item>
-              <Descriptions.Item label={t('payment.public_key')}>
-                {config.public_key ? `${config.public_key.substring(0, 40)}...` : '-'}
-              </Descriptions.Item>
-            </Descriptions>
-            <Button type="primary" icon={<EditOutlined />} onClick={() => openEdit()}>
-              {t('app.edit')}
-            </Button>
-          </>
-        ) : null}
+      <Card>
+        <Table
+          dataSource={data}
+          columns={columns}
+          rowKey="app_id"
+          loading={loading}
+          pagination={false}
+          size="small"
+        />
       </Card>
 
       <Modal
         title={t('payment.alipay_title')}
         open={modalOpen}
-        onCancel={() => setModalOpen(false)}
+        onCancel={() => { setModalOpen(false); setDismissed(true); }}
         footer={null}
         width={520}
       >
