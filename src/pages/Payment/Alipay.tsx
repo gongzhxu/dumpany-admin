@@ -78,6 +78,12 @@ const AlipayConfig: React.FC = () => {
 
   const columns = [
     { title: t('payment.app_id'), dataIndex: 'app_id', key: 'app_id', render: (text: string) => <Tag color="blue">{text}</Tag> },
+    {
+      title: t('payment.app_private_key'),
+      key: 'private_key',
+      width: 120,
+      render: () => <Tag color="green">{t('payment.configured')}</Tag>,
+    },
     { title: t('payment.gateway_url'), dataIndex: 'gateway_url', key: 'gateway_url', ellipsis: true },
     {
       title: t('payment.public_key'),
@@ -134,8 +140,8 @@ const AlipayConfig: React.FC = () => {
           </Form.Item>
 
           <Form.Item name="private_key" label={t('payment.private_key')}
-            rules={[{ required: true, message: t('payment.private_key_required') }]}>
-            <TextArea rows={6} placeholder={t('payment.private_key_placeholder')} />
+            rules={editing ? [] : [{ required: true, message: t('payment.private_key_required') }]}>
+            <TextArea rows={6} placeholder={editing ? t('payment.private_key_edit_placeholder') : t('payment.private_key_placeholder')} />
           </Form.Item>
 
           <Form.Item name="gateway_url" label={t('payment.gateway_url')}>
