@@ -80,14 +80,6 @@ const AdminsPage: React.FC = () => {
       setPwdLoading(false);
     }
   };
-    try {
-      await request.put(`/admins/${id}/disable`);
-      message.success('Status updated');
-      fetchData();
-    } catch (err: any) {
-      message.error(err.message);
-    }
-  };
 
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
