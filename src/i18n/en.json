@@ -79,17 +79,25 @@
     "cancelled": "Cancelled"
   },
   "settings": {
-    "swagger_title": "Swagger Access Account",
+    "swagger_title": "Swagger Access Accounts",
+    "add_account": "Add Account",
+    "add_title": "Add Swagger Account",
+    "edit_title": "Edit Swagger Account",
     "username": "Username",
     "password": "Password",
+    "password_optional": "New Password (leave blank to keep)",
+    "remark": "Remark",
+    "remark_placeholder": "e.g. Development",
     "username_required": "Username must be at least 2 characters",
     "username_placeholder": "Enter username",
-    "password_placeholder": "Leave blank to keep current password",
+    "password_placeholder": "Leave blank to keep current",
     "password_rule": "Password must be at least 6 characters",
-    "save": "Save",
-    "save_success": "Saved successfully",
-    "save_failed": "Save failed",
-    "hint": "Changes will take effect on next Swagger page visit. Current session is not affected."
+    "create_success": "Created successfully",
+    "update_success": "Updated successfully",
+    "delete_success": "Deleted successfully",
+    "delete_confirm": "Are you sure to delete this account?",
+    "save_failed": "Operation failed",
+    "created_at": "Created At"
   },
   "admin": {
     "title": "Admin Management",

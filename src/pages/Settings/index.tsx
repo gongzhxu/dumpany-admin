@@ -1,44 +1,140 @@
-import React, { useState } from 'react';
-import { Card, Form, Input, Button, message, Typography } from 'antd';
+import React, { useEffect, useState, useCallback } from 'react';
+import {
+  Table, Button, Modal, Form, Input, message, Typography, Card, Space, Popconfirm,
+} from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
 const { Title } = Typography;
 
-const SwaggerAccount: React.FC = () => {
-  const { t } = useTranslation();
-  const [form] = Form.useForm();
-  const [loading, setLoading] = useState(false);
+interface Account {
+  id: number;
+  username: string;
+  remark: string;
+  created_at: string;
+  updated_at: string;
+}
 
-  const handleSubmit = async (values: { user: string; pass?: string }) => {
+const SwaggerAccounts: React.FC = () => {
+  const { t } = useTranslation();
+  const [data, setData] = useState<Account[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [editRecord, setEditRecord] = useState<Account | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+  const [form] = Form.useForm();
+
+  const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const body: any = { user: values.user };
-      if (values.pass) {
-        body.pass = values.pass;
-      }
-      await request.put('/settings/swagger', body);
-      message.success(t('settings.save_success'));
-      form.resetFields(['pass']);
+      const res: any = await request.get('/settings/swagger-accounts');
+      setData(res.data);
     } catch (err: any) {
-      message.error(err?.response?.data?.msg || err.message || t('settings.save_failed'));
+      message.error(err.message);
     } finally {
       setLoading(false);
     }
+  }, []);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+
+  const openCreate = () => {
+    setEditRecord(null);
+    form.resetFields();
+    setModalOpen(true);
   };
 
+  const openEdit = (record: Account) => {
+    setEditRecord(record);
+    form.setFieldsValue({ username: record.username, remark: record.remark });
+    setModalOpen(true);
+  };
+
+  const handleSubmit = async (values: { username: string; password?: string; remark?: string }) => {
+    setSubmitting(true);
+    try {
+      if (editRecord) {
+        const body: any = { username: values.username, remark: values.remark || '' };
+        if (values.password) body.password = values.password;
+        await request.put(`/settings/swagger-accounts/${editRecord.id}`, body);
+        message.success(t('settings.update_success'));
+      } else {
+        await request.post('/settings/swagger-accounts', values);
+        message.success(t('settings.create_success'));
+      }
+      setModalOpen(false);
+      fetchData();
+    } catch (err: any) {
+      message.error(err?.response?.data?.msg || err.message || t('settings.save_failed'));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleDelete = async (id: number) => {
+    try {
+      await request.delete(`/settings/swagger-accounts/${id}`);
+      message.success(t('settings.delete_success'));
+      fetchData();
+    } catch (err: any) {
+      message.error(err?.response?.data?.msg || err.message);
+    }
+  };
+
+  const columns = [
+    { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
+    { title: t('settings.username'), dataIndex: 'username', key: 'username' },
+    { title: t('settings.remark'), dataIndex: 'remark', key: 'remark' },
+    { title: t('settings.created_at'), dataIndex: 'created_at', key: 'created_at', width: 180 },
+    {
+      title: t('app.action'),
+      key: 'action',
+      width: 160,
+      render: (_: any, record: Account) => (
+        <Space>
+          <Button size="small" onClick={() => openEdit(record)}>{t('app.edit')}</Button>
+          <Popconfirm
+            title={t('settings.delete_confirm')}
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button size="small" color="danger" variant="outlined">{t('app.delete')}</Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+
   return (
-    <div>
-      <Title level={4} style={{ marginBottom: 24 }}>{t('settings.swagger_title')}</Title>
-      <Card style={{ maxWidth: 500 }}>
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-          initialValues={{ user: '' }}
-        >
+    <div className="page-container">
+      <div className="page-header">
+        <Title level={4}>{t('settings.swagger_title')}</Title>
+        <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
+          {t('settings.add_account')}
+        </Button>
+      </div>
+
+      <Card>
+        <Table
+          dataSource={data}
+          columns={columns}
+          rowKey="id"
+          loading={loading}
+          pagination={false}
+          size="small"
+        />
+      </Card>
+
+      <Modal
+        title={editRecord ? t('settings.edit_title') : t('settings.add_title')}
+        open={modalOpen}
+        onCancel={() => { setModalOpen(false); form.resetFields(); }}
+        footer={null}
+        width={450}
+      >
+        <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item
-            name="user"
+            name="username"
             label={t('settings.username')}
             rules={[{ required: true, min: 2, message: t('settings.username_required') }]}
           >
@@ -46,27 +142,26 @@ const SwaggerAccount: React.FC = () => {
           </Form.Item>
 
           <Form.Item
-            name="pass"
-            label={t('settings.password')}
-            rules={[
-              { min: 6, message: t('settings.password_rule') },
-            ]}
+            name="password"
+            label={editRecord ? t('settings.password_optional') : t('settings.password')}
+            rules={editRecord ? [] : [{ required: true, min: 6, message: t('settings.password_rule') }]}
           >
             <Input.Password placeholder={t('settings.password_placeholder')} />
           </Form.Item>
 
+          <Form.Item name="remark" label={t('settings.remark')}>
+            <Input placeholder={t('settings.remark_placeholder')} />
+          </Form.Item>
+
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={loading}>
-              {t('settings.save')}
+            <Button type="primary" htmlType="submit" loading={submitting} block>
+              {t('app.submit')}
             </Button>
           </Form.Item>
         </Form>
-        <Typography.Text type="secondary" style={{ fontSize: 12 }}>
-          {t('settings.hint')}
-        </Typography.Text>
-      </Card>
+      </Modal>
     </div>
   );
 };
 
-export default SwaggerAccount;
+export default SwaggerAccounts;

@@ -79,17 +79,25 @@
     "cancelled": "已取消"
   },
   "settings": {
-    "swagger_title": "Swagger 文档访问账号",
+    "swagger_title": "Swagger 访问账号",
+    "add_account": "新增账号",
+    "add_title": "新增 Swagger 账号",
+    "edit_title": "编辑 Swagger 账号",
     "username": "用户名",
     "password": "密码",
+    "password_optional": "新密码（留空不修改）",
+    "remark": "备注",
+    "remark_placeholder": "例如：开发环境",
     "username_required": "用户名至少 2 个字符",
     "username_placeholder": "请输入用户名",
     "password_placeholder": "留空则不修改密码",
     "password_rule": "密码至少 6 个字符",
-    "save": "保存",
-    "save_success": "保存成功",
-    "save_failed": "保存失败",
-    "hint": "修改后下次访问 Swagger 文档时生效，当前登录不受影响。"
+    "create_success": "新增成功",
+    "update_success": "修改成功",
+    "delete_success": "删除成功",
+    "delete_confirm": "确认删除此账号？",
+    "save_failed": "操作失败",
+    "created_at": "创建时间"
   },
   "admin": {
     "title": "管理员管理",
