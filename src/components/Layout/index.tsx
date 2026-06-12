@@ -5,6 +5,7 @@ import {
   KeyOutlined,
   ShoppingCartOutlined,
   UserOutlined,
+  DollarOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -22,11 +23,30 @@ const AdminLayout: React.FC = () => {
   const { admin, logout } = useAuth();
   const [collapsed, setCollapsed] = React.useState(false);
 
+  // 根据当前路径自动展开子菜单
+  const [openKeys, setOpenKeys] = React.useState<string[]>(() => {
+    const path = location.pathname;
+    if (path.startsWith('/payment')) return ['payment'];
+    return [];
+  });
+
+  const onOpenChange = (keys: string[]) => {
+    setOpenKeys(keys);
+  };
+
   const menuItems = [
     { key: '/', icon: <DashboardOutlined />, label: t('app.dashboard') },
     { key: '/licenses', icon: <KeyOutlined />, label: t('app.licenses') },
     { key: '/orders', icon: <ShoppingCartOutlined />, label: t('app.orders') },
     { key: '/admins', icon: <UserOutlined />, label: t('app.admins') },
+    {
+      key: 'payment',
+      icon: <DollarOutlined />,
+      label: t('app.payment'),
+      children: [
+        { key: '/payment/alipay', icon: <img src="/alipay-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.alipay') },
+      ],
+    },
     { key: '/settings', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.settings') },
   ];
 
@@ -75,6 +95,8 @@ const AdminLayout: React.FC = () => {
         <Menu
           mode="inline"
           selectedKeys={[location.pathname === '/' ? '/' : location.pathname]}
+          openKeys={collapsed ? [] : openKeys}
+          onOpenChange={onOpenChange}
           items={menuItems}
           onClick={({ key }) => navigate(key)}
         />

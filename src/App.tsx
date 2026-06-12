@@ -12,6 +12,7 @@ import LicensesPage from './pages/Licenses';
 import OrdersPage from './pages/Orders';
 import AdminsPage from './pages/Admins';
 import SettingsPage from './pages/Settings';
+import AlipayPage from './pages/Payment/Alipay';
 import { useAuth } from './hooks/useAuth';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -42,6 +43,7 @@ const App: React.FC = () => {
             <Route path="orders" element={<OrdersPage />} />
             <Route path="admins" element={<AdminsPage />} />
             <Route path="settings" element={<SettingsPage />} />
+            <Route path="payment/alipay" element={<AlipayPage />} />
           </Route>
         </Routes>
       </AntApp>

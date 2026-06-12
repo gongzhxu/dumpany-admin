@@ -7,6 +7,8 @@
     "licenses": "授权管理",
     "orders": "订单管理",
     "admins": "管理员",
+    "payment": "支付管理",
+    "alipay": "支付宝",
     "settings": "Swagger 管理",
     "username": "用户名",
     "password": "密码",
@@ -99,6 +101,20 @@
     "save_failed": "操作失败",
     "created_at": "创建时间",
     "updated_at": "修改时间"
+  },
+  "payment": {
+    "alipay_title": "支付宝配置",
+    "app_id": "App ID",
+    "app_id_required": "请输入 App ID",
+    "app_id_placeholder": "应用 APPID",
+    "private_key": "应用私钥",
+    "private_key_required": "请输入应用私钥",
+    "private_key_placeholder": "RSA2 私钥（PEM 格式）",
+    "public_key": "支付宝公钥",
+    "public_key_placeholder": "支付宝公钥（PEM 格式，留空则不修改）",
+    "save": "保存",
+    "save_success": "保存成功",
+    "save_failed": "保存失败"
   },
   "admin": {
     "title": "管理员管理",

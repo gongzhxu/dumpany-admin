@@ -7,6 +7,8 @@
     "licenses": "Licenses",
     "orders": "Orders",
     "admins": "Admins",
+    "payment": "Payment",
+    "alipay": "Alipay",
     "settings": "Swagger",
     "username": "Username",
     "password": "Password",
@@ -99,6 +101,20 @@
     "save_failed": "Operation failed",
     "created_at": "Created At",
     "updated_at": "Updated At"
+  },
+  "payment": {
+    "alipay_title": "Alipay Config",
+    "app_id": "App ID",
+    "app_id_required": "App ID is required",
+    "app_id_placeholder": "Application APPID",
+    "private_key": "Private Key",
+    "private_key_required": "Private key is required",
+    "private_key_placeholder": "RSA2 private key (PEM format)",
+    "public_key": "Alipay Public Key",
+    "public_key_placeholder": "Alipay public key (PEM, leave blank to keep current)",
+    "save": "Save",
+    "save_success": "Saved successfully",
+    "save_failed": "Save failed"
   },
   "admin": {
     "title": "Admin Management",
