@@ -82,14 +82,16 @@ const AlipayConfig: React.FC = () => {
       title: t('payment.private_key'),
       dataIndex: 'private_key',
       key: 'private_key',
-      ellipsis: true,
+      width: 160,
+      render: (text: string) => text ? <Typography.Text copyable ellipsis={{ tooltip: text }} style={{ width: 140 }}>{text.substring(0, 40)}...</Typography.Text> : '-',
     },
     { title: t('payment.gateway_url'), dataIndex: 'gateway_url', key: 'gateway_url', ellipsis: true },
     {
       title: t('payment.public_key'),
       dataIndex: 'public_key',
       key: 'public_key',
-      ellipsis: true,
+      width: 160,
+      render: (text: string) => text ? <Typography.Text copyable ellipsis={{ tooltip: text }} style={{ width: 140 }}>{text.substring(0, 40)}...</Typography.Text> : '-',
     },
     {
       title: t('app.action'),
