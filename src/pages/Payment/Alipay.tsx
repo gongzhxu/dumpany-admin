@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import './Alipay.css';
 import { Table, Button, Modal, Form, Input, message, Typography, Card, Tag, Space } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
@@ -15,6 +16,7 @@ const AlipayConfig: React.FC = () => {
   const [editing, setEditing] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
   const [dismissed, setDismissed] = useState(false);
+  const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
   const [form] = Form.useForm();
 
   const fetchData = useCallback(async () => {
@@ -40,9 +42,10 @@ const AlipayConfig: React.FC = () => {
     }
   }, [loading, data.length, modalOpen, dismissed]);
 
-  // Modal 打开时填充表单
+  // Modal 打开时填充表单，重置修改标记
   useEffect(() => {
     if (modalOpen) {
+      setDirtyFields(new Set());
       if (editing) {
         form.setFieldsValue({
           app_id: editing.app_id || '',
@@ -134,23 +137,39 @@ const AlipayConfig: React.FC = () => {
         footer={null}
         width={520}
       >
-        <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Form form={form} layout="vertical" onFinish={handleSubmit}
+          onValuesChange={(changed) => {
+            setDirtyFields(prev => {
+              let next = prev;
+              for (const k of Object.keys(changed)) {
+                if (!prev.has(k)) {
+                  if (next === prev) next = new Set(prev);
+                  next.add(k);
+                }
+              }
+              return next;
+            });
+          }}>
           <Form.Item name="app_id" label={t('payment.app_id')}
             rules={[{ required: true, message: t('payment.app_id_required') }]}>
-            <Input placeholder={t('payment.app_id_placeholder')} />
+            <Input placeholder={t('payment.app_id_placeholder')}
+              className={dirtyFields.has('app_id') ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="private_key" label={t('payment.private_key')}
             rules={editing ? [] : [{ required: true, message: t('payment.private_key_required') }]}>
-            <TextArea rows={6} placeholder={editing ? t('payment.private_key_edit_placeholder') : t('payment.private_key_placeholder')} />
+            <TextArea rows={6} placeholder={editing ? t('payment.private_key_edit_placeholder') : t('payment.private_key_placeholder')}
+              className={dirtyFields.has('private_key') ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="gateway_url" label={t('payment.gateway_url')}>
-            <Input placeholder={t('payment.gateway_url_placeholder')} />
+            <Input placeholder={t('payment.gateway_url_placeholder')}
+              className={dirtyFields.has('gateway_url') ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="public_key" label={t('payment.public_key')}>
-            <TextArea rows={4} placeholder={t('payment.public_key_placeholder')} />
+            <TextArea rows={4} placeholder={t('payment.public_key_placeholder')}
+              className={dirtyFields.has('public_key') ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item>
