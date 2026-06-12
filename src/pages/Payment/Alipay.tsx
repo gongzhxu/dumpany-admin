@@ -17,6 +17,7 @@ const AlipayConfig: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [dirtyFields, setDirtyFields] = useState<Set<string>>(new Set());
+  const [populating, setPopulating] = useState(false);
   const [form] = Form.useForm();
 
   const fetchData = useCallback(async () => {
@@ -46,6 +47,7 @@ const AlipayConfig: React.FC = () => {
   useEffect(() => {
     if (modalOpen) {
       setDirtyFields(new Set());
+      setPopulating(true);
       if (editing) {
         form.setFieldsValue({
           app_id: editing.app_id || '',
@@ -57,6 +59,8 @@ const AlipayConfig: React.FC = () => {
         form.resetFields();
         form.setFieldsValue({ gateway_url: 'https://openapi.alipay.com/gateway.do' });
       }
+      // 下一个 tick 恢复 onValuesChange，避免初始化时全标记 dirty
+      setTimeout(() => setPopulating(false), 0);
     }
   }, [modalOpen, editing]);
 
@@ -139,6 +143,7 @@ const AlipayConfig: React.FC = () => {
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}
           onValuesChange={(changed) => {
+            if (populating) return;
             setDirtyFields(prev => {
               let next = prev;
               for (const k of Object.keys(changed)) {
