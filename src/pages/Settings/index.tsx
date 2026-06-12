@@ -116,7 +116,7 @@ const SwaggerAccounts: React.FC = () => {
   return (
     <div className="page-container">
       <div className="page-header">
-        <Title level={4}>{t('settings.swagger_title')}</Title>
+        <Title level={4}><img src="/swagger-icon.svg" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: -3 }} alt="" />{t('settings.swagger_title')}</Title>
         <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
           {t('settings.add_account')}
         </Button>
