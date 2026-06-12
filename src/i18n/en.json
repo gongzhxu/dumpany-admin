@@ -98,6 +98,12 @@
     "add_title": "Add New Admin",
     "disable_confirm": "Are you sure to toggle this admin's status?",
     "enabled": "Enabled",
-    "disabled": "Disabled"
+    "disabled": "Disabled",
+    "disable_btn": "Disable",
+    "enable_btn": "Enable",
+    "change_password": "Change Password",
+    "change_password_title": "Change Password",
+    "new_password": "New Password",
+    "password_rule": "Password must be at least 6 characters"
   }
 }

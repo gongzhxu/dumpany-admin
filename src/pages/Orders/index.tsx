@@ -72,7 +72,7 @@ const OrdersPage: React.FC = () => {
       dataIndex: 'order_no',
       key: 'order_no',
       render: (text: string, record: Order) => (
-        <a onClick={() => showDetail(record.id)}>{text}</a>
+        <Button type="link" size="small" onClick={() => showDetail(record.id)}>{text}</Button>
       ),
     },
     { title: t('license.subscriber'), dataIndex: 'subscriber', key: 'subscriber' },
@@ -108,7 +108,7 @@ const OrdersPage: React.FC = () => {
             title={t('order.refund_confirm')}
             onConfirm={() => handleRefund(record.id)}
           >
-            <a style={{ color: 'red' }}>{t('order.refund')}</a>
+            <Button size="small" color="danger" variant="outlined">{t('order.refund')}</Button>
           </Popconfirm>
         ) : null
       ),

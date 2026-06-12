@@ -169,13 +169,17 @@ const LicensesPage: React.FC = () => {
       width: 160,
       render: (_: any, record: License) => (
         <Space>
-          <a onClick={() => { setRenewId(record.id); setRenewModalOpen(true); }}>{t('license.renew')}</a>
+          <Button size="small" onClick={() => { setRenewId(record.id); setRenewModalOpen(true); }}>
+            {t('license.renew')}
+          </Button>
           {record.status === 'active' && (
             <Popconfirm
               title={t('license.revoke_confirm')}
               onConfirm={() => handleRevoke(record.id)}
             >
-              <a style={{ color: 'red' }}>{t('license.revoke')}</a>
+              <Button size="small" color="danger" variant="outlined">
+                {t('license.revoke')}
+              </Button>
             </Popconfirm>
           )}
         </Space>

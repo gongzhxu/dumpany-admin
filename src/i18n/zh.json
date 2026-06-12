@@ -98,6 +98,12 @@
     "add_title": "新增管理员",
     "disable_confirm": "确认切换此管理员的状态？",
     "enabled": "已启用",
-    "disabled": "已禁用"
+    "disabled": "已禁用",
+    "disable_btn": "禁用",
+    "enable_btn": "启用",
+    "change_password": "修改密码",
+    "change_password_title": "修改密码",
+    "new_password": "新密码",
+    "password_rule": "密码至少 6 个字符"
   }
 }

@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-  Table, Button, Modal, Form, Input, message, Tag, Popconfirm, Typography, Card,
+  Table, Button, Modal, Form, Input, message, Tag, Popconfirm, Typography, Card, Space,
 } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, LockOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
@@ -22,7 +22,11 @@ const AdminsPage: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [createLoading, setCreateLoading] = useState(false);
+  const [pwdModalOpen, setPwdModalOpen] = useState(false);
+  const [pwdAdminId, setPwdAdminId] = useState<number>(0);
+  const [pwdLoading, setPwdLoading] = useState(false);
   const [form] = Form.useForm();
+  const [pwdForm] = Form.useForm();
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -63,6 +67,28 @@ const AdminsPage: React.FC = () => {
     }
   };
 
+  const handleChangePassword = async (values: { password: string }) => {
+    setPwdLoading(true);
+    try {
+      await request.put(`/admins/${pwdAdminId}`, values);
+      message.success('Password updated');
+      setPwdModalOpen(false);
+      pwdForm.resetFields();
+    } catch (err: any) {
+      message.error(err.message);
+    } finally {
+      setPwdLoading(false);
+    }
+  };
+    try {
+      await request.put(`/admins/${id}/disable`);
+      message.success('Status updated');
+      fetchData();
+    } catch (err: any) {
+      message.error(err.message);
+    }
+  };
+
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
     { title: t('app.username'), dataIndex: 'username', key: 'username' },
@@ -81,16 +107,25 @@ const AdminsPage: React.FC = () => {
     {
       title: t('app.action'),
       key: 'action',
-      width: 120,
+      width: 180,
       render: (_: any, record: Admin) => (
-        <Popconfirm
-          title={t('admin.disable_confirm')}
-          onConfirm={() => handleToggleDisable(record.id)}
-        >
-          <a style={{ color: record.status === 1 ? 'red' : 'green' }}>
-            {record.status === 1 ? t('admin.disabled') : t('admin.enabled')}
-          </a>
-        </Popconfirm>
+        <Space>
+          <Popconfirm
+            title={t('admin.disable_confirm')}
+            onConfirm={() => handleToggleDisable(record.id)}
+          >
+            <Button size="small" color={record.status === 1 ? 'danger' : 'primary'} variant="outlined">
+              {record.status === 1 ? t('admin.disable_btn') : t('admin.enable_btn')}
+            </Button>
+          </Popconfirm>
+          <Button
+            size="small"
+            icon={<LockOutlined />}
+            onClick={() => { setPwdAdminId(record.id); setPwdModalOpen(true); }}
+          >
+            {t('admin.change_password')}
+          </Button>
+        </Space>
       ),
     },
   ];
@@ -142,6 +177,29 @@ const AdminsPage: React.FC = () => {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={createLoading} block>
+              {t('app.submit')}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal
+        title={t('admin.change_password_title')}
+        open={pwdModalOpen}
+        onCancel={() => { setPwdModalOpen(false); pwdForm.resetFields(); }}
+        footer={null}
+        width={400}
+      >
+        <Form form={pwdForm} layout="vertical" onFinish={handleChangePassword}>
+          <Form.Item
+            name="password"
+            label={t('admin.new_password')}
+            rules={[{ required: true, min: 6, message: t('admin.password_rule') }]}
+          >
+            <Input.Password />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={pwdLoading} block>
               {t('app.submit')}
             </Button>
           </Form.Item>
