@@ -104,6 +104,8 @@
     "nickname": "Nickname",
     "add_admin": "Add Admin",
     "add_title": "Add New Admin",
+    "edit_title": "Edit Admin",
+    "edit_success": "Updated successfully",
     "disable_confirm": "Are you sure to toggle this admin's status?",
     "enabled": "Enabled",
     "disabled": "Disabled",

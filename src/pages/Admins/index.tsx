@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {
   Table, Button, Modal, Form, Input, message, Tag, Popconfirm, Typography, Card, Space,
 } from 'antd';
-import { PlusOutlined, LockOutlined } from '@ant-design/icons';
+import { PlusOutlined, LockOutlined, EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
@@ -25,8 +25,12 @@ const AdminsPage: React.FC = () => {
   const [pwdModalOpen, setPwdModalOpen] = useState(false);
   const [pwdAdminId, setPwdAdminId] = useState<number>(0);
   const [pwdLoading, setPwdLoading] = useState(false);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [editRecord, setEditRecord] = useState<Admin | null>(null);
+  const [editLoading, setEditLoading] = useState(false);
   const [form] = Form.useForm();
   const [pwdForm] = Form.useForm();
+  const [editForm] = Form.useForm();
 
   const fetchData = useCallback(async () => {
     setLoading(true);
@@ -67,6 +71,21 @@ const AdminsPage: React.FC = () => {
     }
   };
 
+  const handleEdit = async (values: { nickname: string }) => {
+    if (!editRecord) return;
+    setEditLoading(true);
+    try {
+      await request.put(`/admins/${editRecord.id}`, values);
+      message.success(t('admin.edit_success'));
+      setEditModalOpen(false);
+      fetchData();
+    } catch (err: any) {
+      message.error(err.message);
+    } finally {
+      setEditLoading(false);
+    }
+  };
+
   const handleChangePassword = async (values: { password: string }) => {
     setPwdLoading(true);
     try {
@@ -99,9 +118,16 @@ const AdminsPage: React.FC = () => {
     {
       title: t('app.action'),
       key: 'action',
-      width: 180,
+      width: 240,
       render: (_: any, record: Admin) => (
         <Space>
+          <Button
+            size="small"
+            icon={<EditOutlined />}
+            onClick={() => { setEditRecord(record); editForm.setFieldsValue({ nickname: record.nickname }); setEditModalOpen(true); }}
+          >
+            {t('app.edit')}
+          </Button>
           <Popconfirm
             title={t('admin.disable_confirm')}
             onConfirm={() => handleToggleDisable(record.id)}
@@ -192,6 +218,25 @@ const AdminsPage: React.FC = () => {
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit" loading={pwdLoading} block>
+              {t('app.submit')}
+            </Button>
+          </Form.Item>
+        </Form>
+      </Modal>
+
+      <Modal
+        title={t('admin.edit_title')}
+        open={editModalOpen}
+        onCancel={() => { setEditModalOpen(false); editForm.resetFields(); }}
+        footer={null}
+        width={400}
+      >
+        <Form form={editForm} layout="vertical" onFinish={handleEdit}>
+          <Form.Item name="nickname" label={t('admin.nickname')}>
+            <Input />
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" loading={editLoading} block>
               {t('app.submit')}
             </Button>
           </Form.Item>
