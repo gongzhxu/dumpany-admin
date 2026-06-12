@@ -142,10 +142,8 @@ const AlipayConfig: React.FC = () => {
         destroyOnClose
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}
-          onValuesChange={(changed) => {
-            const next = { ...form.getFieldsValue() };
-            console.log('init:', init, 'curr:', next);
-            setCurr(next);
+          onValuesChange={() => {
+            setCurr({ ...form.getFieldsValue() });
           }}>
           <Form.Item name="app_id" label={t('payment.app_id')}
             rules={[{ required: true, message: t('payment.app_id_required') }]}>
