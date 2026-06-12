@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import {
   Table, Button, Modal, Form, Input, message, Tag, Popconfirm, Typography, Card, Space,
 } from 'antd';
+import dayjs from 'dayjs';
 import { PlusOutlined, LockOutlined, EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
@@ -114,6 +115,13 @@ const AdminsPage: React.FC = () => {
           {val === 1 ? t('admin.enabled') : t('admin.disabled')}
         </Tag>
       ),
+    },
+    {
+      title: t('settings.created_at'),
+      dataIndex: 'created_at',
+      key: 'created_at',
+      width: 170,
+      render: (text: string) => text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-',
     },
     {
       title: t('app.action'),

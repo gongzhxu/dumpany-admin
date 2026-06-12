@@ -7,7 +7,7 @@
     "licenses": "Licenses",
     "orders": "Orders",
     "admins": "Admins",
-    "settings": "Settings",
+    "settings": "Swagger",
     "username": "Username",
     "password": "Password",
     "submit": "Submit",
@@ -97,7 +97,8 @@
     "delete_success": "Deleted successfully",
     "delete_confirm": "Are you sure to delete this account?",
     "save_failed": "Operation failed",
-    "created_at": "Created At"
+    "created_at": "Created At",
+    "updated_at": "Updated At"
   },
   "admin": {
     "title": "Admin Management",

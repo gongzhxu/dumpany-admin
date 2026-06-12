@@ -99,6 +99,13 @@ const OrdersPage: React.FC = () => {
       ellipsis: true,
     },
     {
+      title: t('settings.created_at'),
+      dataIndex: 'created_at',
+      key: 'created_at',
+      width: 150,
+      render: (text: string) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-'),
+    },
+    {
       title: t('app.action'),
       key: 'action',
       width: 80,

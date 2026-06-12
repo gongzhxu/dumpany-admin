@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import dayjs from 'dayjs';
 import {
   Table, Button, Modal, Form, Input, message, Typography, Card, Space, Popconfirm,
 } from 'antd';
@@ -86,7 +87,14 @@ const SwaggerAccounts: React.FC = () => {
     { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
     { title: t('settings.username'), dataIndex: 'username', key: 'username' },
     { title: t('settings.remark'), dataIndex: 'remark', key: 'remark' },
-    { title: t('settings.created_at'), dataIndex: 'created_at', key: 'created_at', width: 180 },
+    { title: t('settings.created_at'), dataIndex: 'created_at', key: 'created_at', width: 170, render: (text: string) => text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-' },
+    {
+      title: t('settings.updated_at'),
+      dataIndex: 'updated_at',
+      key: 'updated_at',
+      width: 170,
+      render: (text: string) => text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-',
+    },
     {
       title: t('app.action'),
       key: 'action',

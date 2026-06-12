@@ -152,7 +152,14 @@ const LicensesPage: React.FC = () => {
       dataIndex: 'expires_at',
       key: 'expires_at',
       width: 160,
-      render: (val: number) => dayjs.unix(val).format('YYYY-MM-DD HH:mm'),
+      render: (val: number) => (val ? dayjs.unix(val).format('YYYY-MM-DD HH:mm') : '-'),
+    },
+    {
+      title: t('settings.created_at'),
+      dataIndex: 'created_at',
+      key: 'created_at',
+      width: 170,
+      render: (text: string) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-'),
     },
     {
       title: t('app.status'),

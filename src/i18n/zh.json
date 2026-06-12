@@ -7,7 +7,7 @@
     "licenses": "授权管理",
     "orders": "订单管理",
     "admins": "管理员",
-    "settings": "系统设置",
+    "settings": "Swagger 管理",
     "username": "用户名",
     "password": "密码",
     "submit": "提交",
@@ -97,7 +97,8 @@
     "delete_success": "删除成功",
     "delete_confirm": "确认删除此账号？",
     "save_failed": "操作失败",
-    "created_at": "创建时间"
+    "created_at": "创建时间",
+    "updated_at": "修改时间"
   },
   "admin": {
     "title": "管理员管理",
