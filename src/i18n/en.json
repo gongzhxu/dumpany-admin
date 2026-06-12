@@ -116,7 +116,9 @@
     "public_key_placeholder": "Alipay public key (PEM, leave blank to keep current)",
     "save": "Save",
     "save_success": "Saved successfully",
-    "save_failed": "Save failed"
+    "save_failed": "Save failed",
+    "not_configured": "Alipay not configured",
+    "configure": "Configure Now"
   },
   "admin": {
     "title": "Admin Management",
