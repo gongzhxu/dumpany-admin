@@ -7,13 +7,6 @@ import request from '../../api/request';
 const { Title } = Typography;
 const { TextArea } = Input;
 
-// 掩码显示密钥，只显示前后 8 位
-const maskKey = (key: string) => {
-  if (!key) return '-';
-  if (key.length <= 16) return `${key.substring(0, 4)}****${key.substring(key.length - 4)}`;
-  return `${key.substring(0, 8)}****${key.substring(key.length - 8)}`;
-};
-
 const AlipayConfig: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<any[]>([]);
@@ -90,7 +83,6 @@ const AlipayConfig: React.FC = () => {
       dataIndex: 'private_key',
       key: 'private_key',
       ellipsis: true,
-      render: (text: string) => text ? maskKey(text) : '-',
     },
     { title: t('payment.gateway_url'), dataIndex: 'gateway_url', key: 'gateway_url', ellipsis: true },
     {
@@ -98,7 +90,6 @@ const AlipayConfig: React.FC = () => {
       dataIndex: 'public_key',
       key: 'public_key',
       ellipsis: true,
-      render: (text: string) => text ? maskKey(text) : '-',
     },
     {
       title: t('app.action'),
