@@ -4,7 +4,7 @@ WORKDIR /app
 COPY package.json ./
 RUN npm install --loglevel verbose
 COPY . .
-RUN ./node_modules/.bin/tsc -b --listFiles 2>&1 && ./node_modules/.bin/vite build --debug 2>&1
+RUN npm run build
 
 # Serve with nginx
 FROM nginx:alpine
