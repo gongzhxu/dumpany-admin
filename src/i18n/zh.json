@@ -7,6 +7,7 @@
     "licenses": "授权管理",
     "orders": "订单管理",
     "admins": "管理员",
+    "settings": "系统设置",
     "username": "用户名",
     "password": "密码",
     "submit": "提交",
@@ -76,6 +77,19 @@
     "paid": "已支付",
     "refunded": "已退款",
     "cancelled": "已取消"
+  },
+  "settings": {
+    "swagger_title": "Swagger 文档访问账号",
+    "username": "用户名",
+    "password": "密码",
+    "username_required": "用户名至少 2 个字符",
+    "username_placeholder": "请输入用户名",
+    "password_placeholder": "留空则不修改密码",
+    "password_rule": "密码至少 6 个字符",
+    "save": "保存",
+    "save_success": "保存成功",
+    "save_failed": "保存失败",
+    "hint": "修改后下次访问 Swagger 文档时生效，当前登录不受影响。"
   },
   "admin": {
     "title": "管理员管理",

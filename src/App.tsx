@@ -11,6 +11,7 @@ import DashboardPage from './pages/Dashboard';
 import LicensesPage from './pages/Licenses';
 import OrdersPage from './pages/Orders';
 import AdminsPage from './pages/Admins';
+import SettingsPage from './pages/Settings';
 import { useAuth } from './hooks/useAuth';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -40,6 +41,7 @@ const App: React.FC = () => {
             <Route path="licenses" element={<LicensesPage />} />
             <Route path="orders" element={<OrdersPage />} />
             <Route path="admins" element={<AdminsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
           </Route>
         </Routes>
       </AntApp>

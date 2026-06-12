@@ -5,6 +5,7 @@ import {
   KeyOutlined,
   ShoppingCartOutlined,
   UserOutlined,
+  SettingOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -27,6 +28,7 @@ const AdminLayout: React.FC = () => {
     { key: '/licenses', icon: <KeyOutlined />, label: t('app.licenses') },
     { key: '/orders', icon: <ShoppingCartOutlined />, label: t('app.orders') },
     { key: '/admins', icon: <UserOutlined />, label: t('app.admins') },
+    { key: '/settings', icon: <SettingOutlined />, label: t('app.settings') },
   ];
 
   const toggleLang = () => {

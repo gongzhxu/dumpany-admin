@@ -7,6 +7,7 @@
     "licenses": "Licenses",
     "orders": "Orders",
     "admins": "Admins",
+    "settings": "Settings",
     "username": "Username",
     "password": "Password",
     "submit": "Submit",
@@ -76,6 +77,19 @@
     "paid": "Paid",
     "refunded": "Refunded",
     "cancelled": "Cancelled"
+  },
+  "settings": {
+    "swagger_title": "Swagger Access Account",
+    "username": "Username",
+    "password": "Password",
+    "username_required": "Username must be at least 2 characters",
+    "username_placeholder": "Enter username",
+    "password_placeholder": "Leave blank to keep current password",
+    "password_rule": "Password must be at least 6 characters",
+    "save": "Save",
+    "save_success": "Saved successfully",
+    "save_failed": "Save failed",
+    "hint": "Changes will take effect on next Swagger page visit. Current session is not affected."
   },
   "admin": {
     "title": "Admin Management",
