@@ -8,10 +8,11 @@ import request from '../../api/request';
 const { Title } = Typography;
 const { TextArea } = Input;
 
-// 对比当前值与初始值，相同返回 gray class
-const fieldClass = (initial: any, values: any, name: string) => {
-  if (!initial) return '';
-  return initial[name] !== values?.[name] ? '' : 'form-gray';
+// 实时对比初始值与当前表单值
+const isDirty = (initial: any, form: any, name: string) => {
+  if (!initial) return true;
+  const current = form.getFieldsValue();
+  return initial[name] !== current?.[name];
 };
 
 const AlipayConfig: React.FC = () => {
@@ -23,7 +24,6 @@ const AlipayConfig: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [initialValues, setInitialValues] = useState<any>(null);
-  const [values, setValues] = useState<any>({});
   const [form] = Form.useForm();
 
   const fetchData = useCallback(async () => {
@@ -62,7 +62,6 @@ const AlipayConfig: React.FC = () => {
         vals = { gateway_url: 'https://openapi.alipay.com/gateway.do' };
       }
       setInitialValues(vals);
-      setValues(vals);
       form.setFieldsValue(vals);
     }
   }, [modalOpen, editing]);
@@ -144,28 +143,27 @@ const AlipayConfig: React.FC = () => {
         footer={null}
         width={520}
       >
-        <Form form={form} layout="vertical" onFinish={handleSubmit}
-          onValuesChange={(changed: any) => setValues({ ...values, ...changed })}>
+        <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item name="app_id" label={t('payment.app_id')}
             rules={[{ required: true, message: t('payment.app_id_required') }]}>
             <Input placeholder={t('payment.app_id_placeholder')}
-              className={fieldClass(initialValues, values, 'app_id')} />
+              className={isDirty(initialValues, form, 'app_id') ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="private_key" label={t('payment.private_key')}
             rules={editing ? [] : [{ required: true, message: t('payment.private_key_required') }]}>
             <TextArea rows={6} placeholder={editing ? t('payment.private_key_edit_placeholder') : t('payment.private_key_placeholder')}
-              className={fieldClass(initialValues, values, 'private_key')} />
+              className={isDirty(initialValues, form, 'private_key') ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="gateway_url" label={t('payment.gateway_url')}>
             <Input placeholder={t('payment.gateway_url_placeholder')}
-              className={fieldClass(initialValues, values, 'gateway_url')} />
+              className={isDirty(initialValues, form, 'gateway_url') ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item name="public_key" label={t('payment.public_key')}>
             <TextArea rows={4} placeholder={t('payment.public_key_placeholder')}
-              className={fieldClass(initialValues, values, 'public_key')} />
+              className={isDirty(initialValues, form, 'public_key') ? '' : 'form-gray'} />
           </Form.Item>
 
           <Form.Item>
