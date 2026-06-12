@@ -46,7 +46,7 @@ const AlipayConfig: React.FC = () => {
       if (editing) {
         form.setFieldsValue({
           app_id: editing.app_id || '',
-          private_key: '',
+          private_key: editing.private_key || '',
           gateway_url: editing.gateway_url || 'https://openapi.alipay.com/gateway.do',
           public_key: editing.public_key || '',
         });
