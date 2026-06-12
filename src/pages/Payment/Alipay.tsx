@@ -19,6 +19,7 @@ const AlipayConfig: React.FC = () => {
       form.setFieldsValue({
         app_id: res.data.app_id,
         public_key: res.data.public_key,
+        gateway_url: res.data.gateway_url,
       });
     } catch {
       // 首次配置，显示空表单
@@ -66,6 +67,13 @@ const AlipayConfig: React.FC = () => {
             rules={[{ required: true, message: t('payment.private_key_required') }]}
           >
             <TextArea rows={6} placeholder={t('payment.private_key_placeholder')} />
+          </Form.Item>
+
+          <Form.Item
+            name="gateway_url"
+            label={t('payment.gateway_url')}
+          >
+            <Input placeholder={t('payment.gateway_url_placeholder')} />
           </Form.Item>
 
           <Form.Item

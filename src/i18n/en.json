@@ -110,6 +110,8 @@
     "private_key": "Private Key",
     "private_key_required": "Private key is required",
     "private_key_placeholder": "PEM or raw RSA2 Base64",
+    "gateway_url": "Gateway URL",
+    "gateway_url_placeholder": "https://openapi.alipay.com/gateway.do",
     "public_key": "Alipay Public Key",
     "public_key_placeholder": "Alipay public key (PEM, leave blank to keep current)",
     "save": "Save",

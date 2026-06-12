@@ -110,6 +110,8 @@
     "private_key": "应用私钥",
     "private_key_required": "请输入应用私钥",
     "private_key_placeholder": "PEM 或 RSA2 裸 Base64",
+    "gateway_url": "网关地址",
+    "gateway_url_placeholder": "https://openapi.alipay.com/gateway.do",
     "public_key": "支付宝公钥",
     "public_key_placeholder": "支付宝公钥（PEM 格式，留空则不修改）",
     "save": "保存",
