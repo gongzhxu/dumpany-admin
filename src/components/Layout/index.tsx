@@ -69,7 +69,7 @@ const AdminLayout: React.FC = () => {
           fontSize: collapsed ? 14 : 16,
           color: '#1890ff',
         }}>
-          {collapsed ? 'DA' : 'dumpany-admin'}
+          {collapsed ? 'DA' : 'DumpAny Admin'}
         </div>
         <Menu
           mode="inline"
