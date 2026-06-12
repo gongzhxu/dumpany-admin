@@ -109,7 +109,7 @@
     "app_id_placeholder": "Application APPID",
     "private_key": "Private Key",
     "private_key_required": "Private key is required",
-    "private_key_placeholder": "RSA2 private key (PEM format)",
+    "private_key_placeholder": "PEM or raw RSA2 Base64",
     "public_key": "Alipay Public Key",
     "public_key_placeholder": "Alipay public key (PEM, leave blank to keep current)",
     "save": "Save",
