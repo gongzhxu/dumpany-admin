@@ -38,6 +38,7 @@ const AdminLayout: React.FC = () => {
     { key: '/', icon: <DashboardOutlined />, label: t('app.dashboard') },
     { key: '/licenses', icon: <KeyOutlined />, label: t('app.licenses') },
     { key: '/orders', icon: <ShoppingCartOutlined />, label: t('app.orders') },
+    { key: '/plans', icon: <DollarOutlined />, label: '套餐管理' },
     { key: '/admins', icon: <UserOutlined />, label: t('app.admins') },
     {
       key: 'payment',
