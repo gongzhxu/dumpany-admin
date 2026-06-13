@@ -1,11 +1,9 @@
-import request from './request';
-
 export interface DashboardStats {
-  total_licenses: number;
-  active_licenses: number;
-  total_orders: number;
-  total_revenue: number;
-  today_activations: number;
+  totalLicenses: number;
+  activeLicenses: number;
+  totalOrders: number;
+  totalRevenue: number;
+  todayActivations: number;
 }
 
 export interface DailyStats {
@@ -19,14 +17,6 @@ export interface DailyRevenue {
 }
 
 export interface TrendData {
-  daily_activations: DailyStats[];
-  daily_revenue: DailyRevenue[];
+  dailyActivations: DailyStats[];
+  dailyRevenue: DailyRevenue[];
 }
-
-export const dashboardApi = {
-  stats: () =>
-    request.get('/dashboard/stats'),
-
-  trends: (days = 30) =>
-    request.get('/dashboard/trends', { params: { days } }),
-};
