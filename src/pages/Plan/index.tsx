@@ -24,7 +24,7 @@ interface Plan {
   sortOrder: number;
 }
 
-const PlansPage: React.FC = () => {
+const PlanPage: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<Plan[]>([]);
   const [loading, setLoading] = useState(false);
@@ -202,4 +202,4 @@ const PlansPage: React.FC = () => {
   );
 };
 
-export default PlansPage;
+export default PlanPage;

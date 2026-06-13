@@ -58,11 +58,11 @@ const AdminLayout: React.FC = () => {
 
   const menuItems = [
     { key: '/', icon: <DashboardOutlined />, label: t('app.dashboard') },
-    { key: '/licenses', icon: <KeyOutlined />, label: t('app.licenses') },
-    { key: '/orders', icon: <ShoppingCartOutlined />, label: t('app.orders') },
-    { key: '/plans', icon: <DollarOutlined />, label: '套餐管理' },
+    { key: '/license', icon: <KeyOutlined />, label: t('app.license') },
+    { key: '/order', icon: <ShoppingCartOutlined />, label: t('app.order') },
+    { key: '/plan', icon: <DollarOutlined />, label: t('app.plan') },
     { key: '/admin', icon: <UserOutlined />, label: t('app.admin') },
-    { key: '/apps', icon: <AppstoreOutlined />, label: t('app.apps') },
+    { key: '/app', icon: <AppstoreOutlined />, label: t('app.app') },
     {
       key: 'payment',
       icon: <DollarOutlined />,
@@ -71,7 +71,7 @@ const AdminLayout: React.FC = () => {
         { key: '/payment/alipay', icon: <img src="/alipay-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.alipay') },
       ],
     },
-    { key: '/settings', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.settings') },
+    { key: '/swagger', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.swagger') },
   ];
 
   const toggleLang = () => {

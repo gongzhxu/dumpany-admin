@@ -18,7 +18,7 @@ const statusColorMap: Record<string, string> = {
   cancelled: 'default',
 };
 
-const OrdersPage: React.FC = () => {
+const OrderPage: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<Order[]>([]);
   const [total, setTotal] = useState(0);
@@ -204,4 +204,4 @@ const OrdersPage: React.FC = () => {
   );
 };
 
-export default OrdersPage;
+export default OrderPage;

@@ -12,7 +12,7 @@ import licenseApi from '../../api/licenses';
 const { Title } = Typography;
 
 
-const LicensesPage: React.FC = () => {
+const LicensePage: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<License[]>([]);
   const [total, setTotal] = useState(0);
@@ -351,4 +351,4 @@ const LicensesPage: React.FC = () => {
   );
 };
 
-export default LicensesPage;
+export default LicensePage;

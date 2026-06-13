@@ -8,13 +8,13 @@ import { useTranslation } from 'react-i18next';
 import AdminLayout from './components/Layout';
 import LoginPage from './pages/Login';
 import DashboardPage from './pages/Dashboard';
-import LicensesPage from './pages/Licenses';
-import OrdersPage from './pages/Orders';
+import LicensePage from './pages/License';
+import OrderPage from './pages/Order';
 import AdminPage from './pages/Admin';
-import SettingsPage from './pages/Settings';
+import SwaggerPage from './pages/Swagger';
 import AlipayPage from './pages/Payment/Alipay';
-import PlansPage from './pages/Plans';
-import AppsPage from './pages/Apps';
+import PlanPage from './pages/Plan';
+import AppPage from './pages/App';
 import { useAuth } from './hooks/useAuth';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -41,13 +41,13 @@ const App: React.FC = () => {
             }
           >
             <Route index element={<DashboardPage />} />
-            <Route path="apps" element={<AppsPage />} />
-            <Route path="licenses" element={<LicensesPage />} />
-            <Route path="orders" element={<OrdersPage />} />
+            <Route path="app" element={<AppPage />} />
+            <Route path="license" element={<LicensePage />} />
+            <Route path="order" element={<OrderPage />} />
             <Route path="admin" element={<AdminPage />} />
-            <Route path="settings" element={<SettingsPage />} />
+            <Route path="swagger" element={<SwaggerPage />} />
             <Route path="payment/alipay" element={<AlipayPage />} />
-            <Route path="plans" element={<PlansPage />} />
+            <Route path="plan" element={<PlanPage />} />
           </Route>
         </Routes>
       </AntApp>

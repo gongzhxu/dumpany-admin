@@ -12,7 +12,7 @@ interface App {
   updatedAt: string;
 }
 
-const AppsPage: React.FC = () => {
+const AppPage: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<App[]>([]);
   const [loading, setLoading] = useState(false);
@@ -144,4 +144,4 @@ const AppsPage: React.FC = () => {
   );
 };
 
-export default AppsPage;
+export default AppPage;
