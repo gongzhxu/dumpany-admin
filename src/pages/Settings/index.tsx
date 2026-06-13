@@ -29,7 +29,7 @@ const SwaggerAccounts: React.FC = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res: any = await request.get('/settings/swagger-accounts');
+      const res: any = await request.get('/settings/swagger-account/list');
       setData(res.data);
     } catch (err: any) {
       message.error(err.message);
@@ -58,10 +58,10 @@ const SwaggerAccounts: React.FC = () => {
       if (editRecord) {
         const body: any = { username: values.username, remark: values.remark || '' };
         if (values.password) body.password = values.password;
-        await request.put(`/settings/swagger-accounts/${editRecord.id}`, body);
+        await request.put('/settings/swagger-account/update', { id: editRecord.id, ...body });
         message.success(t('settings.update_success'));
       } else {
-        await request.post('/settings/swagger-accounts', values);
+        await request.post('/settings/swagger-account/create', values);
         message.success(t('settings.create_success'));
       }
       setModalOpen(false);
@@ -75,7 +75,7 @@ const SwaggerAccounts: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await request.delete(`/settings/swagger-accounts/${id}`);
+      await request.delete('/settings/swagger-account/delete', { data: { id } });
       message.success(t('settings.delete_success'));
       fetchData();
     } catch (err: any) {

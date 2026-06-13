@@ -41,7 +41,7 @@ const AdminLayout: React.FC = () => {
 
   // 加载应用列表
   useEffect(() => {
-    request.get('/apps').then((res) => {
+    request.get('/app/list').then((res) => {
       setApps(res.data || []);
     }).catch(() => {});
   }, []);

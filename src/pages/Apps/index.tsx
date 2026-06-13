@@ -24,7 +24,7 @@ const AppsPage: React.FC = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await request.get('/apps');
+      const res = await request.get('/app/list');
       setData(res.data || []);
     } catch (err: any) {
       message.error(err.message || 'Failed to load');
@@ -54,10 +54,10 @@ const AppsPage: React.FC = () => {
     setSubmitting(true);
     try {
       if (editRecord) {
-        await request.put(`/apps/${editRecord.id}`, values);
+        await request.put('/app/update', { id: editRecord.id, ...values });
         message.success(t('apps.update_success'));
       } else {
-        await request.post('/apps', values);
+        await request.post('/app/create', values);
         message.success(t('apps.create_success'));
       }
       setModalOpen(false);
@@ -71,7 +71,7 @@ const AppsPage: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await request.delete(`/apps/${id}`);
+      await request.delete('/app/delete', { data: { id } });
       message.success(t('apps.delete_success'));
       fetchData();
     } catch (err: any) {

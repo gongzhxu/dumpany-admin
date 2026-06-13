@@ -36,7 +36,7 @@ const AdminsPage: React.FC = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res: any = await request.get('/admins');
+      const res: any = await request.get('/user/list');
       setData(res.data);
     } catch (err: any) {
       message.error(err.message);
@@ -50,7 +50,7 @@ const AdminsPage: React.FC = () => {
   const handleCreate = async (values: { username: string; password: string; nickname: string }) => {
     setCreateLoading(true);
     try {
-      await request.post('/admins', values);
+      await request.post('/user/create', values);
       message.success('Admin created');
       setModalOpen(false);
       form.resetFields();
@@ -64,7 +64,7 @@ const AdminsPage: React.FC = () => {
 
   const handleToggleDisable = async (id: number) => {
     try {
-      await request.put('/admins', { adminUserId: id });
+      await request.put('/user/disable', { adminUserId: id });
       message.success('Status updated');
       fetchData();
     } catch (err: any) {
@@ -76,7 +76,7 @@ const AdminsPage: React.FC = () => {
     if (!editRecord) return;
     setEditLoading(true);
     try {
-      await request.put('/admins', { adminUserId: editRecord.id, ...values });
+      await request.put('/user/update', { adminUserId: editRecord.id, ...values });
       message.success(t('admin.edit_success'));
       setEditModalOpen(false);
       fetchData();
@@ -90,7 +90,7 @@ const AdminsPage: React.FC = () => {
   const handleChangePassword = async (values: { password: string }) => {
     setPwdLoading(true);
     try {
-      await request.put('/admins', { adminUserId: pwdAdminId, ...values });
+      await request.put('/user/pwd/update', { adminUserId: pwdAdminId, ...values });
       message.success('Password updated');
       setPwdModalOpen(false);
       pwdForm.resetFields();

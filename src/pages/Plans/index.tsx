@@ -36,7 +36,7 @@ const PlansPage: React.FC = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res: any = await request.get('/plans');
+      const res: any = await request.get('/plan/list');
       setData(res.data);
     } catch (err: any) {
       message.error(err.message);
@@ -84,9 +84,9 @@ const PlansPage: React.FC = () => {
         featuresEn: values.featuresEn ? values.featuresEn.split('\n').filter((s: string) => s.trim()) : [],
       };
       if (editing && editing.id !== values.id) {
-        await request.delete(`/plans/${editing.id}`);
+        await request.delete('/plan/delete', { data: { id: editing.id } });
       }
-      await request.post('/plans', body);
+      await request.post('/plan/save', body);
       message.success('Plan saved');
       setModalOpen(false);
       fetchData();
@@ -99,7 +99,7 @@ const PlansPage: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await request.delete(`/plans/${id}`);
+      await request.delete('/plan/delete', { data: { id } });
       message.success('Plan deleted');
       fetchData();
     } catch (err: any) {

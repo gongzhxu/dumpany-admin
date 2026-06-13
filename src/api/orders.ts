@@ -15,11 +15,11 @@ export interface Order {
 
 const orderApi = {
   list: (params: { page: number; pageSize: number; keyword?: string; status?: string }) =>
-    request.get('/orders', { params }),
+    request.get('/order/list', { params }),
 
-  get: (id: string) => request.get(`/orders/${id}`),
+  get: (id: string) => request.get('/order/get', { params: { id } }),
 
-  refund: (id: string) => request.put(`/orders/${id}/refund`),
+  refund: (id: string) => request.put('/order/refund', { id }),
 };
 
 export default orderApi;
