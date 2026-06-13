@@ -14,7 +14,7 @@ interface Admin {
   username: string;
   nickname: string;
   status: number;
-  created_at: string;
+  createdAt: string;
 }
 
 const AdminPage: React.FC = () => {
@@ -88,6 +88,10 @@ const AdminPage: React.FC = () => {
   };
 
   const handleChangePassword = async (values: { password: string }) => {
+    if (!pwdAdminId) {
+      message.error('Admin ID is missing');
+      return;
+    }
     setPwdLoading(true);
     try {
       await request.put('/user/pwd/update', { adminUserId: pwdAdminId, ...values });

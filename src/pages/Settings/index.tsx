@@ -13,8 +13,8 @@ interface Account {
   id: number;
   username: string;
   remark: string;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const SwaggerAccounts: React.FC = () => {

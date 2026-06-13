@@ -111,7 +111,7 @@ const LicensesPage: React.FC = () => {
   };
 
   const columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
+    { title: 'ID', dataIndex: 'licenseId', key: 'licenseId', width: 60 },
     {
       title: t('license.licenseKey'),
       dataIndex: 'licenseKey',
@@ -242,7 +242,7 @@ const LicensesPage: React.FC = () => {
         <Table
           dataSource={data}
           columns={columns}
-          rowKey="id"
+          rowKey="licenseId"
           loading={loading}
           pagination={{
             current: page,

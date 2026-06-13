@@ -19,7 +19,7 @@ import request from '../../api/request';
 const { Header, Sider, Content } = Layout;
 
 interface AppOption {
-  id: string;
+  appId: string;
   name: string;
 }
 
@@ -142,7 +142,7 @@ const AdminLayout: React.FC = () => {
               placeholder={t('app.select_app')}
               options={[
                 { value: '', label: t('app.all_apps') },
-                ...apps.map((app) => ({ value: app.id, label: `${app.name} (${app.id})` })),
+                ...apps.map((app) => ({ value: app.appId, label: `${app.name} (${app.appId})` })),
               ]}
             />
             <Button type="text" onClick={toggleLang}>

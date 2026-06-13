@@ -9,8 +9,11 @@ export interface AdminInfo {
   id: number;
   username: string;
   nickname: string;
+  role: number;
   status: number;
-  created_at: string;
+  appId: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const authApi = {

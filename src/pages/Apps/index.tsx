@@ -116,7 +116,7 @@ const AppsPage: React.FC = () => {
         </Button>
       </div>
       <Card>
-        <Table columns={columns} dataSource={data} rowKey="id" loading={loading} pagination={false} />
+        <Table columns={columns} dataSource={data} rowKey="appId" loading={loading} pagination={false} />
       </Card>
       <Modal
         title={editRecord ? t('apps.edit_title') : t('apps.add_title')}

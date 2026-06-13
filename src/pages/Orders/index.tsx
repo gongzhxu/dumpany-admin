@@ -66,7 +66,7 @@ const OrdersPage: React.FC = () => {
   };
 
   const columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
+    { title: 'ID', dataIndex: 'orderId', key: 'orderId', width: 60 },
     {
       title: t('order.orderNo'),
       dataIndex: 'orderNo',
@@ -158,7 +158,7 @@ const OrdersPage: React.FC = () => {
         <Table
           dataSource={data}
           columns={columns}
-          rowKey="id"
+          rowKey="orderId"
           loading={loading}
           pagination={{
             current: page,
