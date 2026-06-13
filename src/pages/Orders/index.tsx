@@ -7,7 +7,7 @@ import {
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import { orderApi } from '../../api/orders';
+import orderApi from '../../api/orders';
 
 const { Title } = Typography;
 
@@ -45,7 +45,7 @@ const OrdersPage: React.FC = () => {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  const handleRefund = async (id: number) => {
+  const handleRefund = async (id: string) => {
     try {
       await orderApi.refund(id);
       message.success('Order refunded');
@@ -55,7 +55,7 @@ const OrdersPage: React.FC = () => {
     }
   };
 
-  const showDetail = async (id: number) => {
+  const showDetail = async (id: string) => {
     try {
       const res: any = await orderApi.get(id);
       setDetail(res.data);
@@ -195,7 +195,7 @@ const OrdersPage: React.FC = () => {
               {dayjs(detail.createdAt).format('YYYY-MM-DD HH:mm')}
             </Descriptions.Item>
             <Descriptions.Item label={t('order.paid')}>
-              {detail.paid_at ? dayjs(detail.paid_at).format('YYYY-MM-DD HH:mm') : '-'}
+              {detail.paidAt ? dayjs(detail.paidAt).format('YYYY-MM-DD HH:mm') : '-'}
             </Descriptions.Item>
           </Descriptions>
         )}

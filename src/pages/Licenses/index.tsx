@@ -7,7 +7,7 @@ import {
 import { PlusOutlined, SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import dayjs from 'dayjs';
-import { licenseApi } from '../../api/licenses';
+import licenseApi from '../../api/licenses';
 
 const { Title } = Typography;
 
@@ -24,7 +24,7 @@ const LicensesPage: React.FC = () => {
   const [statusFilter, setStatusFilter] = useState('');
   const [createModalOpen, setCreateModalOpen] = useState(false);
   const [renewModalOpen, setRenewModalOpen] = useState(false);
-  const [renewId, setRenewId] = useState<number | null>(null);
+  const [renewId, setRenewId] = useState<string | null>(null);
   const [detailOpen, setDetailOpen] = useState(false);
   const [detail, setDetail] = useState<License | null>(null);
   const [createLoading, setCreateLoading] = useState(false);
@@ -79,7 +79,7 @@ const LicensesPage: React.FC = () => {
     }
   };
 
-  const handleRevoke = async (id: number) => {
+  const handleRevoke = async (id: string) => {
     try {
       await licenseApi.revoke(id);
       message.success('License revoked');
@@ -89,7 +89,7 @@ const LicensesPage: React.FC = () => {
     }
   };
 
-  const showDetail = async (id: number) => {
+  const showDetail = async (id: string) => {
     try {
       const res: any = await licenseApi.get(id);
       setDetail(res.data);
@@ -340,7 +340,7 @@ const LicensesPage: React.FC = () => {
             <Descriptions.Item label={t('license.expiresAt')}>
               {dayjs.unix(detail.expiresAt).format('YYYY-MM-DD HH:mm')}
             </Descriptions.Item>
-            <Descriptions.Item label="Machine ID" span={2}>{detail.machine_id || '-'}</Descriptions.Item>
+            <Descriptions.Item label="Machine ID" span={2}>{detail.machineId || '-'}</Descriptions.Item>
             <Descriptions.Item label="Signature" span={2} style={{ wordBreak: 'break-all' }}>
               {detail.signature}
             </Descriptions.Item>

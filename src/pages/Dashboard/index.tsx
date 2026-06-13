@@ -7,7 +7,7 @@ import {
   ThunderboltOutlined,
 } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
-import { dashboardApi } from '../../api/dashboard';
+import dashboardApi from '../../api/dashboard';
 import type { DashboardStats } from '../../api/dashboard';
 
 const { Title } = Typography;
