@@ -66,7 +66,7 @@ const PlansPage: React.FC = () => {
       price_cny: record.price_cny,
       price_usd: record.price_usd,
       validity_days: record.validity_days,
-      max_devices: record.max_devices,
+      max_devices: record.maxDevices,
       features_zh: record.features_zh?.join('\n') || '',
       features_en: record.features_en?.join('\n') || '',
       active: record.active,
@@ -115,7 +115,7 @@ const PlansPage: React.FC = () => {
     { title: '价格(CNY)', dataIndex: 'price_cny', key: 'price_cny', width: 100, render: (v: number) => `¥${(v / 100).toFixed(2)}` },
     { title: '价格(USD)', dataIndex: 'price_usd', key: 'price_usd', width: 100, render: (v: number) => `$${(v / 100).toFixed(2)}` },
     { title: '天数', dataIndex: 'validity_days', key: 'validity_days', width: 60, render: (v: number) => v === 0 ? '永久' : v },
-    { title: '设备', dataIndex: 'max_devices', key: 'max_devices', width: 60 },
+    { title: '设备', dataIndex: 'maxDevices', key: 'maxDevices', width: 60 },
     {
       title: '状态', dataIndex: 'active', key: 'active', width: 70,
       render: (v: boolean) => <Tag color={v ? 'green' : 'red'}>{v ? '启用' : '禁用'}</Tag>,
@@ -175,7 +175,7 @@ const PlansPage: React.FC = () => {
             <Form.Item name="validity_days" label="天数" rules={[{ required: true }]}>
               <InputNumber min={0} />
             </Form.Item>
-            <Form.Item name="max_devices" label="设备数" rules={[{ required: true }]}>
+            <Form.Item name="maxDevices" label="设备数" rules={[{ required: true }]}>
               <InputNumber min={1} max={99} />
             </Form.Item>
           </Space>

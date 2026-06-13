@@ -10,6 +10,8 @@ request.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+  const selectedAppId = localStorage.getItem('selectedAppId') || '';
+  config.headers['X-APP-ID'] = selectedAppId;
   return config;
 });
 

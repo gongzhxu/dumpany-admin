@@ -1,11 +1,12 @@
-import React from 'react';
-import { Layout, Menu, Dropdown, Button, Space } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Menu, Dropdown, Button, Space, Select } from 'antd';
 import {
   DashboardOutlined,
   KeyOutlined,
   ShoppingCartOutlined,
   UserOutlined,
   DollarOutlined,
+  AppstoreOutlined,
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -13,25 +14,46 @@ import {
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../hooks/useAuth';
+import request from '../../api/request';
 
 const { Header, Sider, Content } = Layout;
+
+interface AppOption {
+  id: string;
+  name: string;
+}
 
 const AdminLayout: React.FC = () => {
   const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const location = useLocation();
   const { admin, logout } = useAuth();
-  const [collapsed, setCollapsed] = React.useState(false);
+  const [collapsed, setCollapsed] = useState(false);
+  const [apps, setApps] = useState<AppOption[]>([]);
+  const [selectedApp, setSelectedApp] = useState<string>(() => localStorage.getItem('selectedAppId') || '');
 
   // 根据当前路径自动展开子菜单
-  const [openKeys, setOpenKeys] = React.useState<string[]>(() => {
+  const [openKeys, setOpenKeys] = useState<string[]>(() => {
     const path = location.pathname;
     if (path.startsWith('/payment')) return ['payment'];
     return [];
   });
 
+  // 加载应用列表
+  useEffect(() => {
+    request.get('/apps').then((res) => {
+      setApps(res.data || []);
+    }).catch(() => {});
+  }, []);
+
   const onOpenChange = (keys: string[]) => {
     setOpenKeys(keys);
+  };
+
+  const handleAppChange = (value: string) => {
+    setSelectedApp(value);
+    localStorage.setItem('selectedAppId', value);
+    window.location.reload();
   };
 
   const menuItems = [
@@ -40,6 +62,7 @@ const AdminLayout: React.FC = () => {
     { key: '/orders', icon: <ShoppingCartOutlined />, label: t('app.orders') },
     { key: '/plans', icon: <DollarOutlined />, label: '套餐管理' },
     { key: '/admins', icon: <UserOutlined />, label: t('app.admins') },
+    { key: '/apps', icon: <AppstoreOutlined />, label: t('app.apps') },
     {
       key: 'payment',
       icon: <DollarOutlined />,
@@ -112,6 +135,16 @@ const AdminLayout: React.FC = () => {
             />
           </div>
           <div className="header-right">
+            <Select
+              value={selectedApp}
+              onChange={handleAppChange}
+              style={{ width: 160, marginRight: 12 }}
+              placeholder={t('app.select_app')}
+              options={[
+                { value: '', label: t('app.all_apps') },
+                ...apps.map((app) => ({ value: app.id, label: `${app.name} (${app.id})` })),
+              ]}
+            />
             <Button type="text" onClick={toggleLang}>
               {i18n.language === 'zh' ? 'EN' : '中文'}
             </Button>

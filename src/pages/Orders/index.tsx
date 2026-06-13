@@ -68,9 +68,9 @@ const OrdersPage: React.FC = () => {
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
     {
-      title: t('order.order_no'),
-      dataIndex: 'order_no',
-      key: 'order_no',
+      title: t('order.orderNo'),
+      dataIndex: 'orderNo',
+      key: 'orderNo',
       render: (text: string, record: Order) => (
         <Button type="link" size="small" onClick={() => showDetail(record.id)}>{text}</Button>
       ),
@@ -93,15 +93,15 @@ const OrdersPage: React.FC = () => {
       ),
     },
     {
-      title: t('license.license_key'),
-      dataIndex: 'license_key',
-      key: 'license_key',
+      title: t('license.licenseKey'),
+      dataIndex: 'licenseKey',
+      key: 'licenseKey',
       ellipsis: true,
     },
     {
       title: t('settings.created_at'),
-      dataIndex: 'created_at',
-      key: 'created_at',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       width: 150,
       render: (text: string) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-'),
     },
@@ -132,7 +132,7 @@ const OrdersPage: React.FC = () => {
         <div className="table-toolbar">
           <div className="toolbar-left">
             <Input
-              placeholder={t('order.order_no')}
+              placeholder={t('order.orderNo')}
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               style={{ width: 200 }}
@@ -174,7 +174,7 @@ const OrdersPage: React.FC = () => {
       </Card>
 
       <Modal
-        title={t('order.order_no')}
+        title={t('order.orderNo')}
         open={detailOpen}
         onCancel={() => setDetailOpen(false)}
         footer={null}
@@ -183,16 +183,16 @@ const OrdersPage: React.FC = () => {
         {detail && (
           <Descriptions column={2} size="small" bordered>
             <Descriptions.Item label="ID">{detail.id}</Descriptions.Item>
-            <Descriptions.Item label={t('order.order_no')}>{detail.order_no}</Descriptions.Item>
+            <Descriptions.Item label={t('order.orderNo')}>{detail.orderNo}</Descriptions.Item>
             <Descriptions.Item label={t('license.subscriber')} span={2}>{detail.subscriber}</Descriptions.Item>
             <Descriptions.Item label={t('order.product')}>{detail.product}</Descriptions.Item>
             <Descriptions.Item label={t('order.amount')}>{detail.currency} {detail.amount.toFixed(2)}</Descriptions.Item>
             <Descriptions.Item label={t('app.status')}>
               <Tag color={statusColorMap[detail.status]}>{detail.status}</Tag>
             </Descriptions.Item>
-            <Descriptions.Item label={t('license.license_key')} span={2}>{detail.license_key || '-'}</Descriptions.Item>
+            <Descriptions.Item label={t('license.licenseKey')} span={2}>{detail.licenseKey || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('order.created_at')}>
-              {dayjs(detail.created_at).format('YYYY-MM-DD HH:mm')}
+              {dayjs(detail.createdAt).format('YYYY-MM-DD HH:mm')}
             </Descriptions.Item>
             <Descriptions.Item label={t('order.paid')}>
               {detail.paid_at ? dayjs(detail.paid_at).format('YYYY-MM-DD HH:mm') : '-'}

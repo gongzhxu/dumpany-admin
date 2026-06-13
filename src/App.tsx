@@ -14,6 +14,7 @@ import AdminsPage from './pages/Admins';
 import SettingsPage from './pages/Settings';
 import AlipayPage from './pages/Payment/Alipay';
 import PlansPage from './pages/Plans';
+import AppsPage from './pages/Apps';
 import { useAuth } from './hooks/useAuth';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -40,6 +41,7 @@ const App: React.FC = () => {
             }
           >
             <Route index element={<DashboardPage />} />
+            <Route path="apps" element={<AppsPage />} />
             <Route path="licenses" element={<LicensesPage />} />
             <Route path="orders" element={<OrdersPage />} />
             <Route path="admins" element={<AdminsPage />} />

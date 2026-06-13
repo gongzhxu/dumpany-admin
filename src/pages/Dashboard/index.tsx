@@ -44,7 +44,7 @@ const DashboardPage: React.FC = () => {
           <Card hoverable>
             <Statistic
               title={t('dashboard.total_licenses')}
-              value={stats?.total_licenses || 0}
+              value={stats?.totalLicenses || 0}
               prefix={<KeyOutlined style={{ color: '#1890ff' }} />}
               valueStyle={{ color: '#1890ff', fontWeight: 600 }}
             />
@@ -54,7 +54,7 @@ const DashboardPage: React.FC = () => {
           <Card hoverable>
             <Statistic
               title={t('dashboard.active_licenses')}
-              value={stats?.active_licenses || 0}
+              value={stats?.activeLicenses || 0}
               prefix={<ThunderboltOutlined style={{ color: '#52c41a' }} />}
               valueStyle={{ color: '#52c41a', fontWeight: 600 }}
             />
@@ -64,7 +64,7 @@ const DashboardPage: React.FC = () => {
           <Card hoverable>
             <Statistic
               title={t('dashboard.total_orders')}
-              value={stats?.total_orders || 0}
+              value={stats?.totalOrders || 0}
               prefix={<ShoppingCartOutlined style={{ color: '#faad14' }} />}
               valueStyle={{ color: '#faad14', fontWeight: 600 }}
             />
@@ -74,7 +74,7 @@ const DashboardPage: React.FC = () => {
           <Card hoverable>
             <Statistic
               title={t('dashboard.total_revenue')}
-              value={stats?.total_revenue || 0}
+              value={stats?.totalRevenue || 0}
               precision={2}
               prefix={<DollarOutlined style={{ color: '#722ed1' }} />}
               valueStyle={{ color: '#722ed1', fontWeight: 600 }}

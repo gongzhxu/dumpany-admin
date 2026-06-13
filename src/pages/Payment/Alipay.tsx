@@ -49,10 +49,10 @@ const AlipayConfig: React.FC = () => {
       let vals: Record<string, string> = {};
       if (editing) {
         vals = {
-          app_id: editing.app_id || '',
-          private_key: editing.private_key || '',
-          gateway_url: editing.gateway_url || 'https://openapi.alipay.com/gateway.do',
-          public_key: editing.public_key || '',
+          app_id: editing.appId || '',
+          private_key: editing.privateKey || '',
+          gateway_url: editing.gatewayUrl || 'https://openapi.alipay.com/gateway.do',
+          public_key: editing.publicKey || '',
         };
       } else {
         vals = { gateway_url: 'https://openapi.alipay.com/gateway.do' };
@@ -83,19 +83,19 @@ const AlipayConfig: React.FC = () => {
   };
 
   const columns = [
-    { title: t('payment.app_id'), dataIndex: 'app_id', key: 'app_id', render: (text: string) => <Tag color="blue">{text}</Tag> },
+    { title: t('payment.appId'), dataIndex: 'appId', key: 'appId', render: (text: string) => <Tag color="blue">{text}</Tag> },
     {
-      title: t('payment.private_key'),
-      dataIndex: 'private_key',
-      key: 'private_key',
+      title: t('payment.privateKey'),
+      dataIndex: 'privateKey',
+      key: 'privateKey',
       width: 160,
       render: (text: string) => text ? <Typography.Text copyable style={{ width: 140, display: 'inline-block' }} ellipsis>{text.substring(0, 60)}</Typography.Text> : '-',
     },
-    { title: t('payment.gateway_url'), dataIndex: 'gateway_url', key: 'gateway_url', ellipsis: true },
+    { title: t('payment.gatewayUrl'), dataIndex: 'gatewayUrl', key: 'gatewayUrl', ellipsis: true },
     {
-      title: t('payment.public_key'),
-      dataIndex: 'public_key',
-      key: 'public_key',
+      title: t('payment.publicKey'),
+      dataIndex: 'publicKey',
+      key: 'publicKey',
       width: 160,
       render: (text: string) => text ? <Typography.Text copyable style={{ width: 140, display: 'inline-block' }} ellipsis>{text.substring(0, 60)}</Typography.Text> : '-',
     },
@@ -126,7 +126,7 @@ const AlipayConfig: React.FC = () => {
         <Table
           dataSource={data}
           columns={columns}
-          rowKey="app_id"
+          rowKey="appId"
           loading={loading}
           pagination={false}
           size="small"
@@ -145,26 +145,26 @@ const AlipayConfig: React.FC = () => {
           onValuesChange={() => {
             setCurr({ ...form.getFieldsValue() });
           }}>
-          <Form.Item name="app_id" label={t('payment.app_id')}
-            rules={[{ required: true, message: t('payment.app_id_required') }]}>
-            <Input placeholder={t('payment.app_id_placeholder')}
-              style={{ color: init.app_id !== curr.app_id ? undefined : '#bbb' }} />
+          <Form.Item name="appId" label={t('payment.appId')}
+            rules={[{ required: true, message: t('payment.appId_required') }]}>
+            <Input placeholder={t('payment.appId_placeholder')}
+              style={{ color: init.appId !== curr.appId ? undefined : '#bbb' }} />
           </Form.Item>
 
-          <Form.Item name="private_key" label={t('payment.private_key')}
-            rules={editing ? [] : [{ required: true, message: t('payment.private_key_required') }]}>
-            <TextArea rows={6} placeholder={editing ? t('payment.private_key_edit_placeholder') : t('payment.private_key_placeholder')}
-              style={{ color: init.private_key !== curr.private_key ? undefined : '#bbb' }} />
+          <Form.Item name="privateKey" label={t('payment.privateKey')}
+            rules={editing ? [] : [{ required: true, message: t('payment.privateKey_required') }]}>
+            <TextArea rows={6} placeholder={editing ? t('payment.privateKey_edit_placeholder') : t('payment.privateKey_placeholder')}
+              style={{ color: init.privateKey !== curr.privateKey ? undefined : '#bbb' }} />
           </Form.Item>
 
-          <Form.Item name="gateway_url" label={t('payment.gateway_url')}>
-            <Input placeholder={t('payment.gateway_url_placeholder')}
-              style={{ color: init.gateway_url !== curr.gateway_url ? undefined : '#bbb' }} />
+          <Form.Item name="gatewayUrl" label={t('payment.gatewayUrl')}>
+            <Input placeholder={t('payment.gatewayUrl_placeholder')}
+              style={{ color: init.gatewayUrl !== curr.gatewayUrl ? undefined : '#bbb' }} />
           </Form.Item>
 
-          <Form.Item name="public_key" label={t('payment.public_key')}>
-            <TextArea rows={4} placeholder={t('payment.public_key_placeholder')}
-              style={{ color: init.public_key !== curr.public_key ? undefined : '#bbb' }} />
+          <Form.Item name="publicKey" label={t('payment.publicKey')}>
+            <TextArea rows={4} placeholder={t('payment.publicKey_placeholder')}
+              style={{ color: init.publicKey !== curr.publicKey ? undefined : '#bbb' }} />
           </Form.Item>
 
           <Form.Item>

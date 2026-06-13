@@ -113,9 +113,9 @@ const LicensesPage: React.FC = () => {
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
     {
-      title: t('license.license_key'),
-      dataIndex: 'license_key',
-      key: 'license_key',
+      title: t('license.licenseKey'),
+      dataIndex: 'licenseKey',
+      key: 'licenseKey',
       ellipsis: true,
       render: (text: string, record: License) => (
         <a onClick={() => showDetail(record.id)}>{text}</a>
@@ -141,23 +141,23 @@ const LicensesPage: React.FC = () => {
       render: (text: string) => t(`license.${text}`),
     },
     {
-      title: t('license.issued_at'),
-      dataIndex: 'issued_at',
-      key: 'issued_at',
+      title: t('license.issuedAt'),
+      dataIndex: 'issuedAt',
+      key: 'issuedAt',
       width: 160,
       render: (val: number) => dayjs.unix(val).format('YYYY-MM-DD HH:mm'),
     },
     {
-      title: t('license.expires_at'),
-      dataIndex: 'expires_at',
-      key: 'expires_at',
+      title: t('license.expiresAt'),
+      dataIndex: 'expiresAt',
+      key: 'expiresAt',
       width: 160,
       render: (val: number) => (val ? dayjs.unix(val).format('YYYY-MM-DD HH:mm') : '-'),
     },
     {
       title: t('settings.created_at'),
-      dataIndex: 'created_at',
-      key: 'created_at',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       width: 170,
       render: (text: string) => (text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-'),
     },
@@ -207,7 +207,7 @@ const LicensesPage: React.FC = () => {
         <div className="table-toolbar">
           <div className="toolbar-left">
             <Input
-              placeholder={t('license.license_key')}
+              placeholder={t('license.licenseKey')}
               value={keyword}
               onChange={(e) => setKeyword(e.target.value)}
               style={{ width: 200 }}
@@ -281,7 +281,7 @@ const LicensesPage: React.FC = () => {
               <Select.Option value="pro">{t('license.pro')}</Select.Option>
             </Select>
           </Form.Item>
-          <Form.Item name="max_devices" label={t('license.max_devices')} initialValue={1} rules={[{ required: true }]}>
+          <Form.Item name="maxDevices" label={t('license.maxDevices')} initialValue={1} rules={[{ required: true }]}>
             <InputNumber min={1} max={99} style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item name="duration_days" label={t('license.duration_days')} initialValue={365} rules={[{ required: true }]}>
@@ -317,7 +317,7 @@ const LicensesPage: React.FC = () => {
 
       {/* Detail Modal */}
       <Modal
-        title={t('license.license_key')}
+        title={t('license.licenseKey')}
         open={detailOpen}
         onCancel={() => setDetailOpen(false)}
         footer={null}
@@ -327,18 +327,18 @@ const LicensesPage: React.FC = () => {
           <Descriptions column={2} size="small" bordered>
             <Descriptions.Item label="ID">{detail.id}</Descriptions.Item>
             <Descriptions.Item label={t('license.type')}>{t(`license.${detail.type}`)}</Descriptions.Item>
-            <Descriptions.Item label={t('license.license_key')} span={2}>{detail.license_key}</Descriptions.Item>
+            <Descriptions.Item label={t('license.licenseKey')} span={2}>{detail.licenseKey}</Descriptions.Item>
             <Descriptions.Item label={t('license.subscriber')} span={2}>{detail.subscriber}</Descriptions.Item>
             <Descriptions.Item label={t('license.tier')}>{t(`license.${detail.tier}`)}</Descriptions.Item>
-            <Descriptions.Item label={t('license.max_devices')}>{detail.max_devices}</Descriptions.Item>
+            <Descriptions.Item label={t('license.maxDevices')}>{detail.maxDevices}</Descriptions.Item>
             <Descriptions.Item label={t('app.status')}>
               <Tag color={statusColorMap[detail.status]}>{detail.status}</Tag>
             </Descriptions.Item>
-            <Descriptions.Item label={t('license.issued_at')}>
-              {dayjs.unix(detail.issued_at).format('YYYY-MM-DD HH:mm')}
+            <Descriptions.Item label={t('license.issuedAt')}>
+              {dayjs.unix(detail.issuedAt).format('YYYY-MM-DD HH:mm')}
             </Descriptions.Item>
-            <Descriptions.Item label={t('license.expires_at')}>
-              {dayjs.unix(detail.expires_at).format('YYYY-MM-DD HH:mm')}
+            <Descriptions.Item label={t('license.expiresAt')}>
+              {dayjs.unix(detail.expiresAt).format('YYYY-MM-DD HH:mm')}
             </Descriptions.Item>
             <Descriptions.Item label="Machine ID" span={2}>{detail.machine_id || '-'}</Descriptions.Item>
             <Descriptions.Item label="Signature" span={2} style={{ wordBreak: 'break-all' }}>

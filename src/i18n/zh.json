@@ -10,6 +10,9 @@
     "payment": "支付管理",
     "alipay": "支付宝",
     "settings": "Swagger 管理",
+    "apps": "应用配置",
+    "all_apps": "全部应用",
+    "select_app": "切换应用",
     "username": "用户名",
     "password": "密码",
     "submit": "提交",
@@ -138,5 +141,24 @@
     "change_password_title": "修改密码",
     "new_password": "新密码",
     "password_rule": "密码至少 6 个字符"
+  },
+  "apps": {
+    "title": "应用配置",
+    "app_id": "应用 ID",
+    "name": "应用名称",
+    "description": "描述",
+    "add_app": "新增应用",
+    "add_title": "新增应用",
+    "edit_title": "编辑应用",
+    "name_placeholder": "请输入应用名称",
+    "description_placeholder": "请输入描述",
+    "create_success": "创建成功",
+    "update_success": "更新成功",
+    "delete_success": "删除成功",
+    "delete_confirm": "确认删除此应用？",
+    "cannot_delete_default": "默认应用不可删除",
+    "save_failed": "操作失败",
+    "created_at": "创建时间",
+    "updated_at": "修改时间"
   }
 }

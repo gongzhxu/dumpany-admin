@@ -64,7 +64,7 @@ const AdminsPage: React.FC = () => {
 
   const handleToggleDisable = async (id: number) => {
     try {
-      await request.put(`/admins/${id}/disable`);
+      await request.put('/admins', { adminUserId: id });
       message.success('Status updated');
       fetchData();
     } catch (err: any) {
@@ -76,7 +76,7 @@ const AdminsPage: React.FC = () => {
     if (!editRecord) return;
     setEditLoading(true);
     try {
-      await request.put(`/admins/${editRecord.id}`, values);
+      await request.put('/admins', { adminUserId: editRecord.id, ...values });
       message.success(t('admin.edit_success'));
       setEditModalOpen(false);
       fetchData();
@@ -90,7 +90,7 @@ const AdminsPage: React.FC = () => {
   const handleChangePassword = async (values: { password: string }) => {
     setPwdLoading(true);
     try {
-      await request.put(`/admins/${pwdAdminId}`, values);
+      await request.put('/admins', { adminUserId: pwdAdminId, ...values });
       message.success('Password updated');
       setPwdModalOpen(false);
       pwdForm.resetFields();
@@ -118,8 +118,8 @@ const AdminsPage: React.FC = () => {
     },
     {
       title: t('settings.created_at'),
-      dataIndex: 'created_at',
-      key: 'created_at',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
       width: 170,
       render: (text: string) => text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-',
     },

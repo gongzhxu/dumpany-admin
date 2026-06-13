@@ -10,6 +10,9 @@
     "payment": "Payment",
     "alipay": "Alipay",
     "settings": "Swagger",
+    "apps": "Apps",
+    "all_apps": "All Apps",
+    "select_app": "Switch App",
     "username": "Username",
     "password": "Password",
     "submit": "Submit",
@@ -137,5 +140,24 @@
     "change_password_title": "Change Password",
     "new_password": "New Password",
     "password_rule": "Password must be at least 6 characters"
+  },
+  "apps": {
+    "title": "App Config",
+    "app_id": "App ID",
+    "name": "App Name",
+    "description": "Description",
+    "add_app": "Add App",
+    "add_title": "Add New App",
+    "edit_title": "Edit App",
+    "name_placeholder": "Enter app name",
+    "description_placeholder": "Enter description",
+    "create_success": "Created successfully",
+    "update_success": "Updated successfully",
+    "delete_success": "Deleted successfully",
+    "delete_confirm": "Are you sure to delete this app?",
+    "cannot_delete_default": "Cannot delete default app",
+    "save_failed": "Operation failed",
+    "created_at": "Created At",
+    "updated_at": "Updated At"
   }
 }
