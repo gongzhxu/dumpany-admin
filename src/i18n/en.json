@@ -50,12 +50,8 @@
   },
   "license": {
     "title": "License Management",
-    "license_key": "License Key",
     "subscriber": "Subscriber",
     "tier": "Tier",
-    "max_devices": "Max Devices",
-    "issued_at": "Issued At",
-    "expires_at": "Expires At",
     "duration_days": "Duration (days)",
     "generate": "Generate License",
     "renew": "Renew",
@@ -68,7 +64,12 @@
     "standard": "Standard",
     "pro": "Pro",
     "trial": "Trial",
-    "paid": "Paid"
+    "paid": "Paid",
+    "licenseKey": "License Key",
+    "expiresAt": "Expires At",
+    "issuedAt": "Issued At",
+    "maxDevices": "Max Devices",
+    "type": "Type"
   },
   "order": {
     "title": "Order Management",
