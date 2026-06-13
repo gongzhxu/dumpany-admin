@@ -6,7 +6,7 @@
     "dashboard": "Dashboard",
     "licenses": "Licenses",
     "orders": "Orders",
-    "admins": "Admins",
+    "admin": "Admin",
     "payment": "Payment",
     "alipay": "Alipay",
     "settings": "Swagger",
@@ -121,6 +121,7 @@
     "save": "Save",
     "save_success": "Saved successfully",
     "save_failed": "Save failed",
+    "swagger_open": "Open Swagger",
     "not_configured": "Alipay not configured",
     "configure": "Configure Now"
   },

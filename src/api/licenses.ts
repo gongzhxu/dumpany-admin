@@ -1,7 +1,7 @@
 import request from './request';
 
 export interface License {
-  id: string;
+  licenseId: string;
   licenseKey: string;
   type: string;
   subscriber: string;

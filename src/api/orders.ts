@@ -1,7 +1,7 @@
 import request from './request';
 
 export interface Order {
-  id: string;
+  orderId: string;
   orderNo: string;
   subscriber: string;
   product: string;
@@ -17,9 +17,9 @@ const orderApi = {
   list: (params: { page: number; pageSize: number; keyword?: string; status?: string }) =>
     request.get('/order/list', { params }),
 
-  get: (id: string) => request.get('/order/get', { params: { id } }),
+  get: (id: string) => request.get('/order/get', { params: { orderId: id } }),
 
-  refund: (id: string) => request.put('/order/refund', { id }),
+  refund: (id: string) => request.put('/order/refund', { orderId: id }),
 };
 
 export default orderApi;

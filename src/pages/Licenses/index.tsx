@@ -118,7 +118,7 @@ const LicensesPage: React.FC = () => {
       key: 'licenseKey',
       ellipsis: true,
       render: (text: string, record: License) => (
-        <a onClick={() => showDetail(record.id)}>{text}</a>
+        <a onClick={() => showDetail(record.licenseId)}>{text}</a>
       ),
     },
     {
@@ -176,13 +176,13 @@ const LicensesPage: React.FC = () => {
       width: 160,
       render: (_: any, record: License) => (
         <Space>
-          <Button size="small" onClick={() => { setRenewId(record.id); setRenewModalOpen(true); }}>
+          <Button size="small" onClick={() => { setRenewId(record.licenseId); setRenewModalOpen(true); }}>
             {t('license.renew')}
           </Button>
           {record.status === 'active' && (
             <Popconfirm
               title={t('license.revoke_confirm')}
-              onConfirm={() => handleRevoke(record.id)}
+              onConfirm={() => handleRevoke(record.licenseId)}
             >
               <Button size="small" color="danger" variant="outlined">
                 {t('license.revoke')}
@@ -325,7 +325,7 @@ const LicensesPage: React.FC = () => {
       >
         {detail && (
           <Descriptions column={2} size="small" bordered>
-            <Descriptions.Item label="ID">{detail.id}</Descriptions.Item>
+            <Descriptions.Item label="ID">{detail.licenseId}</Descriptions.Item>
             <Descriptions.Item label={t('license.type')}>{t(`license.${detail.type}`)}</Descriptions.Item>
             <Descriptions.Item label={t('license.licenseKey')} span={2}>{detail.licenseKey}</Descriptions.Item>
             <Descriptions.Item label={t('license.subscriber')} span={2}>{detail.subscriber}</Descriptions.Item>

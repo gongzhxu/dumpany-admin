@@ -10,7 +10,7 @@ import LoginPage from './pages/Login';
 import DashboardPage from './pages/Dashboard';
 import LicensesPage from './pages/Licenses';
 import OrdersPage from './pages/Orders';
-import AdminsPage from './pages/Admins';
+import AdminPage from './pages/Admin';
 import SettingsPage from './pages/Settings';
 import AlipayPage from './pages/Payment/Alipay';
 import PlansPage from './pages/Plans';
@@ -44,7 +44,7 @@ const App: React.FC = () => {
             <Route path="apps" element={<AppsPage />} />
             <Route path="licenses" element={<LicensesPage />} />
             <Route path="orders" element={<OrdersPage />} />
-            <Route path="admins" element={<AdminsPage />} />
+            <Route path="admin" element={<AdminPage />} />
             <Route path="settings" element={<SettingsPage />} />
             <Route path="payment/alipay" element={<AlipayPage />} />
             <Route path="plans" element={<PlansPage />} />

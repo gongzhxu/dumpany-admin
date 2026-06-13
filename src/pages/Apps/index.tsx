@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
 interface App {
-  id: string;
+  appId: string;
   name: string;
   description: string;
   createdAt: string;
@@ -45,7 +45,7 @@ const AppsPage: React.FC = () => {
 
   const openEdit = (record: App) => {
     setEditRecord(record);
-    form.setFieldsValue(record);
+    form.setFieldsValue({ appId: record.appId, name: record.name, description: record.description });
     setModalOpen(true);
   };
 
@@ -54,7 +54,7 @@ const AppsPage: React.FC = () => {
     setSubmitting(true);
     try {
       if (editRecord) {
-        await request.put('/app/update', { id: editRecord.id, ...values });
+        await request.put('/app/update', { appId: editRecord.appId, ...values });
         message.success(t('apps.update_success'));
       } else {
         await request.post('/app/create', values);
@@ -71,7 +71,7 @@ const AppsPage: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await request.delete('/app/delete', { data: { id } });
+      await request.delete('/app/delete', { data: { appId: id } });
       message.success(t('apps.delete_success'));
       fetchData();
     } catch (err: any) {
@@ -80,7 +80,7 @@ const AppsPage: React.FC = () => {
   };
 
   const columns = [
-    { title: t('apps.appId'), dataIndex: 'id', key: 'id', width: 120 },
+    { title: t('apps.appId'), dataIndex: 'appId', key: 'appId', width: 120 },
     { title: t('apps.name'), dataIndex: 'name', key: 'name', width: 200 },
     { title: t('apps.description'), dataIndex: 'description', key: 'description', ellipsis: true },
     { title: t('apps.createdAt'), dataIndex: 'createdAt', key: 'createdAt', width: 180 },
@@ -94,11 +94,11 @@ const AppsPage: React.FC = () => {
             {t('app.edit')}
           </Button>
           <Popconfirm
-            title={record.id === '1' ? t('apps.cannot_delete_default') : t('apps.delete_confirm')}
-            onConfirm={() => handleDelete(record.id)}
-            disabled={record.id === '1'}
+            title={record.appId === 'dumpany' ? t('apps.cannot_delete_default') : t('apps.delete_confirm')}
+            onConfirm={() => handleDelete(record.appId)}
+            disabled={record.appId === 'dumpany'}
           >
-            <Button type="link" size="small" danger disabled={record.id === '1'}>
+            <Button type="link" size="small" danger disabled={record.appId === 'dumpany'}>
               {t('app.delete')}
             </Button>
           </Popconfirm>
@@ -128,7 +128,7 @@ const AppsPage: React.FC = () => {
       >
         <Form form={form} layout="vertical" preserve={false}>
           {!editRecord && (
-            <Form.Item name="id" label={t('apps.appId')} rules={[{ required: true, message: 'App ID is required' }]}>
+            <Form.Item name="appId" label={t('apps.appId')} rules={[{ required: true, message: 'App ID is required' }]}>
               <Input placeholder="e.g. my-app" />
             </Form.Item>
           )}

@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import {
   Table, Button, Modal, Form, Input, message, Typography, Card, Space, Popconfirm,
 } from 'antd';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, LinkOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
@@ -58,7 +58,7 @@ const SwaggerAccounts: React.FC = () => {
       if (editRecord) {
         const body: any = { username: values.username, remark: values.remark || '' };
         if (values.password) body.password = values.password;
-        await request.put('/settings/swagger-account/update', { id: editRecord.id, ...body });
+        await request.put('/settings/swagger-account/update', { swaggerAccountId: editRecord.id, ...body });
         message.success(t('settings.update_success'));
       } else {
         await request.post('/settings/swagger-account/create', values);
@@ -75,7 +75,7 @@ const SwaggerAccounts: React.FC = () => {
 
   const handleDelete = async (id: number) => {
     try {
-      await request.delete('/settings/swagger-account/delete', { data: { id } });
+      await request.delete('/settings/swagger-account/delete', { data: { swaggerAccountId: id } });
       message.success(t('settings.delete_success'));
       fetchData();
     } catch (err: any) {
@@ -117,9 +117,14 @@ const SwaggerAccounts: React.FC = () => {
     <div className="page-container">
       <div className="page-header">
         <Title level={4}><img src="/swagger-icon.svg" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: -3 }} alt="" />{t('settings.swagger_title')}</Title>
-        <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
-          {t('settings.add_account')}
-        </Button>
+        <Space>
+          <Button icon={<LinkOutlined />} onClick={() => window.open('/swagger/', '_blank')}>
+            {t('settings.swagger_open')}
+          </Button>
+          <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
+            {t('settings.add_account')}
+          </Button>
+        </Space>
       </div>
 
       <Card>

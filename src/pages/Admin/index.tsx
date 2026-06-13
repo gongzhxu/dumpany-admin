@@ -17,7 +17,7 @@ interface Admin {
   created_at: string;
 }
 
-const AdminsPage: React.FC = () => {
+const AdminPage: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<Admin[]>([]);
   const [loading, setLoading] = useState(false);
@@ -254,4 +254,4 @@ const AdminsPage: React.FC = () => {
   );
 };
 
-export default AdminsPage;
+export default AdminPage;

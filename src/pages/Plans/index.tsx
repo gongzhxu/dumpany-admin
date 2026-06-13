@@ -8,7 +8,7 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 interface Plan {
-  id: string;
+  planId: string;
   tier: string;
   nameZh: string;
   nameEn: string;
@@ -57,7 +57,7 @@ const PlansPage: React.FC = () => {
   const openEdit = (record: Plan) => {
     setEditing(record);
     form.setFieldsValue({
-      id: record.id,
+      planId: record.planId,
       tier: record.tier,
       nameZh: record.nameZh,
       nameEn: record.nameEn,
@@ -83,8 +83,8 @@ const PlansPage: React.FC = () => {
         featuresZh: values.featuresZh ? values.featuresZh.split('\n').filter((s: string) => s.trim()) : [],
         featuresEn: values.featuresEn ? values.featuresEn.split('\n').filter((s: string) => s.trim()) : [],
       };
-      if (editing && editing.id !== values.id) {
-        await request.delete('/plan/delete', { data: { id: editing.id } });
+      if (editing && editing.planId !== values.planId) {
+        await request.delete('/plan/delete', { data: { planId: editing.planId } });
       }
       await request.post('/plan/save', body);
       message.success('Plan saved');
@@ -99,7 +99,7 @@ const PlansPage: React.FC = () => {
 
   const handleDelete = async (id: string) => {
     try {
-      await request.delete('/plan/delete', { data: { id } });
+      await request.delete('/plan/delete', { data: { planId: id } });
       message.success('Plan deleted');
       fetchData();
     } catch (err: any) {
@@ -108,7 +108,7 @@ const PlansPage: React.FC = () => {
   };
 
   const columns = [
-    { title: 'ID', dataIndex: 'id', key: 'id', width: 100 },
+    { title: 'ID', dataIndex: 'planId', key: 'planId', width: 100 },
     { title: t('license.tier'), dataIndex: 'tier', key: 'tier', width: 80 },
     { title: '名称(中)', dataIndex: 'nameZh', key: 'nameZh' },
     { title: '名称(英)', dataIndex: 'nameEn', key: 'nameEn' },
@@ -126,7 +126,7 @@ const PlansPage: React.FC = () => {
       render: (_: any, record: Plan) => (
         <Space>
           <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(record)}>{t('app.edit')}</Button>
-          <Popconfirm title="确认删除此套餐？" onConfirm={() => handleDelete(record.id)}>
+          <Popconfirm title="确认删除此套餐？" onConfirm={() => handleDelete(record.planId)}>
             <Button size="small" color="danger" variant="outlined">{t('app.delete')}</Button>
           </Popconfirm>
         </Space>
@@ -142,12 +142,12 @@ const PlansPage: React.FC = () => {
       </div>
 
       <Card>
-        <Table dataSource={data} columns={columns} rowKey="id" loading={loading} pagination={false} size="small" scroll={{ x: 1100 }} />
+        <Table dataSource={data} columns={columns} rowKey="planId" loading={loading} pagination={false} size="small" scroll={{ x: 1100 }} />
       </Card>
 
       <Modal title={editing ? '编辑套餐' : '新增套餐'} open={modalOpen} onCancel={() => setModalOpen(false)} footer={null} width={640}>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
-          <Form.Item name="id" label="ID" rules={[{ required: true }]}>
+          <Form.Item name="planId" label="ID" rules={[{ required: true }]}>
             <Input placeholder="standard / pro / lifetime" disabled={!!editing} />
           </Form.Item>
           <Form.Item name="tier" label="层级" rules={[{ required: true }]}>

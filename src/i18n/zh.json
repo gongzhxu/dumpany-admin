@@ -6,7 +6,7 @@
     "dashboard": "仪表盘",
     "licenses": "授权管理",
     "orders": "订单管理",
-    "admins": "管理员",
+    "admin": "管理员",
     "payment": "支付管理",
     "alipay": "支付宝",
     "settings": "Swagger 管理",
@@ -122,6 +122,7 @@
     "save": "保存",
     "save_success": "保存成功",
     "save_failed": "保存失败",
+    "swagger_open": "打开 Swagger",
     "not_configured": "尚未配置支付宝",
     "configure": "立即配置"
   },

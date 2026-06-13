@@ -72,7 +72,7 @@ const OrdersPage: React.FC = () => {
       dataIndex: 'orderNo',
       key: 'orderNo',
       render: (text: string, record: Order) => (
-        <Button type="link" size="small" onClick={() => showDetail(record.id)}>{text}</Button>
+        <Button type="link" size="small" onClick={() => showDetail(record.orderId)}>{text}</Button>
       ),
     },
     { title: t('license.subscriber'), dataIndex: 'subscriber', key: 'subscriber' },
@@ -113,7 +113,7 @@ const OrdersPage: React.FC = () => {
         record.status === 'paid' ? (
           <Popconfirm
             title={t('order.refund_confirm')}
-            onConfirm={() => handleRefund(record.id)}
+            onConfirm={() => handleRefund(record.orderId)}
           >
             <Button size="small" color="danger" variant="outlined">{t('order.refund')}</Button>
           </Popconfirm>
@@ -182,7 +182,7 @@ const OrdersPage: React.FC = () => {
       >
         {detail && (
           <Descriptions column={2} size="small" bordered>
-            <Descriptions.Item label="ID">{detail.id}</Descriptions.Item>
+            <Descriptions.Item label="ID">{detail.orderId}</Descriptions.Item>
             <Descriptions.Item label={t('order.orderNo')}>{detail.orderNo}</Descriptions.Item>
             <Descriptions.Item label={t('license.subscriber')} span={2}>{detail.subscriber}</Descriptions.Item>
             <Descriptions.Item label={t('order.product')}>{detail.product}</Descriptions.Item>
