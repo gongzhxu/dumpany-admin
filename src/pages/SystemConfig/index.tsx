@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-  Table, Button, Modal, Input, InputNumber, Switch, message, Typography, Card, Space, Tag,
+  Table, Button, Modal, Input, InputNumber, Switch, message, Typography, Card, Tag,
 } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
