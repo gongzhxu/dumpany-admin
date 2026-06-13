@@ -21,6 +21,7 @@ const SwaggerAccounts: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<Account[]>([]);
   const [loading, setLoading] = useState(false);
+  const [swaggerUrl, setSwaggerUrl] = useState('https://api.dumpany.cn/swagger/');
   const [modalOpen, setModalOpen] = useState(false);
   const [editRecord, setEditRecord] = useState<Account | null>(null);
   const [submitting, setSubmitting] = useState(false);
@@ -39,6 +40,13 @@ const SwaggerAccounts: React.FC = () => {
   }, []);
 
   useEffect(() => { fetchData(); }, [fetchData]);
+
+  useEffect(() => {
+    request.get('/system-config/list').then((res: any) => {
+      const cfg = (res.data || []).find((c: any) => c.configKey === 'swagger_url');
+      if (cfg?.configValue) setSwaggerUrl(cfg.configValue);
+    }).catch(() => {});
+  }, []);
 
   const openCreate = () => {
     setEditRecord(null);
@@ -118,7 +126,7 @@ const SwaggerAccounts: React.FC = () => {
       <div className="page-header">
         <Title level={4}><img src="/swagger-icon.svg" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: -3 }} alt="" />{t('swagger.swagger_title')}</Title>
         <Space>
-          <Button icon={<LinkOutlined />} onClick={() => window.open('/swagger/', '_blank')}>
+          <Button icon={<LinkOutlined />} onClick={() => window.open(swaggerUrl, '_blank')}>
             {t('swagger.swagger_open')}
           </Button>
           <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>

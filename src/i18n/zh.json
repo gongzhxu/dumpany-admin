@@ -30,7 +30,8 @@
     "swagger": "Swagger 管理",
     "all_apps": "全部应用",
     "created_at": "创建时间",
-    "updated_at": "修改时间"
+    "updated_at": "修改时间",
+    "system_config": "系统配置"
   },
   "login": {
     "title": "管理员登录",
@@ -167,5 +168,15 @@
     "updated_at": "修改时间",
     "updatedAt": "修改时间",
     "createdAt": "创建时间"
+  },
+  "system_config": {
+    "title": "系统配置",
+    "config_key": "配置键",
+    "config_value": "配置值",
+    "config_type": "类型",
+    "description": "说明",
+    "cache_ttl": "缓存时间",
+    "no_cache": "不缓存",
+    "edit_title": "编辑配置"
   }
 }

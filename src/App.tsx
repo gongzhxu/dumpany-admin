@@ -15,6 +15,7 @@ import SwaggerPage from './pages/Swagger';
 import AlipayPage from './pages/Payment/Alipay';
 import PlanPage from './pages/Plan';
 import AppPage from './pages/App';
+import SystemConfigPage from './pages/SystemConfig';
 import { useAuth } from './hooks/useAuth';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -48,6 +49,7 @@ const App: React.FC = () => {
             <Route path="swagger" element={<SwaggerPage />} />
             <Route path="payment/alipay" element={<AlipayPage />} />
             <Route path="plan" element={<PlanPage />} />
+            <Route path="system-config" element={<SystemConfigPage />} />
           </Route>
         </Routes>
       </AntApp>

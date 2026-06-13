@@ -30,7 +30,8 @@
     "swagger": "Swagger",
     "all_apps": "All Apps",
     "created_at": "Created At",
-    "updated_at": "Updated At"
+    "updated_at": "Updated At",
+    "system_config": "System Config"
   },
   "login": {
     "title": "Admin Login",
@@ -167,5 +168,15 @@
     "updated_at": "Updated At",
     "updatedAt": "Updated At",
     "createdAt": "Created At"
+  },
+  "system_config": {
+    "title": "System Config",
+    "config_key": "Key",
+    "config_value": "Value",
+    "config_type": "Type",
+    "description": "Description",
+    "cache_ttl": "Cache TTL",
+    "no_cache": "No Cache",
+    "edit_title": "Edit Config"
   }
 }

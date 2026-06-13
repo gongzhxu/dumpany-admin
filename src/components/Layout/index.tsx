@@ -72,6 +72,7 @@ const AdminLayout: React.FC = () => {
       ],
     },
     { key: '/swagger', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.swagger') },
+    { key: '/system-config', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.system_config') },
   ];
 
   const toggleLang = () => {
