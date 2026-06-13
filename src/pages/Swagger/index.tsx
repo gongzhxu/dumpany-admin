@@ -59,15 +59,15 @@ const SwaggerAccounts: React.FC = () => {
         const body: any = { username: values.username, remark: values.remark || '' };
         if (values.password) body.password = values.password;
         await request.put('/settings/swagger-account/update', { swaggerAccountId: editRecord.id, ...body });
-        message.success(t('settings.update_success'));
+        message.success(t('swagger.update_success'));
       } else {
         await request.post('/settings/swagger-account/create', values);
-        message.success(t('settings.create_success'));
+        message.success(t('swagger.create_success'));
       }
       setModalOpen(false);
       fetchData();
     } catch (err: any) {
-      message.error(err?.response?.data?.msg || err.message || t('settings.save_failed'));
+      message.error(err?.response?.data?.msg || err.message || t('swagger.save_failed'));
     } finally {
       setSubmitting(false);
     }
@@ -76,7 +76,7 @@ const SwaggerAccounts: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       await request.delete('/settings/swagger-account/delete', { data: { swaggerAccountId: id } });
-      message.success(t('settings.delete_success'));
+      message.success(t('swagger.delete_success'));
       fetchData();
     } catch (err: any) {
       message.error(err?.response?.data?.msg || err.message);
@@ -85,11 +85,11 @@ const SwaggerAccounts: React.FC = () => {
 
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
-    { title: t('settings.username'), dataIndex: 'username', key: 'username' },
-    { title: t('settings.remark'), dataIndex: 'remark', key: 'remark' },
-    { title: t('settings.created_at'), dataIndex: 'createdAt', key: 'createdAt', width: 170, render: (text: string) => text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-' },
+    { title: t('swagger.username'), dataIndex: 'username', key: 'username' },
+    { title: t('swagger.remark'), dataIndex: 'remark', key: 'remark' },
+    { title: t('swagger.created_at'), dataIndex: 'createdAt', key: 'createdAt', width: 170, render: (text: string) => text ? dayjs(text).format('YYYY-MM-DD HH:mm') : '-' },
     {
-      title: t('settings.updatedAt'),
+      title: t('swagger.updatedAt'),
       dataIndex: 'updatedAt',
       key: 'updatedAt',
       width: 170,
@@ -103,7 +103,7 @@ const SwaggerAccounts: React.FC = () => {
         <Space>
           <Button size="small" onClick={() => openEdit(record)}>{t('app.edit')}</Button>
           <Popconfirm
-            title={t('settings.delete_confirm')}
+            title={t('swagger.delete_confirm')}
             onConfirm={() => handleDelete(record.id)}
           >
             <Button size="small" color="danger" variant="outlined">{t('app.delete')}</Button>
@@ -116,13 +116,13 @@ const SwaggerAccounts: React.FC = () => {
   return (
     <div className="page-container">
       <div className="page-header">
-        <Title level={4}><img src="/swagger-icon.svg" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: -3 }} alt="" />{t('settings.swagger_title')}</Title>
+        <Title level={4}><img src="/swagger-icon.svg" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: -3 }} alt="" />{t('swagger.swagger_title')}</Title>
         <Space>
           <Button icon={<LinkOutlined />} onClick={() => window.open('/swagger/', '_blank')}>
-            {t('settings.swagger_open')}
+            {t('swagger.swagger_open')}
           </Button>
           <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>
-            {t('settings.add_account')}
+            {t('swagger.add_account')}
           </Button>
         </Space>
       </div>
@@ -139,7 +139,7 @@ const SwaggerAccounts: React.FC = () => {
       </Card>
 
       <Modal
-        title={editRecord ? t('settings.edit_title') : t('settings.add_title')}
+        title={editRecord ? t('swagger.edit_title') : t('swagger.add_title')}
         open={modalOpen}
         onCancel={() => { setModalOpen(false); form.resetFields(); }}
         footer={null}
@@ -148,22 +148,22 @@ const SwaggerAccounts: React.FC = () => {
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item
             name="username"
-            label={t('settings.username')}
-            rules={[{ required: true, min: 2, message: t('settings.username_required') }]}
+            label={t('swagger.username')}
+            rules={[{ required: true, min: 2, message: t('swagger.username_required') }]}
           >
-            <Input placeholder={t('settings.username_placeholder')} />
+            <Input placeholder={t('swagger.username_placeholder')} />
           </Form.Item>
 
           <Form.Item
             name="password"
-            label={editRecord ? t('settings.password_optional') : t('settings.password')}
-            rules={editRecord ? [] : [{ required: true, min: 6, message: t('settings.password_rule') }]}
+            label={editRecord ? t('swagger.password_optional') : t('swagger.password')}
+            rules={editRecord ? [] : [{ required: true, min: 6, message: t('swagger.password_rule') }]}
           >
-            <Input.Password placeholder={t('settings.password_placeholder')} />
+            <Input.Password placeholder={t('swagger.password_placeholder')} />
           </Form.Item>
 
-          <Form.Item name="remark" label={t('settings.remark')}>
-            <Input placeholder={t('settings.remark_placeholder')} />
+          <Form.Item name="remark" label={t('swagger.remark')}>
+            <Input placeholder={t('swagger.remark_placeholder')} />
           </Form.Item>
 
           <Form.Item>

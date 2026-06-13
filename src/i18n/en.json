@@ -28,7 +28,9 @@
     "plan": "Plans",
     "app": "Apps",
     "swagger": "Swagger",
-    "all_apps": "All Apps"
+    "all_apps": "All Apps",
+    "created_at": "Created At",
+    "updated_at": "Updated At"
   },
   "login": {
     "title": "Admin Login",
@@ -83,29 +85,8 @@
     "pending": "Pending",
     "paid": "Paid",
     "refunded": "Refunded",
-    "cancelled": "Cancelled"
-  },
-  "settings": {
-    "swagger_title": "Swagger Access Accounts",
-    "add_account": "Add Account",
-    "add_title": "Add Swagger Account",
-    "edit_title": "Edit Swagger Account",
-    "username": "Username",
-    "password": "Password",
-    "password_optional": "New Password (leave blank to keep)",
-    "remark": "Remark",
-    "remark_placeholder": "e.g. Development",
-    "username_required": "Username must be at least 2 characters",
-    "username_placeholder": "Enter username",
-    "password_placeholder": "Leave blank to keep current",
-    "password_rule": "Password must be at least 6 characters",
-    "create_success": "Created successfully",
-    "update_success": "Updated successfully",
-    "delete_success": "Deleted successfully",
-    "delete_confirm": "Are you sure to delete this account?",
-    "save_failed": "Operation failed",
-    "created_at": "Created At",
-    "updated_at": "Updated At"
+    "cancelled": "Cancelled",
+    "created_at": "Created At"
   },
   "payment": {
     "alipay_title": "Alipay Config",
@@ -162,5 +143,29 @@
     "save_failed": "Operation failed",
     "created_at": "Created At",
     "updated_at": "Updated At"
+  },
+  "swagger": {
+    "swagger_title": "Swagger Access Accounts",
+    "add_account": "Add Account",
+    "add_title": "Add Swagger Account",
+    "edit_title": "Edit Swagger Account",
+    "username": "Username",
+    "password": "Password",
+    "password_optional": "New Password (leave blank to keep)",
+    "remark": "Remark",
+    "remark_placeholder": "e.g. Development",
+    "username_required": "Username must be at least 2 characters",
+    "username_placeholder": "Enter username",
+    "password_placeholder": "Leave blank to keep current",
+    "password_rule": "Password must be at least 6 characters",
+    "create_success": "Created successfully",
+    "update_success": "Updated successfully",
+    "delete_success": "Deleted successfully",
+    "delete_confirm": "Are you sure to delete this account?",
+    "save_failed": "Operation failed",
+    "created_at": "Created At",
+    "updated_at": "Updated At",
+    "updatedAt": "Updated At",
+    "createdAt": "Created At"
   }
 }

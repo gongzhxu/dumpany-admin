@@ -99,7 +99,7 @@ const OrderPage: React.FC = () => {
       ellipsis: true,
     },
     {
-      title: t('settings.created_at'),
+      title: t('app.created_at'),
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 150,

@@ -155,7 +155,7 @@ const LicensePage: React.FC = () => {
       render: (val: number) => (val ? dayjs.unix(val).format('YYYY-MM-DD HH:mm') : '-'),
     },
     {
-      title: t('settings.created_at'),
+      title: t('app.created_at'),
       dataIndex: 'createdAt',
       key: 'createdAt',
       width: 170,
