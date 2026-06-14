@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Table, Button, Modal, Form, Input, InputNumber, Switch, message, Typography, Card, Space, Popconfirm, Tag } from 'antd';
+import { Table, Button, Modal, Form, Input, InputNumber, Switch, Select, message, Typography, Card, Space, Popconfirm, Tag } from 'antd';
 import { PlusOutlined, EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
@@ -8,13 +8,14 @@ const { Title } = Typography;
 const { TextArea } = Input;
 
 interface Plan {
+  id: number;
   planId: string;
   tier: string;
   priceCNY: number;
   priceUSD: number;
   validityDays: number;
   maxDevices: number;
-  active: boolean;
+  status: number;
   popular: boolean;
   sortOrder: number;
 }
@@ -56,7 +57,7 @@ const PlanPage: React.FC = () => {
           priceUsd: editing.priceUSD,
           validityDays: editing.validityDays,
           maxDevices: editing.maxDevices,
-          active: editing.active,
+          status: editing.status,
           popular: editing.popular,
           sortOrder: editing.sortOrder,
         };
@@ -70,7 +71,7 @@ const PlanPage: React.FC = () => {
   const openCreate = () => {
     setEditing(null);
     form.resetFields();
-    const defaults = { active: true, popular: false, validityDays: 365, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0 };
+    const defaults = { status: 1, popular: false, validityDays: 365, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0 };
     setInit(defaults);
     setCurr(defaults);
     form.setFieldsValue(defaults);
@@ -118,7 +119,8 @@ const PlanPage: React.FC = () => {
   };
 
   const columns = [
-    { title: 'ID', dataIndex: 'planId', key: 'planId', width: 100 },
+    { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
+    { title: '标识', dataIndex: 'planId', key: 'planId', width: 100 },
     { title: t('license.tier'), dataIndex: 'tier', key: 'tier', width: 80 },
     { title: '价格(CNY)', dataIndex: 'priceCNY', key: 'priceCNY', width: 100, render: (v: number) => v != null ? `¥${(v / 100).toFixed(2)}` : '-' },
     { title: '价格(USD)', dataIndex: 'priceUSD', key: 'priceUSD', width: 100, render: (v: number) => v != null ? `$${(v / 100).toFixed(2)}` : '-' },
@@ -129,8 +131,8 @@ const PlanPage: React.FC = () => {
       render: (v: boolean) => v ? <Tag color="gold">推荐</Tag> : null,
     },
     {
-      title: '状态', dataIndex: 'active', key: 'active', width: 70,
-      render: (v: boolean) => <Tag color={v ? 'green' : 'red'}>{v ? '启用' : '禁用'}</Tag>,
+      title: '状态', dataIndex: 'status', key: 'status', width: 70,
+      render: (v: number) => <Tag color={v === 1 ? 'green' : 'red'}>{v === 1 ? '启用' : '禁用'}</Tag>,
     },
     { title: '排序', dataIndex: 'sortOrder', key: 'sortOrder', width: 60 },
     {
@@ -183,8 +185,11 @@ const PlanPage: React.FC = () => {
             </Form.Item>
           </Space>
           <Space size={16}>
-            <Form.Item name="active" label="启用" valuePropName="checked">
-              <Switch />
+            <Form.Item name="status" label="状态" initialValue={1}>
+              <Select style={{ width: 100 }}>
+                <Select.Option value={1}>启用</Select.Option>
+                <Select.Option value={0}>禁用</Select.Option>
+              </Select>
             </Form.Item>
             <Form.Item name="popular" label="推荐" valuePropName="checked">
               <Switch />
