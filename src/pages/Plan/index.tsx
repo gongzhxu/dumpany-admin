@@ -21,6 +21,7 @@ interface Plan {
   featuresZh: string[];
   featuresEn: string[];
   active: boolean;
+  popular: boolean;
   sortOrder: number;
 }
 
@@ -50,7 +51,7 @@ const PlanPage: React.FC = () => {
   const openCreate = () => {
     setEditing(null);
     form.resetFields();
-    form.setFieldsValue({ active: true, validityDays: 365, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0 });
+    form.setFieldsValue({ active: true, popular: false, validityDays: 365, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0 });
     setModalOpen(true);
   };
 
@@ -70,6 +71,7 @@ const PlanPage: React.FC = () => {
       featuresZh: record.featuresZh?.join('\n') || '',
       featuresEn: record.featuresEn?.join('\n') || '',
       active: record.active,
+      popular: record.popular,
       sortOrder: record.sortOrder,
     });
     setModalOpen(true);
@@ -187,6 +189,9 @@ const PlanPage: React.FC = () => {
           </Form.Item>
           <Space size={16}>
             <Form.Item name="active" label="启用" valuePropName="checked">
+              <Switch />
+            </Form.Item>
+            <Form.Item name="popular" label="推荐" valuePropName="checked">
               <Switch />
             </Form.Item>
             <Form.Item name="sortOrder" label="排序">
