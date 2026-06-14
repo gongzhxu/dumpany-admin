@@ -12,7 +12,8 @@ interface Plan {
   tier: string;
   priceCNY: number;
   priceUSD: number;
-  validityDays: number;
+  validityType: string;
+  validityValue: number;
   maxDevices: number;
   status: number;
   popular: boolean;
@@ -54,7 +55,8 @@ const PlanPage: React.FC = () => {
           tier: editing.tier,
           priceCny: editing.priceCNY,
           priceUsd: editing.priceUSD,
-          validityDays: editing.validityDays,
+          validityType: editing.validityType,
+          validityValue: editing.validityValue,
           maxDevices: editing.maxDevices,
           status: editing.status,
           popular: editing.popular,
@@ -70,7 +72,7 @@ const PlanPage: React.FC = () => {
   const openCreate = () => {
     setEditing(null);
     form.resetFields();
-    const defaults = { status: 1, popular: false, validityDays: 365, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0 };
+    const defaults = { status: 1, popular: false, validityType: 'day', validityValue: 30, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0 };
     setInit(defaults);
     setCurr(defaults);
     form.setFieldsValue(defaults);
@@ -123,7 +125,10 @@ const PlanPage: React.FC = () => {
     { title: t('license.tier'), dataIndex: 'tier', key: 'tier', width: 80 },
     { title: '价格(CNY)', dataIndex: 'priceCNY', key: 'priceCNY', width: 100, render: (v: number) => v != null ? `¥${(v / 100).toFixed(2)}` : '-' },
     { title: '价格(USD)', dataIndex: 'priceUSD', key: 'priceUSD', width: 100, render: (v: number) => v != null ? `$${(v / 100).toFixed(2)}` : '-' },
-    { title: '天数', dataIndex: 'validityDays', key: 'validityDays', width: 60, render: (v: number) => v === 0 ? '永久' : v },
+    { title: '有效期', dataIndex: 'validityType', key: 'validityType', width: 80, render: (_: string, r: Plan) => {
+      const map: Record<string, string> = { hour: '小时', day: '天', year: '年', permanent: '永久' };
+      return r.validityType === 'permanent' ? '永久' : `${r.validityValue} ${map[r.validityType] || r.validityType}`;
+    }},
     { title: '设备', dataIndex: 'maxDevices', key: 'maxDevices', width: 60 },
     {
       title: '推荐', dataIndex: 'popular', key: 'popular', width: 60,
@@ -176,8 +181,17 @@ const PlanPage: React.FC = () => {
             <Form.Item name="priceUsd" label="价格(USD/分)" rules={[{ required: true }]}>
               <InputNumber min={0} style={{ color: fieldColor('priceUsd') }} />
             </Form.Item>
-            <Form.Item name="validityDays" label="天数" rules={[{ required: true }]}>
-              <InputNumber min={0} style={{ color: fieldColor('validityDays') }} />
+            <Form.Item name="validityType" label="有效期" initialValue="day">
+              <Select style={{ width: 110 }} onChange={() => { const t = form.getFieldValue('validityType'); if (t === 'permanent') form.setFieldsValue({ validityValue: 0 }); }}>
+                <Select.Option value="hour">小时</Select.Option>
+                <Select.Option value="day">天</Select.Option>
+                <Select.Option value="year">年</Select.Option>
+                <Select.Option value="permanent">永久</Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item name="validityValue" label="值" rules={[{ required: true }]}>
+              <InputNumber min={0} style={{ color: fieldColor('validityValue'), width: 80 }}
+                disabled={form.getFieldValue('validityType') === 'permanent'} />
             </Form.Item>
             <Form.Item name="maxDevices" label="设备数" rules={[{ required: true }]}>
               <InputNumber min={1} max={99} style={{ color: fieldColor('maxDevices') }} />
