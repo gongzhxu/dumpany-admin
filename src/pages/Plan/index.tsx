@@ -14,8 +14,8 @@ interface Plan {
   nameEn: string;
   descriptionZh: string;
   descriptionEn: string;
-  priceCny: number;
-  priceUsd: number;
+  priceCNY: number;
+  priceUSD: number;
   validityDays: number;
   maxDevices: number;
   featuresZh: string[];
@@ -62,8 +62,8 @@ const PlanPage: React.FC = () => {
           nameEn: editing.nameEn,
           descriptionZh: editing.descriptionZh,
           descriptionEn: editing.descriptionEn,
-          priceCny: editing.priceCny,
-          priceUsd: editing.priceUsd,
+          priceCny: editing.priceCNY,
+          priceUsd: editing.priceUSD,
           validityDays: editing.validityDays,
           maxDevices: editing.maxDevices,
           featuresZh: editing.featuresZh?.join('\n') || '',
@@ -138,8 +138,8 @@ const PlanPage: React.FC = () => {
     { title: t('license.tier'), dataIndex: 'tier', key: 'tier', width: 80 },
     { title: '名称(中)', dataIndex: 'nameZh', key: 'nameZh' },
     { title: '名称(英)', dataIndex: 'nameEn', key: 'nameEn' },
-    { title: '价格(CNY)', dataIndex: 'priceCny', key: 'priceCny', width: 100, render: (v: number) => `¥${(v / 100).toFixed(2)}` },
-    { title: '价格(USD)', dataIndex: 'priceUsd', key: 'priceUsd', width: 100, render: (v: number) => `$${(v / 100).toFixed(2)}` },
+    { title: '价格(CNY)', dataIndex: 'priceCNY', key: 'priceCNY', width: 100, render: (v: number) => v != null ? `¥${(v / 100).toFixed(2)}` : '-' },
+    { title: '价格(USD)', dataIndex: 'priceUSD', key: 'priceUSD', width: 100, render: (v: number) => v != null ? `$${(v / 100).toFixed(2)}` : '-' },
     { title: '天数', dataIndex: 'validityDays', key: 'validityDays', width: 60, render: (v: number) => v === 0 ? '永久' : v },
     { title: '设备', dataIndex: 'maxDevices', key: 'maxDevices', width: 60 },
     {
