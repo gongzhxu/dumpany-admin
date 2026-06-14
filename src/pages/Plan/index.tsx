@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
 const { Title } = Typography;
-const { TextArea } = Input;
 
 interface Plan {
   id: number;
