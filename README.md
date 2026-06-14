@@ -24,28 +24,28 @@ API 代理配置在 `vite.config.ts` 中，开发模式自动代理 `/api` 到 `
 
 ```
 src/
-├── api/            # API 接口封装
-│   ├── request.ts  # Axios 实例 + 拦截器
-│   ├── auth.ts     # 登录/登出
-│   ├── licenses.ts # 授权管理
-│   └── orders.ts   # 订单管理
-├── components/     # 组件
-│   └── Layout/     # 管理后台布局（菜单、Header、Outlet）
-├── hooks/          # 自定义 hooks
-│   └── useAuth.ts  # 认证状态管理
-├── i18n/           # 国际化
-│   ├── zh.json     # 中文
-│   └── en.json     # 英文
-├── pages/          # 页面
-│   ├── Login/      # 登录页
-│   ├── Dashboard/  # 仪表盘
-│   ├── Licenses/   # 授权管理
-│   ├── Orders/     # 订单管理
-│   ├── Admins/     # 管理员管理
-│   ├── Settings/   # Swagger 账号管理
-│   └── Payment/    # 支付配置（支付宝）
-├── App.tsx         # 路由配置
-└── main.tsx        # 入口
+├── api/               # API 接口封装
+│   ├── request.ts     # Axios 实例 + 拦截器
+│   └── ...
+├── components/
+│   └── Layout/        # 管理后台布局（菜单、Header、Outlet）
+├── hooks/
+│   └── useAuth.ts     # 认证状态管理
+├── i18n/
+│   ├── zh.json        # 中文
+│   └── en.json        # 英文
+├── pages/
+│   ├── Dashboard/     # 仪表盘
+│   ├── License/       # 授权管理
+│   ├── Order/         # 订单管理
+│   ├── Plan/          # 套餐管理
+│   ├── Admin/         # 管理员管理
+│   ├── App/           # 应用管理
+│   ├── Swagger/       # Swagger 账号管理
+│   ├── Payment/       # 支付配置（支付宝）
+│   └── SystemConfig/  # 系统配置（通用/SMS/邮件）
+├── App.tsx            # 路由配置
+└── main.tsx           # 入口
 ```
 
 ## 开发规范
@@ -56,6 +56,18 @@ src/
 - **样式**：Ant Design 组件 + 内联样式，全局样式在 style.css
 - **路由**：嵌套路由在 `App.tsx` 中配置，受 `ProtectedRoute` 保护
 - **操作列**：使用 `<Button>` 而非 `<a>`，确保按钮样式一致
+
+## 构建验证
+
+**修改代码后必须先本地构建再提交**，确保无 TypeScript 错误：
+
+```bash
+npm run build
+# 或仅检查类型
+npx tsc --noEmit
+```
+
+本地构建通过后才允许 commit + push。
 
 ## 构建
 

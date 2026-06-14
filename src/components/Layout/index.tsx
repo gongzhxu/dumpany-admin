@@ -10,6 +10,7 @@ import {
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  SettingOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -72,7 +73,16 @@ const AdminLayout: React.FC = () => {
       ],
     },
     { key: '/swagger', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.swagger') },
-    { key: '/system-config', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.system_config') },
+    {
+      key: 'system-config',
+      icon: <SettingOutlined />,
+      label: t('app.system_config'),
+      children: [
+        { key: '/system-config', label: t('app.system_config_general') },
+        { key: '/system-config/sms', label: t('app.system_config_sms') },
+        { key: '/system-config/smtp', label: t('app.system_config_smtp') },
+      ],
+    },
   ];
 
   const toggleLang = () => {

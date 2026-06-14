@@ -31,7 +31,10 @@
     "all_apps": "All Apps",
     "created_at": "Created At",
     "updated_at": "Updated At",
-    "system_config": "System Config"
+    "system_config": "System Config",
+    "system_config_general": "General",
+    "system_config_sms": "SMS",
+    "system_config_smtp": "Email (SMTP)"
   },
   "login": {
     "title": "Admin Login",
@@ -193,5 +196,28 @@
     "cache_ttl": "Cache TTL",
     "no_cache": "No Cache",
     "edit_title": "Edit Config"
+  },
+  "sms": {
+    "title": "Tencent Cloud SMS",
+    "editTitle": "Edit SMS Config",
+    "secretId": "SecretId",
+    "secretKey": "SecretKey",
+    "sdkAppId": "SDK AppID",
+    "sign": "Sign",
+    "templateId": "Template ID"
+  },
+  "smtp": {
+    "title": "163 SMTP Email",
+    "editTitle": "Edit SMTP Config",
+    "host": "SMTP Host",
+    "port": "Port",
+    "user": "Email",
+    "pass": "Auth Code"
+  },
+  "common": {
+    "configured": "Configured",
+    "notConfigured": "Not configured",
+    "save": "Save",
+    "saved": "Saved"
   }
 }

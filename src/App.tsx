@@ -16,6 +16,8 @@ import AlipayPage from './pages/Payment/Alipay';
 import PlanPage from './pages/Plan';
 import AppPage from './pages/App';
 import SystemConfigPage from './pages/SystemConfig';
+import SmsConfigPage from './pages/SystemConfig/SmsConfig';
+import SmtpConfigPage from './pages/SystemConfig/SmtpConfig';
 import { useAuth } from './hooks/useAuth';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -50,6 +52,8 @@ const App: React.FC = () => {
             <Route path="payment/alipay" element={<AlipayPage />} />
             <Route path="plan" element={<PlanPage />} />
             <Route path="system-config" element={<SystemConfigPage />} />
+            <Route path="system-config/sms" element={<SmsConfigPage />} />
+            <Route path="system-config/smtp" element={<SmtpConfigPage />} />
           </Route>
         </Routes>
       </AntApp>

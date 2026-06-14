@@ -31,7 +31,10 @@
     "all_apps": "全部应用",
     "created_at": "创建时间",
     "updated_at": "修改时间",
-    "system_config": "系统配置"
+    "system_config": "系统配置",
+    "system_config_general": "通用配置",
+    "system_config_sms": "SMS 配置",
+    "system_config_smtp": "邮件配置"
   },
   "login": {
     "title": "管理员登录",
@@ -193,5 +196,28 @@
     "cache_ttl": "缓存时间",
     "no_cache": "不缓存",
     "edit_title": "编辑配置"
+  },
+  "sms": {
+    "title": "腾讯云 SMS 配置",
+    "editTitle": "编辑 SMS 配置",
+    "secretId": "SecretId",
+    "secretKey": "SecretKey",
+    "sdkAppId": "SDK AppID",
+    "sign": "短信签名",
+    "templateId": "模板 ID"
+  },
+  "smtp": {
+    "title": "163 SMTP 邮件配置",
+    "editTitle": "编辑 SMTP 配置",
+    "host": "SMTP 服务器",
+    "port": "端口",
+    "user": "邮箱地址",
+    "pass": "授权码"
+  },
+  "common": {
+    "configured": "已配置",
+    "notConfigured": "未配置",
+    "save": "保存",
+    "saved": "已保存"
   }
 }
