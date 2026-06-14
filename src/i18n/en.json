@@ -87,7 +87,9 @@
     "paid": "Paid",
     "refunded": "Refunded",
     "cancelled": "Cancelled",
-    "created_at": "Created At"
+    "created_at": "Created At",
+    "orderNo": "Order No",
+    "createdAt": "Created At"
   },
   "payment": {
     "alipay_title": "Alipay Config",
@@ -107,7 +109,18 @@
     "save_failed": "Save failed",
     "swagger_open": "Open Swagger",
     "not_configured": "Alipay not configured",
-    "configure": "Configure Now"
+    "configure": "Configure Now",
+    "appId": "App ID",
+    "privateKey": "Private Key",
+    "gatewayUrl": "Gateway URL",
+    "publicKey": "Alipay Public Key",
+    "appId_required": "App ID is required",
+    "appId_placeholder": "Application APPID",
+    "privateKey_required": "Private key is required",
+    "privateKey_placeholder": "RSA2 Private Key",
+    "privateKey_edit_placeholder": "Leave blank to keep current",
+    "gatewayUrl_placeholder": "https://openapi.alipay.com/gateway.do",
+    "publicKey_placeholder": "RSA2 Public Key"
   },
   "admin": {
     "title": "Admin Management",
@@ -143,7 +156,9 @@
     "cannot_delete_default": "Cannot delete default app",
     "save_failed": "Operation failed",
     "created_at": "Created At",
-    "updated_at": "Updated At"
+    "updated_at": "Updated At",
+    "appId": "App ID",
+    "createdAt": "Created At"
   },
   "swagger": {
     "swagger_title": "Swagger Access Accounts",

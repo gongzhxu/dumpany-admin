@@ -87,7 +87,9 @@
     "paid": "已支付",
     "refunded": "已退款",
     "cancelled": "已取消",
-    "created_at": "创建时间"
+    "created_at": "创建时间",
+    "orderNo": "订单号",
+    "createdAt": "创建时间"
   },
   "payment": {
     "alipay_title": "支付宝配置",
@@ -107,7 +109,18 @@
     "save_failed": "保存失败",
     "swagger_open": "打开 Swagger",
     "not_configured": "尚未配置支付宝",
-    "configure": "立即配置"
+    "configure": "立即配置",
+    "appId": "App ID",
+    "privateKey": "应用私钥",
+    "gatewayUrl": "网关地址",
+    "publicKey": "支付宝公钥",
+    "appId_required": "请输入 App ID",
+    "appId_placeholder": "应用 APPID",
+    "privateKey_required": "请输入应用私钥",
+    "privateKey_placeholder": "RSA2 私钥",
+    "privateKey_edit_placeholder": "留空则不修改",
+    "gatewayUrl_placeholder": "https://openapi.alipay.com/gateway.do",
+    "publicKey_placeholder": "支付宝公钥（PEM 格式，留空则不修改）"
   },
   "admin": {
     "title": "管理员管理",
@@ -143,7 +156,9 @@
     "cannot_delete_default": "默认应用不可删除",
     "save_failed": "操作失败",
     "created_at": "创建时间",
-    "updated_at": "修改时间"
+    "updated_at": "修改时间",
+    "appId": "应用 ID",
+    "createdAt": "创建时间"
   },
   "swagger": {
     "swagger_title": "Swagger 访问账号",
