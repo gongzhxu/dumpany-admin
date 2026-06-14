@@ -10,16 +10,10 @@ const { TextArea } = Input;
 interface Plan {
   planId: string;
   tier: string;
-  nameZh: string;
-  nameEn: string;
-  descriptionZh: string;
-  descriptionEn: string;
   priceCNY: number;
   priceUSD: number;
   validityDays: number;
   maxDevices: number;
-  featuresZh: string[];
-  featuresEn: string[];
   active: boolean;
   popular: boolean;
   sortOrder: number;
@@ -58,16 +52,10 @@ const PlanPage: React.FC = () => {
         vals = {
           planId: editing.planId,
           tier: editing.tier,
-          nameZh: editing.nameZh,
-          nameEn: editing.nameEn,
-          descriptionZh: editing.descriptionZh,
-          descriptionEn: editing.descriptionEn,
           priceCny: editing.priceCNY,
           priceUsd: editing.priceUSD,
           validityDays: editing.validityDays,
           maxDevices: editing.maxDevices,
-          featuresZh: editing.featuresZh?.join('\n') || '',
-          featuresEn: editing.featuresEn?.join('\n') || '',
           active: editing.active,
           popular: editing.popular,
           sortOrder: editing.sortOrder,
@@ -97,11 +85,7 @@ const PlanPage: React.FC = () => {
   const handleSubmit = async (values: any) => {
     setSubmitting(true);
     try {
-      const body = {
-        ...values,
-        featuresZh: values.featuresZh ? values.featuresZh.split('\n').filter((s: string) => s.trim()) : [],
-        featuresEn: values.featuresEn ? values.featuresEn.split('\n').filter((s: string) => s.trim()) : [],
-      };
+      const body = { ...values };
       if (editing && editing.planId !== values.planId) {
         await request.delete('/plan/delete', { data: { planId: editing.planId } });
       }
@@ -136,8 +120,6 @@ const PlanPage: React.FC = () => {
   const columns = [
     { title: 'ID', dataIndex: 'planId', key: 'planId', width: 100 },
     { title: t('license.tier'), dataIndex: 'tier', key: 'tier', width: 80 },
-    { title: '名称(中)', dataIndex: 'nameZh', key: 'nameZh' },
-    { title: '名称(英)', dataIndex: 'nameEn', key: 'nameEn' },
     { title: '价格(CNY)', dataIndex: 'priceCNY', key: 'priceCNY', width: 100, render: (v: number) => v != null ? `¥${(v / 100).toFixed(2)}` : '-' },
     { title: '价格(USD)', dataIndex: 'priceUSD', key: 'priceUSD', width: 100, render: (v: number) => v != null ? `$${(v / 100).toFixed(2)}` : '-' },
     { title: '天数', dataIndex: 'validityDays', key: 'validityDays', width: 60, render: (v: number) => v === 0 ? '永久' : v },
@@ -186,18 +168,6 @@ const PlanPage: React.FC = () => {
             <Input placeholder="standard / pro"
               style={{ color: fieldColor('tier') }} />
           </Form.Item>
-          <Form.Item name="nameZh" label="名称(中文)" rules={[{ required: true }]}>
-            <Input style={{ color: fieldColor('nameZh') }} />
-          </Form.Item>
-          <Form.Item name="nameEn" label="名称(英文)" rules={[{ required: true }]}>
-            <Input style={{ color: fieldColor('nameEn') }} />
-          </Form.Item>
-          <Form.Item name="descriptionZh" label="描述(中文)">
-            <Input style={{ color: fieldColor('descriptionZh') }} />
-          </Form.Item>
-          <Form.Item name="descriptionEn" label="描述(英文)">
-            <Input style={{ color: fieldColor('descriptionEn') }} />
-          </Form.Item>
           <Space size={16}>
             <Form.Item name="priceCny" label="价格(CNY/分)" rules={[{ required: true }]}>
               <InputNumber min={0} style={{ color: fieldColor('priceCny') }} />
@@ -212,12 +182,6 @@ const PlanPage: React.FC = () => {
               <InputNumber min={1} max={99} style={{ color: fieldColor('maxDevices') }} />
             </Form.Item>
           </Space>
-          <Form.Item name="featuresZh" label="功能列表(中文，每行一个)">
-            <TextArea rows={4} style={{ color: fieldColor('featuresZh') }} />
-          </Form.Item>
-          <Form.Item name="featuresEn" label="功能列表(英文，每行一个)">
-            <TextArea rows={4} style={{ color: fieldColor('featuresEn') }} />
-          </Form.Item>
           <Space size={16}>
             <Form.Item name="active" label="启用" valuePropName="checked">
               <Switch />
