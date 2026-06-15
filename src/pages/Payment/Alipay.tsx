@@ -16,8 +16,6 @@ const AlipayConfig: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [form] = Form.useForm();
-
-  // 收集每个字段的初始值和当前值，每次输入变化时更新
   const [init, setInit] = useState<Record<string, string>>({});
   const [curr, setCurr] = useState<Record<string, string>>({});
 
@@ -43,7 +41,6 @@ const AlipayConfig: React.FC = () => {
     }
   }, [loading, data.length, modalOpen, dismissed]);
 
-  // Modal 打开时设置初始值和表单
   useEffect(() => {
     if (modalOpen) {
       let vals: Record<string, string> = {};
@@ -53,9 +50,10 @@ const AlipayConfig: React.FC = () => {
           private_key: editing.privateKey || '',
           gateway_url: editing.gatewayUrl || 'https://openapi.alipay.com/gateway.do',
           public_key: editing.publicKey || '',
+          currency: editing.currency || 'CNY',
         };
       } else {
-        vals = { gateway_url: 'https://openapi.alipay.com/gateway.do' };
+        vals = { gateway_url: 'https://openapi.alipay.com/gateway.do', currency: 'CNY' };
       }
       setInit(vals);
       setCurr(vals);
@@ -84,6 +82,7 @@ const AlipayConfig: React.FC = () => {
 
   const columns = [
     { title: t('payment.appId'), dataIndex: 'appId', key: 'appId', render: (text: string) => <Tag color="blue">{text}</Tag> },
+    { title: '币种', dataIndex: 'currency', key: 'currency', render: (text: string) => text || 'CNY' },
     {
       title: t('payment.privateKey'),
       dataIndex: 'privateKey',
@@ -142,9 +141,7 @@ const AlipayConfig: React.FC = () => {
         destroyOnClose
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}
-          onValuesChange={() => {
-            setCurr({ ...form.getFieldsValue() });
-          }}>
+          onValuesChange={() => { setCurr({ ...form.getFieldsValue() }); }}>
           <Form.Item name="appId" label={t('payment.appId')}
             rules={[{ required: true, message: t('payment.appId_required') }]}>
             <Input placeholder={t('payment.appId_placeholder')}
@@ -165,6 +162,11 @@ const AlipayConfig: React.FC = () => {
           <Form.Item name="publicKey" label={t('payment.publicKey')}>
             <TextArea rows={4} placeholder={t('payment.publicKey_placeholder')}
               style={{ color: init.publicKey !== curr.publicKey ? undefined : '#bbb' }} />
+          </Form.Item>
+
+          <Form.Item name="currency" label="币种" initialValue="CNY">
+            <Input placeholder="CNY"
+              style={{ color: init.currency !== curr.currency ? undefined : '#bbb' }} />
           </Form.Item>
 
           <Form.Item>
