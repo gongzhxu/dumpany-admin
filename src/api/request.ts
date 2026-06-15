@@ -12,6 +12,8 @@ request.interceptors.request.use((config) => {
   }
   const selectedAppId = localStorage.getItem('selectedAppId') || '';
   config.headers['X-APP-ID'] = selectedAppId;
+  const lang = localStorage.getItem('lang') || 'zh';
+  config.headers['X-LANGUAGE'] = lang;
   return config;
 });
 
