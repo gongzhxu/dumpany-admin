@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Button, Modal, Form, Input, InputNumber, message, Typography, Card, Tag } from 'antd';
-import { EditOutlined } from '@ant-design/icons';
+import { EditOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
@@ -11,6 +11,19 @@ const CONFIG_KEY = 'service_smtp';
 function isConfigured(cfg: any) {
   return cfg?.host && cfg?.user && cfg?.pass;
 }
+
+const MaskedValue: React.FC<{ value: string }> = ({ value }) => {
+  const [visible, setVisible] = useState(false);
+  if (!value) return <>{'-'}</>;
+  return (
+    <span style={{ cursor: 'pointer' }} onClick={() => setVisible(!visible)}>
+      {visible ? value : '••••••••••'}
+      <span style={{ marginLeft: 6, color: '#999' }}>
+        {visible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+      </span>
+    </span>
+  );
+};
 
 const defaultVals = { host: 'smtp.163.com', port: 465, user: '', pass: '' };
 
@@ -117,6 +130,7 @@ const SmtpConfig: React.FC = () => {
           <Descriptions.Item label={t('smtp.host')}>{data?.host || '-'}</Descriptions.Item>
           <Descriptions.Item label={t('smtp.port')}>{data?.port ?? '-'}</Descriptions.Item>
           <Descriptions.Item label={t('smtp.user')}>{data?.user || '-'}</Descriptions.Item>
+          <Descriptions.Item label={t('smtp.pass')}><MaskedValue value={data?.pass || ''} /></Descriptions.Item>
           <Descriptions.Item label={t('app.status')}>
             <Tag color={data?.status !== 0 ? 'green' : 'red'} style={{ cursor: 'pointer' }}
               onClick={handleToggleStatus}>
