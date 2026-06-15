@@ -195,7 +195,9 @@
     "description": "Description",
     "cache_ttl": "Cache TTL",
     "no_cache": "No Cache",
-    "edit_title": "Edit Config"
+    "edit_title": "Edit Config",
+    "never_expire": "Never Expire",
+    "custom": "Custom"
   },
   "sms": {
     "title": "Tencent Cloud SMS",

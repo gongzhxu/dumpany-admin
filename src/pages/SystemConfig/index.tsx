@@ -26,6 +26,7 @@ const SystemConfigPage: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editRecord, setEditRecord] = useState<ConfigItem | null>(null);
   const [editLoading, setEditLoading] = useState(false);
+  const [cacheMode, setCacheMode] = useState<string>('0');
   const [form] = Form.useForm();
 
   const fetchData = useCallback(async () => {
@@ -128,8 +129,12 @@ const SystemConfigPage: React.FC = () => {
     },
     { title: t('system_config.description'), dataIndex: 'description', key: 'description', ellipsis: true },
     {
-      title: t('system_config.cache_ttl'), dataIndex: 'cacheTTL', key: 'cacheTTL', width: 70,
-      render: (val: number) => (val === 0 ? t('system_config.no_cache') : `${val}s`),
+      title: t('system_config.cache_ttl'), dataIndex: 'cacheTTL', key: 'cacheTTL', width: 80,
+      render: (val: number) => {
+        if (val === -1) return t('system_config.never_expire');
+        if (val === 0) return t('system_config.no_cache');
+        return `${val}s`;
+      },
     },
     {
       title: t('app.status'), dataIndex: 'status', key: 'status', width: 65,
@@ -180,7 +185,13 @@ const SystemConfigPage: React.FC = () => {
               </Select>
             </Form.Item>
             <Form.Item name="cacheTTL" label={t('system_config.cache_ttl')}>
-              <InputNumber min={0} style={{ width: 120 }} />
+              <Select style={{ width: 120 }}
+                onChange={(val) => { if (val === -1) form.setFieldsValue({ cacheTTL: -1 }); else if (val === 0) form.setFieldsValue({ cacheTTL: 0 }); }}>
+                <Select.Option value={-1}>{t('system_config.never_expire')}</Select.Option>
+                <Select.Option value={0}>{t('system_config.no_cache')}</Select.Option>
+                <Select.Option value="s">自定义</Select.Option>
+              </Select>
+              {form.getFieldValue('cacheTTL') > 0 && <InputNumber min={1} style={{ width: 100, marginLeft: 8 }} />}
             </Form.Item>
             <Form.Item name="status" label={t('app.status')}>
               <Select style={{ width: 100 }}>

@@ -195,7 +195,9 @@
     "description": "说明",
     "cache_ttl": "缓存时间",
     "no_cache": "不缓存",
-    "edit_title": "编辑配置"
+    "edit_title": "编辑配置",
+    "never_expire": "不过期",
+    "custom": "自定义"
   },
   "sms": {
     "title": "腾讯云 SMS 配置",
