@@ -37,6 +37,20 @@ const SmtpConfig: React.FC = () => {
   };
 
   useEffect(() => { fetchData(); }, []);
+  
+  const handleToggleStatus = async () => {
+    const newStatus = data?.status === 0 ? 1 : 0;
+    try {
+      await request.put('/system-config/update', {
+        configKey: CONFIG_KEY,
+        configValue: JSON.stringify(data),
+        status: newStatus,
+      });
+      fetchData();
+    } catch (err: any) {
+      message.error(err.message);
+    }
+  };
 
   useEffect(() => {
     if (!loading && !data && !modalOpen && !dismissed) {
@@ -61,19 +75,19 @@ const SmtpConfig: React.FC = () => {
   const handleSubmit = async (vals: any) => {
     setSubmitting(true);
     try {
+      const body = {
+        configKey: CONFIG_KEY,
+        configValue: JSON.stringify(vals),
+        status: data?.status === 0 ? 0 : 1,
+      };
       if (data) {
-        await request.put('/system-config/update', {
-          configKey: CONFIG_KEY,
-          configValue: JSON.stringify(vals),
-        });
+        await request.put('/system-config/update', body);
       } else {
         await request.post('/system-config/create', {
-          configKey: CONFIG_KEY,
-          configValue: JSON.stringify(vals),
+          ...body,
           configType: 'json',
           description: '',
           cacheTTL: 0,
-          status: 1,
         });
       }
       message.success(t('common.saved'));
@@ -104,9 +118,10 @@ const SmtpConfig: React.FC = () => {
           <Descriptions.Item label={t('smtp.port')}>{data?.port ?? '-'}</Descriptions.Item>
           <Descriptions.Item label={t('smtp.user')}>{data?.user || '-'}</Descriptions.Item>
           <Descriptions.Item label={t('app.status')}>
-            {isConfigured(data)
-              ? <Tag color="green">{t('common.configured')}</Tag>
-              : <Tag color="red">{t('common.notConfigured')}</Tag>}
+            <Tag color={data?.status !== 0 ? 'green' : 'red'} style={{ cursor: 'pointer' }}
+              onClick={handleToggleStatus}>
+              {data?.status === 0 ? t('app.disabled') : (isConfigured(data) ? t('common.configured') : t('common.notConfigured'))}
+            </Tag>
           </Descriptions.Item>
         </Descriptions>
       </Card>
