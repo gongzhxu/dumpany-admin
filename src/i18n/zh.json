@@ -110,7 +110,6 @@
     "save": "保存",
     "save_success": "保存成功",
     "save_failed": "保存失败",
-    "swagger_open": "打开 Swagger",
     "not_configured": "尚未配置支付宝",
     "configure": "立即配置",
     "appId": "App ID",
@@ -185,7 +184,8 @@
     "created_at": "创建时间",
     "updated_at": "修改时间",
     "updatedAt": "修改时间",
-    "createdAt": "创建时间"
+    "createdAt": "创建时间",
+    "swagger_open": "打开 Swagger"
   },
   "system_config": {
     "title": "系统配置",

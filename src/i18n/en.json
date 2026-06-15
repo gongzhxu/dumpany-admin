@@ -110,7 +110,6 @@
     "save": "Save",
     "save_success": "Saved successfully",
     "save_failed": "Save failed",
-    "swagger_open": "Open Swagger",
     "not_configured": "Alipay not configured",
     "configure": "Configure Now",
     "appId": "App ID",
@@ -185,7 +184,8 @@
     "created_at": "Created At",
     "updated_at": "Updated At",
     "updatedAt": "Updated At",
-    "createdAt": "Created At"
+    "createdAt": "Created At",
+    "swagger_open": "Open Swagger"
   },
   "system_config": {
     "title": "System Config",
