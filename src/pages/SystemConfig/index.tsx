@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-  Table, Button, Modal, Form, Input, InputNumber, Select, Switch, message, Typography, Card, Tag, Space, Popconfirm,
+  Table, Button, Modal, Form, Input, InputNumber, Select, message, Typography, Card, Tag, Space, Popconfirm,
 } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
@@ -112,34 +112,35 @@ const SystemConfigPage: React.FC = () => {
   };
 
   const columns = [
-    { title: t('system_config.config_key'), dataIndex: 'configKey', key: 'configKey', width: 220 },
+    { title: t('system_config.config_key'), dataIndex: 'configKey', key: 'configKey', width: 160 },
     {
       title: t('system_config.config_value'), dataIndex: 'configValue', key: 'configValue',
       ellipsis: true,
       render: (text: string) => (
-        <Typography.Paragraph copyable ellipsis={{ rows: 1 }} style={{ margin: 0, maxWidth: 300 }}>
+        <Typography.Paragraph copyable ellipsis={{ rows: 1 }} style={{ margin: 0, maxWidth: 200 }}>
           {text}
         </Typography.Paragraph>
       ),
     },
     {
-      title: t('system_config.config_type'), dataIndex: 'configType', key: 'configType', width: 80,
+      title: t('system_config.config_type'), dataIndex: 'configType', key: 'configType', width: 65,
       render: (text: string) => <Tag color={typeColor[text] || 'default'}>{text}</Tag>,
     },
     { title: t('system_config.description'), dataIndex: 'description', key: 'description', ellipsis: true },
     {
-      title: t('system_config.cache_ttl'), dataIndex: 'cacheTTL', key: 'cacheTTL', width: 100,
+      title: t('system_config.cache_ttl'), dataIndex: 'cacheTTL', key: 'cacheTTL', width: 70,
       render: (val: number) => (val === 0 ? t('system_config.no_cache') : `${val}s`),
     },
     {
-      title: t('app.status'), dataIndex: 'status', key: 'status', width: 80,
+      title: t('app.status'), dataIndex: 'status', key: 'status', width: 65,
       render: (val: number, record: ConfigItem) => (
-        <Switch checked={val === 1} size="small" onChange={() => handleToggleStatus(record)}
-          checkedChildren={t('app.active')} unCheckedChildren={t('app.disabled')} />
+        <Tag color={val === 1 ? 'green' : 'red'} style={{ cursor: 'pointer' }} onClick={() => handleToggleStatus(record)}>
+          {val === 1 ? t('app.active') : t('app.disabled')}
+        </Tag>
       ),
     },
     {
-      title: t('app.action'), key: 'action', width: 120,
+      title: t('app.action'), key: 'action', width: 100,
       render: (_: any, record: ConfigItem) => (
         <Space>
           <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(record)}>{t('app.edit')}</Button>
@@ -158,7 +159,7 @@ const SystemConfigPage: React.FC = () => {
         <Button type="primary" icon={<PlusOutlined />} onClick={openCreate}>{t('app.create')}</Button>
       </div>
       <Card>
-        <Table dataSource={data} columns={columns} rowKey="configKey" loading={loading} pagination={false} size="small" scroll={{ x: 1100 }} />
+        <Table dataSource={data} columns={columns} rowKey="configKey" loading={loading} pagination={false} size="small" />
       </Card>
       <Modal title={editRecord ? t('system_config.edit_title') : '新增配置'} open={modalOpen}
         onCancel={() => setModalOpen(false)} footer={null} width={560} destroyOnClose>
