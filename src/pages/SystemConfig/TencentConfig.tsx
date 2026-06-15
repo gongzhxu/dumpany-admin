@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Descriptions, Button, Modal, Form, Input, Space, message, Typography, Card, Tag } from 'antd';
-import { EditOutlined, PlusOutlined, DeleteOutlined } from '@ant-design/icons';
+import { EditOutlined, PlusOutlined, DeleteOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
@@ -17,7 +17,7 @@ const defaultData = {
 type SectionKey = 'credentials' | 'sms' | 'cos';
 
 const SECTION_FIELDS: Record<SectionKey, string[]> = {
-  credentials: ['credentials.secretId'],
+  credentials: ['credentials.secretId', 'credentials.secretKey'],
   sms: ['sms.sdkAppId', 'sms.appKey', 'sms.signName', 'sms.templateId'],
   cos: ['cos.bucket', 'cos.region'],
 };
@@ -36,6 +36,19 @@ function isConfiguredSection(cfg: any, section: SectionKey) {
 }
 
 const CARD_WIDTH: React.CSSProperties = { maxWidth: 640 };
+
+const MaskedValue: React.FC<{ value: string }> = ({ value }) => {
+  const [visible, setVisible] = useState(false);
+  if (!value) return <>{'-'}</>;
+  return (
+    <span style={{ cursor: 'pointer' }} onClick={() => setVisible(!visible)}>
+      {visible ? value : '••••••••••'}
+      <span style={{ marginLeft: 6, color: '#999' }}>
+        {visible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+      </span>
+    </span>
+  );
+};
 
 const TencentConfig: React.FC = () => {
   const { t } = useTranslation();
@@ -202,12 +215,13 @@ const TencentConfig: React.FC = () => {
       {/* Credentials Card */}
       {renderCard(t('tencent.credentials'), 'credentials', [
         { label: t('tencent.secretId'), value: data?.credentials?.secretId },
+        { label: t('tencent.secretKey'), value: <MaskedValue value={data?.credentials?.secretKey} /> },
       ], () => openModal('credentials'))}
 
       {/* SMS Card */}
       {renderCard(t('tencent.sms'), 'sms', [
         { label: t('tencent.sdkAppId'), value: data?.sms?.sdkAppId },
-        { label: t('tencent.appKey'), value: data?.sms?.appKey },
+        { label: t('tencent.appKey'), value: <MaskedValue value={data?.sms?.appKey} /> },
         { label: t('tencent.sign'), value: data?.sms?.signName },
         { label: t('tencent.templateId'), value: data?.sms?.templateId },
       ], () => openModal('sms'))}
