@@ -26,7 +26,6 @@ const SystemConfigPage: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [editRecord, setEditRecord] = useState<ConfigItem | null>(null);
   const [editLoading, setEditLoading] = useState(false);
-  const [cacheMode, setCacheMode] = useState<string>('0');
   const [form] = Form.useForm();
 
   const fetchData = useCallback(async () => {
