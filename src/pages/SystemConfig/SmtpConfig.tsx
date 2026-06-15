@@ -67,6 +67,7 @@ const SmtpConfig: React.FC = () => {
       });
       message.success(t('common.saved'));
       setModalOpen(false);
+      setDismissed(false);
       fetchData();
     } catch (err: any) {
       message.error(err?.response?.data?.msg || err.message);
