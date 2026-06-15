@@ -34,7 +34,8 @@
     "system_config": "System Config",
     "system_config_general": "General",
     "system_config_sms": "SMS",
-    "system_config_smtp": "Email (SMTP)"
+    "system_config_smtp": "Email (SMTP)",
+    "system_config_tencent": "Tencent Cloud"
   },
   "login": {
     "title": "Admin Login",
@@ -215,6 +216,25 @@
     "port": "Port",
     "user": "Email",
     "pass": "Auth Code"
+  },
+  "tencent": {
+    "title": "Tencent Cloud Config",
+    "editTitle": "Edit Config",
+    "credentials": "Credentials",
+    "secretId": "SecretId",
+    "secretKey": "SecretKey",
+    "sms": "SMS",
+    "sdkAppId": "SDK AppID",
+    "sign": "Sign Name",
+    "templateId": "Template ID",
+    "cos": "COS",
+    "bucket": "Bucket",
+    "region": "Region",
+    "prefixes": "Prefixes",
+    "noPrefixes": "No prefixes",
+    "prefixName": "Name",
+    "prefixPath": "Path",
+    "addPrefix": "Add Prefix"
   },
   "common": {
     "configured": "Configured",

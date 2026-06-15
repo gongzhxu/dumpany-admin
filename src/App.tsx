@@ -18,6 +18,7 @@ import AppPage from './pages/App';
 import SystemConfigPage from './pages/SystemConfig';
 import SmsConfigPage from './pages/SystemConfig/SmsConfig';
 import SmtpConfigPage from './pages/SystemConfig/SmtpConfig';
+import TencentConfigPage from './pages/SystemConfig/TencentConfig';
 import { useAuth } from './hooks/useAuth';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -54,6 +55,7 @@ const App: React.FC = () => {
             <Route path="system-config" element={<SystemConfigPage />} />
             <Route path="system-config/sms" element={<SmsConfigPage />} />
             <Route path="system-config/smtp" element={<SmtpConfigPage />} />
+            <Route path="system-config/tencent" element={<TencentConfigPage />} />
           </Route>
         </Routes>
       </AntApp>

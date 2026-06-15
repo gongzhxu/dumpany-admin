@@ -34,7 +34,8 @@
     "system_config": "系统配置",
     "system_config_general": "通用配置",
     "system_config_sms": "SMS 配置",
-    "system_config_smtp": "邮件配置"
+    "system_config_smtp": "邮件配置",
+    "system_config_tencent": "腾讯云服务"
   },
   "login": {
     "title": "管理员登录",
@@ -215,6 +216,25 @@
     "port": "端口",
     "user": "邮箱地址",
     "pass": "授权码"
+  },
+  "tencent": {
+    "title": "腾讯云服务配置",
+    "editTitle": "编辑配置",
+    "credentials": "凭证",
+    "secretId": "SecretId",
+    "secretKey": "SecretKey",
+    "sms": "SMS 短信",
+    "sdkAppId": "SDK AppID",
+    "sign": "短信签名",
+    "templateId": "模板 ID",
+    "cos": "COS 对象存储",
+    "bucket": "存储桶",
+    "region": "地域",
+    "prefixes": "前缀列表",
+    "noPrefixes": "暂无前缀",
+    "prefixName": "名称",
+    "prefixPath": "路径",
+    "addPrefix": "新增前缀"
   },
   "common": {
     "configured": "已配置",
