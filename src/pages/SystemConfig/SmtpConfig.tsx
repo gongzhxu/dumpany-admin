@@ -61,10 +61,21 @@ const SmtpConfig: React.FC = () => {
   const handleSubmit = async (vals: any) => {
     setSubmitting(true);
     try {
-      await request.put('/system-config/update', {
-        configKey: CONFIG_KEY,
-        configValue: JSON.stringify(vals),
-      });
+      if (data) {
+        await request.put('/system-config/update', {
+          configKey: CONFIG_KEY,
+          configValue: JSON.stringify(vals),
+        });
+      } else {
+        await request.post('/system-config/create', {
+          configKey: CONFIG_KEY,
+          configValue: JSON.stringify(vals),
+          configType: 'json',
+          description: '',
+          cacheTTL: 0,
+          status: 1,
+        });
+      }
       message.success(t('common.saved'));
       setModalOpen(false);
       setDismissed(false);
