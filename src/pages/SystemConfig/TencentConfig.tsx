@@ -10,7 +10,7 @@ const CONFIG_KEY = 'tencent';
 
 const defaultData = {
   credentials: { secretId: '', secretKey: '' },
-  sms: { sdkAppId: '', appKey: '', sign: 'DumpAny', templateId: '' },
+  sms: { sdkAppId: '', appKey: '', signName: 'DumpAny', templateId: '' },
   cos: { bucket: '', region: '', prefixes: [] as any[] },
 };
 
@@ -18,7 +18,7 @@ type SectionKey = 'credentials' | 'sms' | 'cos';
 
 const SECTION_FIELDS: Record<SectionKey, string[]> = {
   credentials: ['credentials.secretId'],
-  sms: ['sms.sdkAppId', 'sms.appKey', 'sms.sign', 'sms.templateId'],
+  sms: ['sms.sdkAppId', 'sms.appKey', 'sms.signName', 'sms.templateId'],
   cos: ['cos.bucket', 'cos.region'],
 };
 
@@ -93,7 +93,7 @@ const TencentConfig: React.FC = () => {
     } else if (modalSection === 'sms') {
       vals.sdkAppId = s.sdkAppId || '';
       vals.appKey = s.appKey || '';
-      vals.sign = s.sign || 'DumpAny';
+      vals.signName = s.signName || 'DumpAny';
       vals.templateId = s.templateId || '';
     } else if (modalSection === 'cos') {
       vals.bucket = s.bucket || '';
@@ -208,7 +208,7 @@ const TencentConfig: React.FC = () => {
       {renderCard(t('tencent.sms'), 'sms', [
         { label: t('tencent.sdkAppId'), value: data?.sms?.sdkAppId },
         { label: t('tencent.appKey'), value: data?.sms?.appKey },
-        { label: t('tencent.sign'), value: data?.sms?.sign },
+        { label: t('tencent.sign'), value: data?.sms?.signName },
         { label: t('tencent.templateId'), value: data?.sms?.templateId },
       ], () => openModal('sms'))}
 
@@ -244,7 +244,7 @@ const TencentConfig: React.FC = () => {
           <Form.Item name="appKey" label={t('tencent.appKey')} rules={[{ required: true }]}>
             <Input.Password />
           </Form.Item>
-          <Form.Item name="sign" label={t('tencent.sign')} rules={[{ required: true }]}>
+          <Form.Item name="signName" label={t('tencent.sign')} rules={[{ required: true }]}>
             <Input />
           </Form.Item>
           <Form.Item name="templateId" label={t('tencent.templateId')} rules={[{ required: true }]}>
