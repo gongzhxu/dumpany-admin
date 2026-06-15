@@ -225,6 +225,7 @@
     "secretKey": "SecretKey",
     "sms": "SMS",
     "sdkAppId": "SDK AppID",
+    "appKey": "App Key",
     "sign": "Sign Name",
     "templateId": "Template ID",
     "cos": "COS",

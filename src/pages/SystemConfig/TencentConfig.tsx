@@ -10,7 +10,7 @@ const CONFIG_KEY = 'tencent';
 
 const defaultData = {
   credentials: { secretId: '', secretKey: '' },
-  sms: { sdkAppId: '', sign: 'DumpAny', templateId: '' },
+  sms: { sdkAppId: '', appKey: '', sign: 'DumpAny', templateId: '' },
   cos: { bucket: '', region: '', prefixes: [] as any[] },
 };
 
@@ -18,7 +18,7 @@ type SectionKey = 'credentials' | 'sms' | 'cos';
 
 const SECTION_FIELDS: Record<SectionKey, string[]> = {
   credentials: ['credentials.secretId'],
-  sms: ['sms.sdkAppId', 'sms.sign', 'sms.templateId'],
+  sms: ['sms.sdkAppId', 'sms.appKey', 'sms.sign', 'sms.templateId'],
   cos: ['cos.bucket', 'cos.region'],
 };
 
@@ -92,6 +92,7 @@ const TencentConfig: React.FC = () => {
       vals.secretKey = s.secretKey || '';
     } else if (modalSection === 'sms') {
       vals.sdkAppId = s.sdkAppId || '';
+      vals.appKey = s.appKey || '';
       vals.sign = s.sign || 'DumpAny';
       vals.templateId = s.templateId || '';
     } else if (modalSection === 'cos') {
@@ -206,6 +207,7 @@ const TencentConfig: React.FC = () => {
       {/* SMS Card */}
       {renderCard(t('tencent.sms'), 'sms', [
         { label: t('tencent.sdkAppId'), value: data?.sms?.sdkAppId },
+        { label: t('tencent.appKey'), value: data?.sms?.appKey },
         { label: t('tencent.sign'), value: data?.sms?.sign },
         { label: t('tencent.templateId'), value: data?.sms?.templateId },
       ], () => openModal('sms'))}
@@ -238,6 +240,9 @@ const TencentConfig: React.FC = () => {
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item name="sdkAppId" label={t('tencent.sdkAppId')} rules={[{ required: true }]}>
             <Input />
+          </Form.Item>
+          <Form.Item name="appKey" label={t('tencent.appKey')} rules={[{ required: true }]}>
+            <Input.Password />
           </Form.Item>
           <Form.Item name="sign" label={t('tencent.sign')} rules={[{ required: true }]}>
             <Input />

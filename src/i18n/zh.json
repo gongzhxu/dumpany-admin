@@ -225,6 +225,7 @@
     "secretKey": "SecretKey",
     "sms": "SMS 短信",
     "sdkAppId": "SDK AppID",
+    "appKey": "App Key",
     "sign": "短信签名",
     "templateId": "模板 ID",
     "cos": "COS 对象存储",
