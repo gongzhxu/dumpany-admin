@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, Modal, Form, Input, InputNumber, message, Typography, Card } from 'antd';
+import { Descriptions, Button, Modal, Form, Input, InputNumber, message, Typography, Card, Tag } from 'antd';
 import { EditOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
@@ -12,13 +12,15 @@ function isConfigured(cfg: any) {
   return cfg?.host && cfg?.user && cfg?.pass;
 }
 
+const defaultVals = { host: 'smtp.163.com', port: 465, user: '', pass: '' };
+
 const SmtpConfig: React.FC = () => {
   const { t } = useTranslation();
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [modalOpen, setModalOpen] = useState(false);
-  const [editing, setEditing] = useState<any>(null);
   const [submitting, setSubmitting] = useState(false);
+  const [dismissed, setDismissed] = useState(false);
   const [form] = Form.useForm();
   const [init, setInit] = useState<Record<string, any>>({});
   const [curr, setCurr] = useState<Record<string, any>>({});
@@ -28,44 +30,33 @@ const SmtpConfig: React.FC = () => {
     try {
       const res: any = await request.get('/system-config/list');
       const cfg = (res.data || []).find((c: any) => c.configKey === CONFIG_KEY);
-      if (cfg) {
-        const parsed = JSON.parse(cfg.configValue || '{}');
-        setData([parsed]);
-      } else {
-        setData([]);
-      }
-    } catch {
-      setData([]);
-    } finally {
-      setLoading(false);
-    }
+      if (cfg) setData(JSON.parse(cfg.configValue || '{}'));
+      else setData(null);
+    } catch { setData(null); }
+    finally { setLoading(false); }
   };
 
   useEffect(() => { fetchData(); }, []);
 
   useEffect(() => {
+    if (!loading && !data && !modalOpen && !dismissed) {
+      setModalOpen(true);
+    }
+  }, [loading, data, modalOpen, dismissed]);
+
+  useEffect(() => {
     if (modalOpen) {
-      let vals: any = {};
-      if (editing) {
-        vals = {
-          host: editing.host || 'smtp.163.com',
-          port: editing.port || 465,
-          user: editing.user || '',
-          pass: editing.pass || '',
-        };
-      } else {
-        vals = { host: 'smtp.163.com', port: 465 };
-      }
+      const vals = data ? {
+        host: data.host || 'smtp.163.com',
+        port: data.port || 465,
+        user: data.user || '',
+        pass: data.pass || '',
+      } : { ...defaultVals };
       setInit(vals);
       setCurr(vals);
       form.setFieldsValue(vals);
     }
-  }, [modalOpen, editing, form]);
-
-  const openEdit = (record?: any) => {
-    setEditing(record || null);
-    setModalOpen(true);
-  };
+  }, [modalOpen, data, form]);
 
   const handleSubmit = async (vals: any) => {
     setSubmitting(true);
@@ -79,9 +70,7 @@ const SmtpConfig: React.FC = () => {
       fetchData();
     } catch (err: any) {
       message.error(err?.response?.data?.msg || err.message);
-    } finally {
-      setSubmitting(false);
-    }
+    } finally { setSubmitting(false); }
   };
 
   const fieldColor = (key: string) => {
@@ -89,34 +78,27 @@ const SmtpConfig: React.FC = () => {
     return '#bbb';
   };
 
-  const columns = [
-    { title: t('smtp.host'), dataIndex: 'host', key: 'host' },
-    { title: t('smtp.port'), dataIndex: 'port', key: 'port', width: 80 },
-    { title: t('smtp.user'), dataIndex: 'user', key: 'user' },
-    {
-      title: t('app.status'), key: 'status', width: 120,
-      render: (_: any, record: any) =>
-        isConfigured(record)
-          ? <Typography.Text type="success">{t('common.configured')}</Typography.Text>
-          : <Typography.Text type="danger">{t('common.notConfigured')}</Typography.Text>,
-    },
-    {
-      title: t('app.action'), key: 'action', width: 80,
-      render: (_: any, record: any) => (
-        <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(record)}>{t('app.edit')}</Button>
-      ),
-    },
-  ];
+  if (loading) return <Card loading><Title level={4}>{t('smtp.title')}</Title></Card>;
 
   return (
     <div className="page-container">
       <div className="page-header">
         <Title level={4}>{t('smtp.title')}</Title>
+        {data && <Button icon={<EditOutlined />} onClick={() => setModalOpen(true)}>{t('app.edit')}</Button>}
       </div>
       <Card>
-        <Table dataSource={data} columns={columns} rowKey="host" loading={loading} pagination={false} size="small" />
+        <Descriptions column={1} size="small" bordered>
+          <Descriptions.Item label={t('smtp.host')}>{data?.host || '-'}</Descriptions.Item>
+          <Descriptions.Item label={t('smtp.port')}>{data?.port ?? '-'}</Descriptions.Item>
+          <Descriptions.Item label={t('smtp.user')}>{data?.user || '-'}</Descriptions.Item>
+          <Descriptions.Item label={t('app.status')}>
+            {isConfigured(data)
+              ? <Tag color="green">{t('common.configured')}</Tag>
+              : <Tag color="red">{t('common.notConfigured')}</Tag>}
+          </Descriptions.Item>
+        </Descriptions>
       </Card>
-      <Modal title={t('smtp.editTitle')} open={modalOpen} onCancel={() => setModalOpen(false)} footer={null} width={520} destroyOnClose>
+      <Modal title={t('smtp.editTitle')} open={modalOpen} onCancel={() => { setModalOpen(false); setDismissed(true); }} footer={null} width={520} destroyOnClose>
         <Form form={form} layout="vertical" onFinish={handleSubmit}
           onValuesChange={() => setCurr({ ...form.getFieldsValue() })}>
           <Form.Item name="host" label={t('smtp.host')} rules={[{ required: true }]}>
@@ -132,9 +114,7 @@ const SmtpConfig: React.FC = () => {
             <Input.Password style={{ color: fieldColor('pass') }} />
           </Form.Item>
           <Form.Item>
-            <Button type="primary" htmlType="submit" loading={submitting} block>
-              {t('common.save')}
-            </Button>
+            <Button type="primary" htmlType="submit" loading={submitting} block>{t('common.save')}</Button>
           </Form.Item>
         </Form>
       </Modal>
