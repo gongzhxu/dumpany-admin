@@ -35,7 +35,8 @@
     "system_config_general": "通用配置",
     "system_config_sms": "SMS 配置",
     "system_config_smtp": "邮件配置",
-    "system_config_tencent": "腾讯云服务"
+    "system_config_tencent": "腾讯云服务",
+    "system_config_jwt": "JWT 配置"
   },
   "login": {
     "title": "管理员登录",

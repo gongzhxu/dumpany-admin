@@ -35,7 +35,8 @@
     "system_config_general": "General",
     "system_config_sms": "SMS",
     "system_config_smtp": "Email (SMTP)",
-    "system_config_tencent": "Tencent Cloud"
+    "system_config_tencent": "Tencent Cloud",
+    "system_config_jwt": "JWT Config"
   },
   "login": {
     "title": "Admin Login",
