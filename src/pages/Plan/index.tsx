@@ -18,6 +18,7 @@ interface Plan {
   status: number;
   popular: boolean;
   sortOrder: number;
+  paymentExpiryHours: number;
 }
 
 const PlanPage: React.FC = () => {
@@ -61,6 +62,7 @@ const PlanPage: React.FC = () => {
           status: editing.status,
           popular: editing.popular,
           sortOrder: editing.sortOrder,
+          paymentExpiryHours: editing.paymentExpiryHours ?? 720,
         };
       }
       setInit(vals);
@@ -72,7 +74,7 @@ const PlanPage: React.FC = () => {
   const openCreate = () => {
     setEditing(null);
     form.resetFields();
-    const defaults = { status: 1, popular: false, validityType: 'day', validityValue: 30, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0 };
+    const defaults = { status: 1, popular: false, validityType: 'day', validityValue: 30, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0, paymentExpiryHours: 720 };
     setInit(defaults);
     setCurr(defaults);
     form.setFieldsValue(defaults);
@@ -209,6 +211,11 @@ const PlanPage: React.FC = () => {
             </Form.Item>
             <Form.Item name="sortOrder" label="排序">
               <InputNumber min={0} style={{ color: fieldColor('sortOrder') }} />
+            </Form.Item>
+          </Space>
+          <Space size={16}>
+            <Form.Item name="paymentExpiryHours" label="支付过期(小时)" initialValue={720}>
+              <InputNumber min={1} style={{ color: fieldColor('paymentExpiryHours') }} />
             </Form.Item>
           </Space>
           <Form.Item>
