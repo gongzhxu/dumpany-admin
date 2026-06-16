@@ -36,8 +36,8 @@ const JwtConfig: React.FC = () => {
 
   useEffect(() => {
     if (modalOpen) {
-      const vals = data || { secret: '', expireHours: 24 };
-      form.setFieldsValue({ secret: vals.secret || '', expireHours: vals.expireHours || 24 });
+      const vals = data || { secret: '', expireSeconds: 24 };
+      form.setFieldsValue({ secret: vals.secret || '', expireSeconds: vals.expireSeconds || 24 });
     }
   }, [modalOpen, data, form]);
 
@@ -66,8 +66,8 @@ const JwtConfig: React.FC = () => {
           <Descriptions.Item label="Secret">
             {data?.secret ? <Tag color="blue">{data.secret.substring(0, 20)}...</Tag> : '-'}
           </Descriptions.Item>
-          <Descriptions.Item label="过期时间(小时)">
-            {data?.expireHours ?? 24} 小时
+          <Descriptions.Item label="过期时间(秒)">
+            {data?.expireSeconds ?? 86400} 小时
           </Descriptions.Item>
           <Descriptions.Item label="状态">
             {data?.secret ? <Tag color="green">已配置</Tag> : <Tag color="red">未配置</Tag>}
@@ -81,7 +81,7 @@ const JwtConfig: React.FC = () => {
           <Form.Item name="secret" label="Secret" rules={[{ required: true, message: '请输入 JWT Secret' }]}>
             <Input.Password placeholder="JWT 签名密钥" />
           </Form.Item>
-          <Form.Item name="expireHours" label="过期时间(小时)" initialValue={24}>
+          <Form.Item name="expireSeconds" label="过期时间(秒)" initialValue={86400}>
             <InputNumber min={1} max={8760} style={{ width: '100%' }} />
           </Form.Item>
           <Form.Item>
