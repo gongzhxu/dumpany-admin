@@ -124,7 +124,11 @@
     "privateKey_placeholder": "RSA2 私钥",
     "privateKey_edit_placeholder": "留空则不修改",
     "gatewayUrl_placeholder": "https://openapi.alipay.com/gateway.do",
-    "publicKey_placeholder": "支付宝公钥（PEM 格式，留空则不修改）"
+    "publicKey_placeholder": "支付宝公钥（PEM 格式，留空则不修改）",
+    "notifyUrl": "异步回调地址",
+    "notifyUrl_placeholder": "https://api.dumpany.cn/api/v1/backend/payments/alipay/webhook",
+    "returnUrl": "支付成功跳转地址",
+    "returnUrl_placeholder": "https://dumpany.cn/account?tab=orders"
   },
   "admin": {
     "title": "管理员管理",

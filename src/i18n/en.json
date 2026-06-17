@@ -124,7 +124,11 @@
     "privateKey_placeholder": "RSA2 Private Key",
     "privateKey_edit_placeholder": "Leave blank to keep current",
     "gatewayUrl_placeholder": "https://openapi.alipay.com/gateway.do",
-    "publicKey_placeholder": "RSA2 Public Key"
+    "publicKey_placeholder": "RSA2 Public Key",
+    "notifyUrl": "Notify URL",
+    "notifyUrl_placeholder": "https://api.dumpany.cn/api/v1/backend/payments/alipay/webhook",
+    "returnUrl": "Return URL",
+    "returnUrl_placeholder": "https://dumpany.cn/account?tab=orders"
   },
   "admin": {
     "title": "Admin Management",
