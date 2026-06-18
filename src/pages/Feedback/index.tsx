@@ -33,6 +33,10 @@ function fmtTime(v: string) {
   return d.toLocaleString();
 }
 
+function isVideo(url: string) {
+  return /\.(mp4|mov|avi|mkv|webm)(\?|$)/i.test(url);
+}
+
 const FeedbackPage: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<Feedback[]>([]);
@@ -130,10 +134,15 @@ const FeedbackPage: React.FC = () => {
         if (!v || v.length === 0) return '-';
         return (
           <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
-            {v.map((url: string, i: number) => (
-              <img key={i} src={url} alt="" onClick={() => { setPreviewUrls(v); setPreviewIndex(i) }}
-                style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 4, border: '1px solid #f0f0f0', cursor: 'pointer' }} />
-            ))}
+            {v.map((url: string, i: number) =>
+              isVideo(url) ? (
+                <div key={i} onClick={() => { setPreviewUrls(v); setPreviewIndex(i) }}
+                  style={{ width: 50, height: 50, borderRadius: 4, border: '1px solid #f0f0f0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f5f5', fontSize: 20 }}>▶</div>
+              ) : (
+                <img key={i} src={url} alt="" onClick={() => { setPreviewUrls(v); setPreviewIndex(i) }}
+                  style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 4, border: '1px solid #f0f0f0', cursor: 'pointer' }} />
+              )
+            )}
           </div>
         );
       },
@@ -210,7 +219,10 @@ const FeedbackPage: React.FC = () => {
           style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, cursor: 'zoom-out' }}>
           <span onClick={(e) => { e.stopPropagation(); setPreviewIndex(previewIndex > 0 ? previewIndex - 1 : previewUrls.length - 1); }}
             style={{ fontSize: 40, color: 'white', cursor: 'pointer', userSelect: 'none', padding: '0 8px', lineHeight: 1 }}>‹</span>
-          <img src={previewUrls[previewIndex]} alt="" style={{ maxWidth: '70vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: 8 }} />
+          {isVideo(previewUrls[previewIndex])
+            ? <video src={previewUrls[previewIndex]} controls autoPlay style={{ maxWidth: '80vw', maxHeight: '90vh', borderRadius: 8 }} />
+            : <img src={previewUrls[previewIndex]} alt="" style={{ maxWidth: '70vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: 8 }} />
+          }
           <span onClick={(e) => { e.stopPropagation(); setPreviewIndex(previewIndex < previewUrls.length - 1 ? previewIndex + 1 : 0); }}
             style={{ fontSize: 40, color: 'white', cursor: 'pointer', userSelect: 'none', padding: '0 8px', lineHeight: 1 }}>›</span>
           <span style={{ position: 'absolute', bottom: 16, color: 'white', fontSize: 14, background: 'rgba(0,0,0,0.5)', padding: '4px 12px', borderRadius: 12 }}>
