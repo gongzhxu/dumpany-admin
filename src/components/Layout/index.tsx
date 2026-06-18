@@ -34,14 +34,12 @@ const AdminLayout: React.FC = () => {
   const [apps, setApps] = useState<AppOption[]>([]);
   const [selectedApp, setSelectedApp] = useState<string>(() => localStorage.getItem('selectedAppId') || '');
 
-  // 根据当前路径自动展开子菜单
   const [openKeys, setOpenKeys] = useState<string[]>(() => {
     const path = location.pathname;
     if (path.startsWith('/payment')) return ['payment'];
     return [];
   });
 
-  // 加载应用列表
   useEffect(() => {
     request.get('/app/list').then((res) => {
       setApps(res.data || []);
@@ -60,11 +58,9 @@ const AdminLayout: React.FC = () => {
 
   const menuItems = [
     { key: '/', icon: <DashboardOutlined />, label: t('app.dashboard') },
-    { key: '/license', icon: <KeyOutlined />, label: t('app.license') },
     { key: '/order', icon: <ShoppingCartOutlined />, label: t('app.order') },
-    { key: '/plan', icon: <DollarOutlined />, label: t('app.plan') },
-    { key: '/admin', icon: <UserOutlined />, label: t('app.admin') },
-    { key: '/app', icon: <AppstoreOutlined />, label: t('app.app') },
+    { key: '/license', icon: <KeyOutlined />, label: t('app.license') },
+    { key: '/feedback', icon: <MessageOutlined />, label: '用户反馈' },
     {
       key: 'payment',
       icon: <DollarOutlined />,
@@ -73,8 +69,10 @@ const AdminLayout: React.FC = () => {
         { key: '/payment/alipay', icon: <img src="/alipay-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.alipay') },
       ],
     },
+    { key: '/plan', icon: <DollarOutlined />, label: t('app.plan') },
+    { key: '/app', icon: <AppstoreOutlined />, label: t('app.app') },
+    { key: '/admin', icon: <UserOutlined />, label: t('app.admin') },
     { key: '/swagger', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.swagger') },
-    { key: '/feedback', icon: <MessageOutlined />, label: '用户反馈' },
     {
       key: 'system-config',
       icon: <SettingOutlined />,
