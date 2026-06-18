@@ -12,12 +12,15 @@ interface Plan {
   tier: string;
   priceCNY: number;
   priceUSD: number;
+  originalPriceCNY: number;
+  originalPriceUSD: number;
   validityType: string;
   validityValue: number;
   maxDevices: number;
   status: number;
   popular: boolean;
   sortOrder: number;
+  bulkDiscountRate: number;
   paymentExpirySeconds: number;
 }
 
@@ -52,16 +55,20 @@ const PlanPage: React.FC = () => {
       let vals: Record<string, any> = {};
       if (editing) {
         vals = {
+          id: editing.id,
           planId: editing.planId,
           tier: editing.tier,
           priceCny: editing.priceCNY,
           priceUsd: editing.priceUSD,
+          originalPriceCny: editing.originalPriceCNY,
+          originalPriceUsd: editing.originalPriceUSD,
           validityType: editing.validityType,
           validityValue: editing.validityValue,
           maxDevices: editing.maxDevices,
           status: editing.status,
           popular: editing.popular,
           sortOrder: editing.sortOrder,
+          bulkDiscountRate: editing.bulkDiscountRate,
           paymentExpirySeconds: editing.paymentExpirySeconds ?? 7200,
         };
       }
@@ -74,7 +81,7 @@ const PlanPage: React.FC = () => {
   const openCreate = () => {
     setEditing(null);
     form.resetFields();
-    const defaults = { status: 1, popular: false, validityType: 'day', validityValue: 30, maxDevices: 1, priceCny: 0, priceUsd: 0, sortOrder: 0, paymentExpirySeconds: 7200 };
+    const defaults = { status: 1, popular: false, validityType: 'day', validityValue: 30, maxDevices: 1, priceCny: 0, priceUsd: 0, originalPriceCny: 0, originalPriceUsd: 0, bulkDiscountRate: 10000, sortOrder: 0, paymentExpirySeconds: 7200 };
     setInit(defaults);
     setCurr(defaults);
     form.setFieldsValue(defaults);
@@ -90,9 +97,7 @@ const PlanPage: React.FC = () => {
     setSubmitting(true);
     try {
       const body = { ...values };
-      if (editing && editing.planId !== values.planId) {
-        await request.delete('/plan/delete', { data: { planId: editing.planId } });
-      }
+      if (editing) body.id = editing.id;
       await request.post('/plan/save', body);
       message.success('Plan saved');
       setModalOpen(false);
@@ -116,17 +121,17 @@ const PlanPage: React.FC = () => {
 
   // 计算字段颜色：创建=黑色，编辑时未改=灰色，已改=红色
   const fieldColor = (key: string) => {
-    if (!editing) return undefined; // 创建模式，黑色
-    if (init[key] !== curr[key]) return '#ff4d4f'; // 已修改，红色
-    return '#bbb'; // 未修改，灰色
+    if (!editing) return undefined;
+    if (init[key] !== curr[key]) return '#ff4d4f';
+    return '#bbb';
   };
 
   const columns = [
     { title: 'ID', dataIndex: 'id', key: 'id', width: 60 },
     { title: '标识', dataIndex: 'planId', key: 'planId', width: 100 },
     { title: t('license.tier'), dataIndex: 'tier', key: 'tier', width: 80 },
-    { title: '价格(CNY)', dataIndex: 'priceCNY', key: 'priceCNY', width: 100, render: (v: number) => v != null ? `¥${(v / 100).toFixed(2)}` : '-' },
-    { title: '价格(USD)', dataIndex: 'priceUSD', key: 'priceUSD', width: 100, render: (v: number) => v != null ? `$${(v / 100).toFixed(2)}` : '-' },
+    { title: '价格(CNY)', dataIndex: 'priceCNY', key: 'priceCNY', width: 90, render: (v: number) => v != null ? `¥${(v / 100).toFixed(2)}` : '-' },
+    { title: '原价(CNY)', dataIndex: 'originalPriceCNY', key: 'originalPriceCNY', width: 90, render: (v: number) => v ? `¥${(v / 100).toFixed(2)}` : '-' },
     { title: '有效期', dataIndex: 'validityType', key: 'validityType', width: 80, render: (_: string, r: Plan) => {
       const map: Record<string, string> = { hour: '小时', day: '天', year: '年', permanent: '永久' };
       return r.validityType === 'permanent' ? '永久' : `${r.validityValue} ${map[r.validityType] || r.validityType}`;
@@ -165,7 +170,7 @@ const PlanPage: React.FC = () => {
         <Table dataSource={data} columns={columns} rowKey="planId" loading={loading} pagination={false} size="small" scroll={{ x: 1200 }} />
       </Card>
 
-      <Modal title={editing ? '编辑套餐' : '新增套餐'} open={modalOpen} onCancel={() => setModalOpen(false)} footer={null} width={640} destroyOnClose>
+      <Modal title={editing ? '编辑套餐' : '新增套餐'} open={modalOpen} onCancel={() => setModalOpen(false)} footer={null} width={800} destroyOnClose>
         <Form form={form} layout="vertical" onFinish={handleSubmit}
           onValuesChange={() => setCurr({ ...form.getFieldsValue() })}>
           <Form.Item name="planId" label="ID" rules={[{ required: true }]}>
@@ -177,12 +182,20 @@ const PlanPage: React.FC = () => {
               style={{ color: fieldColor('tier') }} />
           </Form.Item>
           <Space size={16}>
-            <Form.Item name="priceCny" label="价格(CNY/分)" rules={[{ required: true }]}>
+            <Form.Item name="priceCny" label="售价(CNY/分)" rules={[{ required: true }]}>
               <InputNumber min={0} style={{ color: fieldColor('priceCny') }} />
             </Form.Item>
-            <Form.Item name="priceUsd" label="价格(USD/分)" rules={[{ required: true }]}>
+            <Form.Item name="originalPriceCny" label="原价(CNY/分)">
+              <InputNumber min={0} style={{ color: fieldColor('originalPriceCny') }} />
+            </Form.Item>
+            <Form.Item name="priceUsd" label="售价(USD/分)" rules={[{ required: true }]}>
               <InputNumber min={0} style={{ color: fieldColor('priceUsd') }} />
             </Form.Item>
+            <Form.Item name="originalPriceUsd" label="原价(USD/分)">
+              <InputNumber min={0} style={{ color: fieldColor('originalPriceUsd') }} />
+            </Form.Item>
+          </Space>
+          <Space size={16}>
             <Form.Item name="validityType" label="有效期" initialValue="day">
               <Select style={{ width: 110 }} onChange={() => { const t = form.getFieldValue('validityType'); if (t === 'permanent') form.setFieldsValue({ validityValue: 0 }); }}>
                 <Select.Option value="hour">小时</Select.Option>
@@ -198,6 +211,9 @@ const PlanPage: React.FC = () => {
             <Form.Item name="maxDevices" label="设备数" rules={[{ required: true }]}>
               <InputNumber min={1} max={99} style={{ color: fieldColor('maxDevices') }} />
             </Form.Item>
+            <Form.Item name="bulkDiscountRate" label="第2份起折扣(万分比)" initialValue={10000}>
+              <InputNumber min={0} max={10000} style={{ color: fieldColor('bulkDiscountRate') }} />
+            </Form.Item>
           </Space>
           <Space size={16}>
             <Form.Item name="status" label="状态" initialValue={1}>
@@ -212,8 +228,6 @@ const PlanPage: React.FC = () => {
             <Form.Item name="sortOrder" label="排序">
               <InputNumber min={0} style={{ color: fieldColor('sortOrder') }} />
             </Form.Item>
-          </Space>
-          <Space size={16}>
             <Form.Item name="paymentExpirySeconds" label="支付过期(秒)" initialValue={7200}>
               <InputNumber min={1} style={{ color: fieldColor('paymentExpirySeconds') }} />
             </Form.Item>
