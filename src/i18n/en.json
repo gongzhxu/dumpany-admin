@@ -37,6 +37,7 @@
     "system_config_sms": "SMS",
     "system_config_smtp": "Email (SMTP)",
     "system_config_tencent": "Tencent Cloud",
+    "system_config_aliyun": "Aliyun Cloud",
     "system_config_jwt": "JWT Config"
   },
   "login": {
@@ -249,8 +250,20 @@
   "common": {
     "configured": "Configured",
     "notConfigured": "Not configured",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
     "save": "Save",
     "saved": "Saved"
+  },
+  "aliyunConfig": {
+    "title": "Aliyun Cloud Config",
+    "credentials": "Credentials",
+    "accessKeyId": "AccessKey ID",
+    "accessKeySecret": "AccessKey Secret",
+    "sms": "SMS",
+    "smsEnabled": "Status",
+    "signName": "Sign Name",
+    "templateCode": "Template Code"
   },
   "feedback": {
     "title": "Feedback",

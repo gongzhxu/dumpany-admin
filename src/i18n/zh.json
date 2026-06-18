@@ -37,6 +37,7 @@
     "system_config_sms": "SMS 配置",
     "system_config_smtp": "邮件配置",
     "system_config_tencent": "腾讯云服务",
+    "system_config_aliyun": "阿里云服务",
     "system_config_jwt": "JWT 配置"
   },
   "login": {
@@ -249,8 +250,20 @@
   "common": {
     "configured": "已配置",
     "notConfigured": "未配置",
+    "enabled": "已启用",
+    "disabled": "已禁用",
     "save": "保存",
     "saved": "已保存"
+  },
+  "aliyunConfig": {
+    "title": "阿里云服务配置",
+    "credentials": "凭证",
+    "accessKeyId": "AccessKey ID",
+    "accessKeySecret": "AccessKey Secret",
+    "sms": "SMS 短信",
+    "smsEnabled": "启用状态",
+    "signName": "短信签名",
+    "templateCode": "模板 Code"
   },
   "feedback": {
     "title": "用户反馈",

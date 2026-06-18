@@ -84,6 +84,7 @@ const AdminLayout: React.FC = () => {
         { key: '/system-config', label: t('app.system_config_general') },
         { key: '/system-config/smtp', label: t('app.system_config_smtp') },
         { key: '/system-config/tencent', label: t('app.system_config_tencent') },
+        { key: '/system-config/aliyun', label: t('app.system_config_aliyun') },
         { key: '/system-config/jwt', label: t('app.system_config_jwt') },
       ],
     },

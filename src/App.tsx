@@ -19,6 +19,7 @@ import AppPage from './pages/App';
 import SystemConfigPage from './pages/SystemConfig';
 import SmtpConfigPage from './pages/SystemConfig/SmtpConfig';
 import TencentConfigPage from './pages/SystemConfig/TencentConfig';
+import AliyunConfigPage from './pages/SystemConfig/AliyunConfig';
 import JwtConfigPage from './pages/SystemConfig/JwtConfig';
 import FeedbackPage from './pages/Feedback';
 import DownloadConfigPage from './pages/DownloadConfig';
@@ -61,6 +62,7 @@ const App: React.FC = () => {
             <Route path="system-config" element={<SystemConfigPage />} />
             <Route path="system-config/smtp" element={<SmtpConfigPage />} />
             <Route path="system-config/tencent" element={<TencentConfigPage />} />
+            <Route path="system-config/aliyun" element={<AliyunConfigPage />} />
             <Route path="system-config/jwt" element={<JwtConfigPage />} />
           </Route>
         </Routes>

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Descriptions, Button, Modal, Form, Input, Space, message, Typography, Card, Tag } from 'antd';
+import { Descriptions, Button, Modal, Form, Input, Space, Switch, message, Typography, Card, Tag } from 'antd';
 import { EditOutlined, PlusOutlined, DeleteOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
@@ -10,7 +10,7 @@ const CONFIG_KEY = 'tencent';
 
 const defaultData = {
   credentials: { secretId: '', secretKey: '' },
-  sms: { sdkAppId: '', appKey: '', signName: 'DumpAny', templateId: '' },
+  sms: { enabled: false, sdkAppId: '', appKey: '', signName: 'DumpAny', templateId: '' },
   cos: { bucket: '', region: '', prefixes: [] as any[] },
 };
 
@@ -104,6 +104,7 @@ const TencentConfig: React.FC = () => {
       vals.secretId = s.secretId || '';
       vals.secretKey = s.secretKey || '';
     } else if (modalSection === 'sms') {
+      vals.enabled = s.enabled || false;
       vals.sdkAppId = s.sdkAppId || '';
       vals.appKey = s.appKey || '';
       vals.signName = s.signName || 'DumpAny';
@@ -156,7 +157,10 @@ const TencentConfig: React.FC = () => {
   const renderCard = (title: string, section: SectionKey, fields: { label: string; value: any }[], onEdit: () => void) => (
     <div style={{ marginBottom: 20, padding: 20, borderRadius: 12, border: '1px solid var(--border-color)', ...CARD_WIDTH }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <Title level={5} style={{ margin: 0 }}>{title}</Title>
+        <Title level={5} style={{ margin: 0 }}>
+          <span style={{ display: 'inline-block', width: 10, height: 10, borderRadius: '50%', marginRight: 8, backgroundColor: isConfiguredSection(data, section) ? '#52c41a' : '#ff4d4f' }} />
+          {title}
+        </Title>
         <Space>
           <Button size="small" icon={<EditOutlined />} onClick={onEdit}>{t('app.edit')}</Button>
         </Space>
@@ -167,11 +171,6 @@ const TencentConfig: React.FC = () => {
             {f.value ?? '-'}
           </Descriptions.Item>
         ))}
-        <Descriptions.Item label={t('app.status')}>
-          {isConfiguredSection(data, section)
-            ? <Tag color="green">{t('common.configured')}</Tag>
-            : <Tag color="red">{t('common.notConfigured')}</Tag>}
-        </Descriptions.Item>
       </Descriptions>
     </div>
   );
@@ -220,6 +219,7 @@ const TencentConfig: React.FC = () => {
 
       {/* SMS Card */}
       {renderCard(t('tencent.sms'), 'sms', [
+        { label: t('app.status'), value: data?.sms?.enabled ? <Tag color="green">{t('common.enabled')}</Tag> : <Tag color="red">{t('common.disabled')}</Tag> },
         { label: t('tencent.sdkAppId'), value: data?.sms?.sdkAppId },
         { label: t('tencent.appKey'), value: <MaskedValue value={data?.sms?.appKey} /> },
         { label: t('tencent.sign'), value: data?.sms?.signName },
@@ -252,6 +252,9 @@ const TencentConfig: React.FC = () => {
         onCancel={() => { setModalOpen(false); setDismissed(true); }}
         footer={null} width={480} destroyOnClose>
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
+	          <Form.Item name="enabled" label={t('app.status')} valuePropName="checked">
+	            <Switch />
+	          </Form.Item>
           <Form.Item name="sdkAppId" label={t('tencent.sdkAppId')} rules={[{ required: true }]}>
             <Input />
           </Form.Item>
