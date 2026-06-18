@@ -11,7 +11,7 @@ const CONFIG_KEY = 'tencent';
 const defaultData = {
   credentials: { secretId: '', secretKey: '' },
   sms: { enabled: false, sdkAppId: '', appKey: '', signName: 'DumpAny', templateId: '' },
-  cos: { bucket: '', region: '', prefixes: [] as any[] },
+  cos: { bucket: '', region: '', cdnDomain: '', prefixes: [] as any[] },
 };
 
 type SectionKey = 'credentials' | 'sms' | 'cos';
@@ -120,6 +120,7 @@ const TencentConfig: React.FC = () => {
     } else if (modalSection === 'cos') {
       vals.bucket = s.bucket || '';
       vals.region = s.region || '';
+      vals.cdnDomain = s.cdnDomain || '';
       setPrefixes(s.prefixes || []);
     }
     form.setFieldsValue(vals);
@@ -250,6 +251,7 @@ const TencentConfig: React.FC = () => {
       {/* COS Card */}
       {renderCard(t('tencent.cos'), 'cos', [
         { label: t('tencent.bucket'), value: data?.cos?.bucket },
+        { label: t('tencent.cdnDomain'), value: data?.cos?.cdnDomain || '-' },
         { label: t('tencent.region'), value: data?.cos?.region },
       ], () => openModal('cos'))}
 
@@ -302,6 +304,9 @@ const TencentConfig: React.FC = () => {
           </Form.Item>
           <Form.Item name="region" label={t('tencent.region')} rules={[{ required: true }]}>
             <Input />
+          </Form.Item>
+          <Form.Item name="cdnDomain" label={t('tencent.cdnDomain')}>
+            <Input placeholder="https://cdn.dumpany.cn" />
           </Form.Item>
           {renderCosPrefixTable()}
           <Form.Item style={{ marginTop: 16 }}>

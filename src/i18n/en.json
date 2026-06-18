@@ -241,6 +241,7 @@
     "cos": "COS",
     "bucket": "Bucket",
     "region": "Region",
+    "cdnDomain": "CDN Domain",
     "prefixes": "Prefixes",
     "noPrefixes": "No prefixes",
     "prefixName": "Name",

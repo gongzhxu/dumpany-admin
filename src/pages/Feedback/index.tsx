@@ -10,7 +10,7 @@ interface Feedback {
   id: number;
   userId: number;
   content: string;
-  imageUrls: string;
+  imageUrls: string[];
   handled: boolean;
   handledAt: string;
   createdAt: string;
@@ -23,6 +23,7 @@ const FeedbackPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [marking, setMarking] = useState<number | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
 
   const fetchData = useCallback(async (p = 1) => {
     setLoading(true);
@@ -63,16 +64,18 @@ const FeedbackPage: React.FC = () => {
       render: (v: string) => <div style={{ maxWidth: 400, whiteSpace: 'pre-wrap', wordBreak: 'break-word' }}>{v}</div>,
     },
     {
-      title: t('feedback.image'), dataIndex: 'imageUrls', key: 'imageUrls', width: 100,
-      render: (v: string) => {
-        if (!v || v === '[]' || v === 'null') return '-';
-        try {
-          const urls = JSON.parse(v);
-          if (!urls || urls.length === 0) return '-';
-          return urls.map((url: string, i: number) => (
-            <a key={i} href={url} target="_blank" rel="noreferrer" style={{ marginRight: 4 }}>{t('feedback.image')}{i + 1}</a>
-          ));
-        } catch { return '-'; }
+      title: t('feedback.image'), dataIndex: 'imageUrls', key: 'imageUrls', width: 200,
+      render: (v: string[]) => {
+        if (!v || v.length === 0) return '-';
+        return (
+          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+            {v.map((url: string, i: number) => (
+              <a key={i} href={url} target="_blank" rel="noreferrer">
+                <img src={url} alt="" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4, border: '1px solid #f0f0f0' }} />
+              </a>
+            ))}
+          </div>
+        );
       },
     },
     {

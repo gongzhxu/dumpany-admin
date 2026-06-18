@@ -241,6 +241,7 @@
     "cos": "COS 对象存储",
     "bucket": "存储桶",
     "region": "地域",
+    "cdnDomain": "CDN 域名",
     "prefixes": "前缀列表",
     "noPrefixes": "暂无前缀",
     "prefixName": "名称",
