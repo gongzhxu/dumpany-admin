@@ -11,6 +11,7 @@ import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   SettingOutlined,
+  MessageOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -73,6 +74,7 @@ const AdminLayout: React.FC = () => {
       ],
     },
     { key: '/swagger', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.swagger') },
+    { key: '/feedback', icon: <MessageOutlined />, label: '用户反馈' },
     {
       key: 'system-config',
       icon: <SettingOutlined />,
