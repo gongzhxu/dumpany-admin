@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Table, Button, message, Typography, Card, Tag, Tooltip, Input, Modal, Form } from 'antd';
-import { CheckCircleOutlined, SearchOutlined } from '@ant-design/icons';
+import { CheckCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
@@ -136,8 +136,11 @@ const FeedbackPage: React.FC = () => {
           <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
             {v.map((url: string, i: number) =>
               isVideo(url) ? (
-                <div key={i} onClick={() => { setPreviewUrls(v); setPreviewIndex(i) }}
-                  style={{ width: 50, height: 50, borderRadius: 4, border: '1px solid #f0f0f0', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#f5f5f5', fontSize: 20 }}>▶</div>
+                <div key={i} style={{ position: 'relative', width: 50, height: 50, cursor: 'pointer' }} onClick={() => { setPreviewUrls(v); setPreviewIndex(i) }}>
+                  <video src={url} muted playsInline preload="metadata"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 4, border: '1px solid #f0f0f0' }} />
+                  <span style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', fontSize: 16, color: 'white', textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}>▶</span>
+                </div>
               ) : (
                 <img key={i} src={url} alt="" onClick={() => { setPreviewUrls(v); setPreviewIndex(i) }}
                   style={{ width: 50, height: 50, objectFit: 'cover', borderRadius: 4, border: '1px solid #f0f0f0', cursor: 'pointer' }} />
