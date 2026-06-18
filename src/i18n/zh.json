@@ -276,18 +276,27 @@
   },
   "feedback": {
     "title": "用户反馈",
-    "userId": "用户ID",
+    "userId": "用户",
     "content": "反馈内容",
     "image": "截图",
     "status": "状态",
     "handled": "已处理",
     "pending": "待处理",
     "submittedAt": "提交时间",
+    "handledAt": "处理时间",
     "action": "操作",
     "markHandledConfirm": "标记为已处理？",
     "markHandled": "标记已处理",
     "marked": "已标记为已处理",
-    "total": "共 {count} 条"
+    "total": "共 {{count}} 条",
+    "searchPlaceholder": "搜索反馈内容或用户ID",
+    "userName": "用户名",
+    "email": "邮箱",
+    "phone": "手机号",
+    "regTime": "注册时间",
+    "handleResult": "处理结果",
+    "handleResultPlaceholder": "请输入处理结果说明",
+    "handleResultRequired": "请输入处理结果"
   },
   "downloadConfig": {
     "title": "下载配置",
@@ -315,7 +324,7 @@
     "urlLabel": "下载链接",
     "enabledLabel": "启用",
     "save": "保存",
-    "total": "共 {count} 条"
+    "total": "共 {{count}} 条"
   },
   "jwtConfig": {
     "title": "JWT 配置",

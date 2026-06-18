@@ -276,18 +276,27 @@
   },
   "feedback": {
     "title": "Feedback",
-    "userId": "User ID",
+    "userId": "User",
     "content": "Content",
     "image": "Image",
     "status": "Status",
     "handled": "Handled",
     "pending": "Pending",
     "submittedAt": "Submitted At",
+    "handledAt": "Handled At",
     "action": "Action",
     "markHandledConfirm": "Mark as handled?",
     "markHandled": "Mark Handled",
     "marked": "Marked as handled",
-    "total": "Total {count}"
+    "total": "Total {{count}}",
+    "searchPlaceholder": "Search by content or user ID",
+    "userName": "Username",
+    "email": "Email",
+    "phone": "Phone",
+    "regTime": "Registered At",
+    "handleResult": "Handle Result",
+    "handleResultPlaceholder": "Enter handle result",
+    "handleResultRequired": "Please enter handle result"
   },
   "downloadConfig": {
     "title": "Download Config",
@@ -315,7 +324,7 @@
     "urlLabel": "Download URL",
     "enabledLabel": "Enabled",
     "save": "Save",
-    "total": "Total {count}"
+    "total": "Total {{count}}"
   },
   "jwtConfig": {
     "title": "JWT Config",
