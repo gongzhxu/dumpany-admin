@@ -13,6 +13,7 @@ import OrderPage from './pages/Order';
 import AdminPage from './pages/Admin';
 import SwaggerPage from './pages/Swagger';
 import AlipayPage from './pages/Payment/Alipay';
+import WeChatPage from './pages/Payment/WeChat';
 import PlanPage from './pages/Plan';
 import AppPage from './pages/App';
 import SystemConfigPage from './pages/SystemConfig';
@@ -53,6 +54,7 @@ const App: React.FC = () => {
             <Route path="admin" element={<AdminPage />} />
             <Route path="swagger" element={<SwaggerPage />} />
             <Route path="payment/alipay" element={<AlipayPage />} />
+            <Route path="payment/wechat" element={<WeChatPage />} />
             <Route path="plan" element={<PlanPage />} />
             <Route path="feedback" element={<FeedbackPage />} />
             <Route path="download-config" element={<DownloadConfigPage />} />

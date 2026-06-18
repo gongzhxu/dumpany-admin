@@ -1,13 +1,13 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Button, Modal, Form, Input, message, Typography, Card, Descriptions, Tag, Divider } from 'antd';
-import { EditOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import { EditOutlined, CheckCircleOutlined, CloseCircleOutlined, KeyOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
 
 const { Title } = Typography;
 const { TextArea } = Input;
 
-const AlipayConfig: React.FC = () => {
+const WeChatConfig: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +20,7 @@ const AlipayConfig: React.FC = () => {
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const res: any = await request.get('/settings/payment/alipay');
+      const res: any = await request.get('/settings/payment/wechat');
       setData(res.data || null);
     } catch {
       setData(null);
@@ -44,16 +44,16 @@ const AlipayConfig: React.FC = () => {
       const vals: Record<string, string> = {};
       if (data) {
         vals.appId = data.appId || '';
+        vals.mchId = data.mchId || '';
+        vals.apiV3Key = data.apiV3Key || '';
+        vals.serialNo = data.serialNo || '';
         vals.privateKey = data.privateKey || '';
-        vals.gatewayUrl = data.gatewayUrl || 'https://openapi.alipay.com/gateway.do';
-        vals.publicKey = data.publicKey || '';
-        vals.notifyUrl = data.notifyUrl || 'https://api.dumpany.cn/api/v1/backend/payments/alipay/webhook';
+        vals.notifyUrl = data.notifyUrl || 'https://api.dumpany.cn/api/v1/backend/payment/wechat/webhook';
         vals.returnUrl = data.returnUrl || 'https://dumpany.cn/account?tab=orders';
         vals.currency = data.currency || 'CNY';
         setEditing(true);
       } else {
-        vals.gatewayUrl = 'https://openapi.alipay.com/gateway.do';
-        vals.notifyUrl = 'https://api.dumpany.cn/api/v1/backend/payments/alipay/webhook';
+        vals.notifyUrl = 'https://api.dumpany.cn/api/v1/backend/payment/wechat/webhook';
         vals.returnUrl = 'https://dumpany.cn/account?tab=orders';
         vals.currency = 'CNY';
         setEditing(false);
@@ -67,7 +67,7 @@ const AlipayConfig: React.FC = () => {
   const handleSubmit = async (vals: any) => {
     setSubmitting(true);
     try {
-      await request.put('/settings/payment/alipay', vals);
+      await request.put('/settings/payment/wechat', vals);
       message.success(t('payment.save_success'));
       setModalOpen(false);
       fetchData();
@@ -79,9 +79,20 @@ const AlipayConfig: React.FC = () => {
   };
 
   const configItems = data ? [
-    { label: t('alipayConfig.appId'), content: <Tag color="blue">{data.appId}</Tag> },
+    { label: t('wechatConfig.appId'), content: <Tag color="blue">{data.appId}</Tag> },
+    { label: t('wechatConfig.mchId'), content: <Tag color="blue">{data.mchId || '-'}</Tag> },
+    { label: t('wechatConfig.apiV3Key'), content: data.apiV3Key ? (
+      <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('wechatConfig.configured')}</Tag>
+    ) : (
+      <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('wechatConfig.notConfigured')}</Tag>
+    )},
+    { label: t('wechatConfig.serialNo'), content: <Tag color="blue">{data.serialNo || '-'}</Tag> },
+    { label: t('payment.privateKey'), content: data.privateKey ? (
+      <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('wechatConfig.configured')}</Tag>
+    ) : (
+      <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('wechatConfig.notConfigured')}</Tag>
+    )},
     { label: t('payment.currency'), content: data.currency || 'CNY' },
-    { label: t('payment.gatewayUrl'), content: data.gatewayUrl || '-' },
     { label: t('payment.notifyUrl'), content: data.notifyUrl || '-' },
     { label: t('payment.returnUrl'), content: data.returnUrl || '-' },
   ] : [];
@@ -90,8 +101,8 @@ const AlipayConfig: React.FC = () => {
     <div className="page-container">
       <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Title level={4} style={{ margin: 0 }}>
-          <img src="/alipay-icon.svg" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: -3 }} alt="" />
-          {t('payment.alipay_title')}
+          <img src="/wechat-icon.svg" style={{ width: 20, height: 20, marginRight: 8, verticalAlign: -3 }} alt="" />
+          {t('payment.wechat_title')}
         </Title>
         {hasConfig && (
           <Button type="primary" icon={<EditOutlined />} onClick={() => setModalOpen(true)}>
@@ -108,25 +119,11 @@ const AlipayConfig: React.FC = () => {
                 {item.content}
               </Descriptions.Item>
             ))}
-            <Descriptions.Item label={t('payment.privateKey')}>
-              {data.privateKey ? (
-                <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('alipayConfig.configured')}</Tag>
-              ) : (
-                <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('alipayConfig.notConfigured')}</Tag>
-              )}
-            </Descriptions.Item>
-            <Descriptions.Item label={t('payment.publicKey')}>
-              {data.publicKey ? (
-                <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('alipayConfig.configured')}</Tag>
-              ) : (
-                <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('alipayConfig.notConfigured')}</Tag>
-              )}
-            </Descriptions.Item>
           </Descriptions>
         ) : (
           <div style={{ textAlign: 'center', padding: '40px 0' }}>
-            <p style={{ color: '#999', marginBottom: 16 }}>{t('payment.not_configured')}</p>
-            <Button type="primary" size="large" onClick={() => setModalOpen(true)}>
+            <p style={{ color: '#999', marginBottom: 16 }}>{t('payment.not_configured_wechat')}</p>
+            <Button type="primary" size="large" onClick={() => { setEditing(false); form.resetFields(); setModalOpen(true); }}>
               {t('payment.configure')}
             </Button>
           </div>
@@ -134,34 +131,50 @@ const AlipayConfig: React.FC = () => {
       </Card>
 
       <Modal
-        title={t('payment.alipay_title')}
+        title={t('payment.wechat_title')}
         open={modalOpen}
         onCancel={() => { setModalOpen(false); setDismissed(true); }}
         footer={null}
         width={600}
         destroyOnClose
       >
-        <Form form={form} layout="vertical" onFinish={handleSubmit}
-          onValuesChange={() => {}}>
-          <Form.Item name="appId" label={t('alipayConfig.appId')}
-            extra={t('alipayConfig.appId_extra')}
-            rules={[{ required: true, message: t('alipayConfig.appId_required') }]}>
-            <Input placeholder={t('alipayConfig.appId_placeholder')} />
+        <Form form={form} layout="vertical" onFinish={handleSubmit}>
+          <Form.Item name="appId" label={t('wechatConfig.appId')}
+            extra={t('wechatConfig.appId_extra')}
+            rules={[{ required: true, message: t('wechatConfig.appId_required') }]}>
+            <Input placeholder={t('wechatConfig.appId_placeholder')} />
           </Form.Item>
+
+          <Form.Item name="mchId" label={t('wechatConfig.mchId')}
+            extra={t('wechatConfig.mchId_extra')}
+            rules={[{ required: true, message: t('wechatConfig.mchId_required') }]}>
+            <Input placeholder={t('wechatConfig.mchId_placeholder')} />
+          </Form.Item>
+
+          <Form.Item name="apiV3Key" label={t('wechatConfig.apiV3Key')}
+            extra={t('wechatConfig.apiV3Key_extra')}
+            rules={[{ required: true, message: t('wechatConfig.apiV3Key_required') }]}>
+            <Input.Password
+              prefix={<KeyOutlined />}
+              placeholder={t('wechatConfig.apiV3Key_placeholder')} />
+          </Form.Item>
+
+          <Form.Item name="serialNo" label={t('wechatConfig.serialNo')}
+            extra={t('wechatConfig.serialNo_extra')}
+            rules={[{ required: true, message: t('wechatConfig.serialNo_required') }]}>
+            <Input placeholder={t('wechatConfig.serialNo_placeholder')} />
+          </Form.Item>
+
+          <Divider plain>{t('wechatConfig.certTitle')}</Divider>
 
           <Form.Item name="privateKey" label={t('payment.privateKey')}
-            extra={t('alipayConfig.privateKey_extra')}
+            extra={t('wechatConfig.privateKey_extra')}
             rules={editing ? [] : [{ required: true, message: t('payment.privateKey_required') }]}>
             <TextArea rows={6}
-              placeholder={editing ? t('payment.privateKey_edit_placeholder') : t('payment.privateKey_placeholder')} />
+              placeholder={editing ? t('payment.privateKey_edit_placeholder') : t('wechatConfig.privateKey_placeholder')} />
           </Form.Item>
 
-          <Form.Item name="publicKey" label={t('payment.publicKey')}
-            extra={t('alipayConfig.publicKey_extra')}>
-            <TextArea rows={4} placeholder={t('payment.publicKey_placeholder')} />
-          </Form.Item>
-
-          <Divider plain>{t('alipayConfig.callbackTitle')}</Divider>
+          <Divider plain>{t('wechatConfig.callbackTitle')}</Divider>
 
           <Form.Item name="notifyUrl" label={t('payment.notifyUrl')}>
             <Input placeholder={t('payment.notifyUrl_placeholder')} />
@@ -171,13 +184,8 @@ const AlipayConfig: React.FC = () => {
             <Input placeholder={t('payment.returnUrl_placeholder')} />
           </Form.Item>
 
-          <Form.Item name="gatewayUrl" label={t('payment.gatewayUrl')}
-            extra={t('alipayConfig.gatewayUrl_extra')}>
-            <Input placeholder={t('payment.gatewayUrl_placeholder')} />
-          </Form.Item>
-
-          <Form.Item name="currency" label={t('alipayConfig.currency')} initialValue="CNY">
-            <Input placeholder="CNY" />
+          <Form.Item name="currency" label={t('wechatConfig.currency')} initialValue="CNY">
+            <Input placeholder="CNY" disabled />
           </Form.Item>
 
           <Form.Item>
@@ -191,4 +199,4 @@ const AlipayConfig: React.FC = () => {
   );
 };
 
-export default AlipayConfig;
+export default WeChatConfig;

@@ -68,6 +68,7 @@ const AdminLayout: React.FC = () => {
       label: t('app.payment'),
       children: [
         { key: '/payment/alipay', icon: <img src="/alipay-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.alipay') },
+	        { key: '/payment/wechat', icon: <img src="/wechat-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.wechat') },
       ],
     },
     { key: '/plan', icon: <DollarOutlined />, label: t('app.plan') },
