@@ -23,7 +23,8 @@ const FeedbackPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const [total, setTotal] = useState(0);
   const [marking, setMarking] = useState<number | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
+  const [previewIndex, setPreviewIndex] = useState<number>(-1);
+  const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
   const fetchData = useCallback(async (p = 1) => {
     setLoading(true);
@@ -70,9 +71,8 @@ const FeedbackPage: React.FC = () => {
         return (
           <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
             {v.map((url: string, i: number) => (
-              <a key={i} href={url} target="_blank" rel="noreferrer">
-                <img src={url} alt="" style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4, border: '1px solid #f0f0f0' }} />
-              </a>
+              <img key={i} src={url} alt="" onClick={() => { setPreviewUrls(v); setPreviewIndex(i) }}
+                style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 4, border: '1px solid #f0f0f0', cursor: 'pointer' }} />
             ))}
           </div>
         );
@@ -113,6 +113,20 @@ const FeedbackPage: React.FC = () => {
           scroll={{ x: 1000 }}
         />
       </Card>
+
+      {previewIndex >= 0 && previewUrls[previewIndex] && (
+        <div onClick={() => setPreviewIndex(-1)}
+          style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)', zIndex: 9999, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0, cursor: 'zoom-out' }}>
+          <span onClick={(e) => { e.stopPropagation(); setPreviewIndex(previewIndex > 0 ? previewIndex - 1 : previewUrls.length - 1); }}
+            style={{ fontSize: 40, color: 'white', cursor: 'pointer', userSelect: 'none', padding: '0 8px', lineHeight: 1 }}>‹</span>
+          <img src={previewUrls[previewIndex]} alt="" style={{ maxWidth: '70vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: 8 }} />
+          <span onClick={(e) => { e.stopPropagation(); setPreviewIndex(previewIndex < previewUrls.length - 1 ? previewIndex + 1 : 0); }}
+            style={{ fontSize: 40, color: 'white', cursor: 'pointer', userSelect: 'none', padding: '0 8px', lineHeight: 1 }}>›</span>
+          <span style={{ position: 'absolute', bottom: 16, color: 'white', fontSize: 14, background: 'rgba(0,0,0,0.5)', padding: '4px 12px', borderRadius: 12 }}>
+            {previewIndex + 1} / {previewUrls.length}
+          </span>
+        </div>
+      )}
     </div>
   );
 };
