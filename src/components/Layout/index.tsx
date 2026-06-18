@@ -122,11 +122,13 @@ const AdminLayout: React.FC = () => {
           alignItems: 'center',
           justifyContent: 'center',
           borderBottom: '1px solid #f0f0f0',
+          gap: 8,
           fontWeight: 700,
           fontSize: collapsed ? 14 : 16,
           color: '#1890ff',
         }}>
-          {collapsed ? 'DA' : 'DumpAny Admin'}
+          <img src="/favicon.svg" style={{ width: 22, height: 22 }} alt="" />
+          {!collapsed && 'DumpAny Admin'}
         </div>
         <Menu
           mode="inline"
