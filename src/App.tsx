@@ -20,6 +20,7 @@ import SmtpConfigPage from './pages/SystemConfig/SmtpConfig';
 import TencentConfigPage from './pages/SystemConfig/TencentConfig';
 import JwtConfigPage from './pages/SystemConfig/JwtConfig';
 import FeedbackPage from './pages/Feedback';
+import DownloadConfigPage from './pages/DownloadConfig';
 import { useAuth } from './hooks/useAuth';
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -54,6 +55,7 @@ const App: React.FC = () => {
             <Route path="payment/alipay" element={<AlipayPage />} />
             <Route path="plan" element={<PlanPage />} />
             <Route path="feedback" element={<FeedbackPage />} />
+            <Route path="download-config" element={<DownloadConfigPage />} />
             <Route path="system-config" element={<SystemConfigPage />} />
             <Route path="system-config/smtp" element={<SmtpConfigPage />} />
             <Route path="system-config/tencent" element={<TencentConfigPage />} />

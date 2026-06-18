@@ -12,6 +12,7 @@ import {
   MenuUnfoldOutlined,
   SettingOutlined,
   MessageOutlined,
+  DownloadOutlined,
 } from '@ant-design/icons';
 import { useNavigate, useLocation, Outlet } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -60,7 +61,7 @@ const AdminLayout: React.FC = () => {
     { key: '/', icon: <DashboardOutlined />, label: t('app.dashboard') },
     { key: '/order', icon: <ShoppingCartOutlined />, label: t('app.order') },
     { key: '/license', icon: <KeyOutlined />, label: t('app.license') },
-    { key: '/feedback', icon: <MessageOutlined />, label: '用户反馈' },
+    { key: '/feedback', icon: <MessageOutlined />, label: t('layout.feedback') },
     {
       key: 'payment',
       icon: <DollarOutlined />,
@@ -73,6 +74,7 @@ const AdminLayout: React.FC = () => {
     { key: '/app', icon: <AppstoreOutlined />, label: t('app.app') },
     { key: '/admin', icon: <UserOutlined />, label: t('app.admin') },
     { key: '/swagger', icon: <img src="/swagger-icon.svg" style={{ width: 14, height: 14 }} alt="" />, label: t('app.swagger') },
+    { key: '/download-config', icon: <DownloadOutlined />, label: t('layout.downloadConfig') },
     {
       key: 'system-config',
       icon: <SettingOutlined />,

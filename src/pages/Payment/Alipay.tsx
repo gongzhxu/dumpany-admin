@@ -110,16 +110,16 @@ const AlipayConfig: React.FC = () => {
             ))}
             <Descriptions.Item label={t('payment.privateKey')}>
               {data.privateKey ? (
-                <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>已配置</Tag>
+                <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('alipayConfig.configured')}</Tag>
               ) : (
-                <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>未配置</Tag>
+                <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('alipayConfig.notConfigured')}</Tag>
               )}
             </Descriptions.Item>
             <Descriptions.Item label={t('payment.publicKey')}>
               {data.publicKey ? (
-                <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>已配置</Tag>
+                <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('alipayConfig.configured')}</Tag>
               ) : (
-                <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>未配置</Tag>
+                <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('alipayConfig.notConfigured')}</Tag>
               )}
             </Descriptions.Item>
           </Descriptions>
@@ -158,7 +158,7 @@ const AlipayConfig: React.FC = () => {
             <TextArea rows={4} placeholder={t('payment.publicKey_placeholder')} />
           </Form.Item>
 
-          <Divider plain>回调地址配置</Divider>
+          <Divider plain>{t('alipayConfig.callbackTitle')}</Divider>
 
           <Form.Item name="notifyUrl" label={t('payment.notifyUrl')}>
             <Input placeholder={t('payment.notifyUrl_placeholder')} />
@@ -172,7 +172,7 @@ const AlipayConfig: React.FC = () => {
             <Input placeholder={t('payment.gatewayUrl_placeholder')} />
           </Form.Item>
 
-          <Form.Item name="currency" label="币种" initialValue="CNY">
+          <Form.Item name="currency" label={t('alipayConfig.currency')} initialValue="CNY">
             <Input placeholder="CNY" />
           </Form.Item>
 

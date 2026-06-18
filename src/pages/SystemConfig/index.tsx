@@ -84,7 +84,7 @@ const SystemConfigPage: React.FC = () => {
   const handleDelete = async (key: string) => {
     try {
       await request.delete('/system-config/delete', { data: { configKey: key } });
-      message.success('已删除');
+      message.success(t('systemConfig.deleted'));
       fetchData();
     } catch (err: any) {
       message.error(err.message);
@@ -148,7 +148,7 @@ const SystemConfigPage: React.FC = () => {
       render: (_: any, record: ConfigItem) => (
         <Space>
           <Button size="small" icon={<EditOutlined />} onClick={() => openEdit(record)}>{t('app.edit')}</Button>
-          <Popconfirm title="确认删除此配置？" onConfirm={() => handleDelete(record.configKey)}>
+          <Popconfirm title={t('systemConfig.deleteConfirm')} onConfirm={() => handleDelete(record.configKey)}>
             <Button size="small" color="danger" variant="outlined" icon={<DeleteOutlined />}>{t('app.delete')}</Button>
           </Popconfirm>
         </Space>

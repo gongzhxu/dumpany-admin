@@ -8,6 +8,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
+    "pretty-json": "python3 -c \"import json,pathlib; [pathlib.Path(f).write_text(json.dumps(json.loads(pathlib.Path(f).read_text()),ensure_ascii=False,indent=2)) for f in pathlib.Path('src/data').glob('*.json')]\"",
     "preview": "vite preview"
   },
   "dependencies": {
