@@ -245,6 +245,14 @@
     "noPrefixes": "暂无前缀",
     "prefixName": "名称",
     "prefixPath": "路径",
+    "prefixTimeout": "超时(s)",
+    "prefixMaxSize": "限制(MB)",
+    "prefixExts": "分类",
+    "fileTypeImage": "图片",
+    "fileTypeVideo": "视频",
+    "fileTypeDocument": "文档",
+    "fileTypeArchive": "压缩包",
+    "fileTypeAudio": "音频",
     "addPrefix": "新增前缀"
   },
   "common": {

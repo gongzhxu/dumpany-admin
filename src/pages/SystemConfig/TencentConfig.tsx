@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Descriptions, Button, Modal, Form, Input, Space, Switch, message, Typography, Card, Tag } from 'antd';
+import { Descriptions, Button, Modal, Form, Input, InputNumber, Select, Space, Switch, message, Typography, Card, Tag } from 'antd';
 import { EditOutlined, PlusOutlined, DeleteOutlined, EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
@@ -54,6 +54,14 @@ const TencentConfig: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+
+  const fileTypeOptions = React.useMemo(() => [
+    { label: t('tencent.fileTypeImage'), key: 'image' },
+    { label: t('tencent.fileTypeVideo'), key: 'video' },
+    { label: t('tencent.fileTypeDocument'), key: 'document' },
+    { label: t('tencent.fileTypeArchive'), key: 'archive' },
+    { label: t('tencent.fileTypeAudio'), key: 'audio' },
+  ], [t]);
 
   // Modal state
   const [modalSection, setModalSection] = useState<SectionKey>('credentials');
@@ -141,10 +149,10 @@ const TencentConfig: React.FC = () => {
   };
 
   const addPrefix = () => {
-    setPrefixes([...prefixes, { key: '', name: '', path: '' }]);
+    setPrefixes([...prefixes, { key: '', name: '', path: '', timeout: 300, maxSizeMB: 5, fileTypes: [] }]);
   };
 
-  const updatePrefix = (i: number, field: string, val: string) => {
+  const updatePrefix = (i: number, field: string, val: string | number | string[]) => {
     const copy = [...prefixes];
     copy[i] = { ...copy[i], [field]: val };
     setPrefixes(copy);
@@ -193,6 +201,19 @@ const TencentConfig: React.FC = () => {
             <Input size="small" placeholder={t('tencent.prefixPath')} value={p.path}
               onChange={e => updatePrefix(i, 'path', e.target.value)}
               style={{ flex: 1 }} />
+            <InputNumber size="small" placeholder={t('tencent.prefixTimeout')} value={p.timeout}
+              onChange={v => updatePrefix(i, 'timeout', v ?? 300)}
+              style={{ width: 80 }} min={60} max={3600} />
+            <InputNumber size="small" placeholder={t('tencent.prefixMaxSize')} value={p.maxSizeMB}
+              onChange={v => updatePrefix(i, 'maxSizeMB', v ?? 5)}
+              style={{ width: 80 }} min={1} max={100} />
+            <Select size="small" placeholder={t('tencent.prefixExts')}
+              value={p.fileTypes || []}
+              onChange={v => updatePrefix(i, 'fileTypes', v)}
+              mode="multiple"
+              style={{ width: 180 }}
+              options={fileTypeOptions.map(opt => ({ label: opt.label, value: opt.key }))}
+            />
             <Button size="small" danger icon={<DeleteOutlined />} onClick={() => removePrefix(i)} />
           </div>
         ))

@@ -245,6 +245,14 @@
     "noPrefixes": "No prefixes",
     "prefixName": "Name",
     "prefixPath": "Path",
+    "prefixTimeout": "Timeout(s)",
+    "prefixMaxSize": "Limit(MB)",
+    "prefixExts": "Type",
+    "fileTypeImage": "Image",
+    "fileTypeVideo": "Video",
+    "fileTypeDocument": "Document",
+    "fileTypeArchive": "Archive",
+    "fileTypeAudio": "Audio",
     "addPrefix": "Add Prefix"
   },
   "common": {
