@@ -39,6 +39,7 @@ def build():
     print("  ⬇️  拉取最新代码...")
     run("git checkout -- . 2>/dev/null || true", check=False)
     run("git pull")
+    run("git log --oneline -1", check=False)
     # 可选复制 favicon
     favicon = os.path.expanduser("~/dumpany-desktop/assets/images/appicon/appicon.svg")
     if os.path.isfile(favicon):
