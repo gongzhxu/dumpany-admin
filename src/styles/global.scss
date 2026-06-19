@@ -20,27 +20,6 @@ body {
   background-attachment: fixed;
 }
 
-// Login page full-screen bg
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-// Dashboard card
-.dashboard-card {
-  text-align: center;
-  cursor: default;
-
-  .dashboard-card-value {
-    font-size: 32px;
-    font-weight: 600;
-    color: #1890ff;
-  }
-}
-
 // Page wrapper
 .page-container {
   padding: 24px;
@@ -78,45 +57,5 @@ body {
   .toolbar-right {
     display: flex;
     gap: 8px;
-  }
-}
-
-// Layout styles
-.admin-layout {
-  height: 100vh;
-
-  .admin-layout-header {
-    background: #fff;
-    padding: 0 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #f0f0f0;
-    height: 48px;
-    line-height: 48px;
-
-    .header-left {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-
-      .header-logo {
-        font-size: 16px;
-        font-weight: 700;
-        color: #1890ff;
-      }
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-  }
-
-  .admin-layout-content {
-    overflow: auto;
-    background: #f5f5f5;
-    min-height: calc(100vh - 48px);
   }
 }

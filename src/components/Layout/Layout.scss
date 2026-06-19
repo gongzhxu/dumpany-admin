@@ -1,0 +1,38 @@
+.admin-layout {
+  height: 100vh;
+}
+
+.admin-layout-header {
+  background: #fff;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #f0f0f0;
+  height: 48px;
+  line-height: 48px;
+}
+
+.admin-layout-header .header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-layout-header .header-left .header-logo {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1890ff;
+}
+
+.admin-layout-header .header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-layout-content {
+  overflow: auto;
+  background: #f5f5f5;
+  min-height: calc(100vh - 48px);
+}
