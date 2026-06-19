@@ -94,6 +94,8 @@
     "paid": "已支付",
     "refunded": "已退款",
     "cancelled": "已取消",
+    "failReason": "失败原因",
+    "failed": "支付失败",
     "created_at": "创建时间",
     "orderNo": "订单号",
     "createdAt": "创建时间"

@@ -16,6 +16,7 @@ const statusColorMap: Record<string, string> = {
   paid: 'green',
   refunded: 'red',
   cancelled: 'default',
+  failed: 'red',
 };
 
 const OrderPage: React.FC = () => {
@@ -89,7 +90,7 @@ const OrderPage: React.FC = () => {
       key: 'status',
       width: 100,
       render: (text: string) => (
-        <Tag color={statusColorMap[text]}>{t(`order.${text}`)}</Tag>
+        <Tag color={statusColorMap[text] || 'default'}>{t(`order.${text}`)}</Tag>
       ),
     },
     {
@@ -150,6 +151,7 @@ const OrderPage: React.FC = () => {
               <Select.Option value="paid">{t('order.paid')}</Select.Option>
               <Select.Option value="refunded">{t('order.refunded')}</Select.Option>
               <Select.Option value="cancelled">{t('order.cancelled')}</Select.Option>
+              <Select.Option value="failed">{t('order.failed')}</Select.Option>
             </Select>
             <Button icon={<ReloadOutlined />} onClick={fetchData} />
           </div>
@@ -188,8 +190,13 @@ const OrderPage: React.FC = () => {
             <Descriptions.Item label={t('order.product')}>{detail.product}</Descriptions.Item>
             <Descriptions.Item label={t('order.amount')}>{detail.currency} {detail.amount.toFixed(2)}</Descriptions.Item>
             <Descriptions.Item label={t('app.status')}>
-              <Tag color={statusColorMap[detail.status]}>{detail.status}</Tag>
+              <Tag color={statusColorMap[detail.status] || 'default'}>{t(`order.${detail.status}`)}</Tag>
             </Descriptions.Item>
+            {detail.status === 'failed' && detail.failReason && (
+              <Descriptions.Item label={t('order.failReason')} span={2}>
+                <span style={{ color: '#e53935' }}>{detail.failReason}</span>
+              </Descriptions.Item>
+            )}
             <Descriptions.Item label={t('license.licenseKey')} span={2}>{detail.licenseKey || '-'}</Descriptions.Item>
             <Descriptions.Item label={t('order.created_at')}>
               {dayjs(detail.createdAt).format('YYYY-MM-DD HH:mm')}

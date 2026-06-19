@@ -8,6 +8,7 @@ export interface Order {
   amount: number;
   currency: string;
   status: string;
+  failReason?: string;
   licenseKey: string;
   paidAt: string;
   createdAt: string;

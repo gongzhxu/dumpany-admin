@@ -94,6 +94,8 @@
     "paid": "Paid",
     "refunded": "Refunded",
     "cancelled": "Cancelled",
+    "failed": "Failed",
+    "failReason": "Failure Reason",
     "created_at": "Created At",
     "orderNo": "Order No",
     "createdAt": "Created At"
