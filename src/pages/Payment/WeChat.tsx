@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Modal, Form, Input, message, Typography, Card, Descriptions, Tag, Divider } from 'antd';
+import { Button, Modal, Form, Input, Switch, message, Typography, Card, Descriptions, Tag, Divider } from 'antd';
 import { EditOutlined, CheckCircleOutlined, CloseCircleOutlined, KeyOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
@@ -41,21 +41,25 @@ const WeChatConfig: React.FC = () => {
 
   useEffect(() => {
     if (modalOpen) {
-      const vals: Record<string, string> = {};
+      const vals: Record<string, any> = {};
       if (data) {
         vals.appId = data.appId || '';
         vals.mchId = data.mchId || '';
         vals.apiV3Key = data.apiV3Key || '';
         vals.serialNo = data.serialNo || '';
         vals.privateKey = data.privateKey || '';
+        vals.wechatPayPublicKey = data.wechatPayPublicKey || '';
+        vals.wechatPayPublicKeyId = data.wechatPayPublicKeyId || '';
         vals.notifyUrl = data.notifyUrl || 'https://api.dumpany.cn/api/v1/backend/payment/wechat/webhook';
         vals.returnUrl = data.returnUrl || 'https://dumpany.cn/account?tab=orders';
         vals.currency = data.currency || 'CNY';
+        vals.enabled = data.enabled !== false;
         setEditing(true);
       } else {
         vals.notifyUrl = 'https://api.dumpany.cn/api/v1/backend/payment/wechat/webhook';
         vals.returnUrl = 'https://dumpany.cn/account?tab=orders';
         vals.currency = 'CNY';
+        vals.enabled = false;
         setEditing(false);
       }
       form.setFieldsValue(vals);
@@ -79,6 +83,11 @@ const WeChatConfig: React.FC = () => {
   };
 
   const configItems = data ? [
+    { label: t('payment.enabled'), content: data.enabled !== false ? (
+      <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('payment.enabled_on')}</Tag>
+    ) : (
+      <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('payment.enabled_off')}</Tag>
+    )},
     { label: t('wechatConfig.appId'), content: <Tag color="blue">{data.appId}</Tag> },
     { label: t('wechatConfig.mchId'), content: <Tag color="blue">{data.mchId || '-'}</Tag> },
     { label: t('wechatConfig.apiV3Key'), content: data.apiV3Key ? (
@@ -92,6 +101,12 @@ const WeChatConfig: React.FC = () => {
     ) : (
       <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('wechatConfig.notConfigured')}</Tag>
     )},
+    { label: t('wechatConfig.wechatPayPublicKey'), content: data.wechatPayPublicKey ? (
+      <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('wechatConfig.configured')}</Tag>
+    ) : (
+      <Tag icon={<CloseCircleOutlined />} color="warning" style={{ margin: 0 }}>{t('wechatConfig.notConfigured')}</Tag>
+    )},
+    { label: t('wechatConfig.wechatPayPublicKeyId'), content: <Tag color="blue">{data.wechatPayPublicKeyId || '-'}</Tag> },
     { label: t('payment.currency'), content: data.currency || 'CNY' },
     { label: t('payment.notifyUrl'), content: data.notifyUrl || '-' },
     { label: t('payment.returnUrl'), content: data.returnUrl || '-' },
@@ -139,6 +154,10 @@ const WeChatConfig: React.FC = () => {
         destroyOnClose
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}>
+          <Form.Item name="enabled" label={t('payment.enabled')} valuePropName="checked">
+            <Switch checkedChildren={t('payment.enabled_on')} unCheckedChildren={t('payment.enabled_off')} />
+          </Form.Item>
+
           <Form.Item name="appId" label={t('wechatConfig.appId')}
             extra={t('wechatConfig.appId_extra')}
             rules={[{ required: true, message: t('wechatConfig.appId_required') }]}>
@@ -172,6 +191,19 @@ const WeChatConfig: React.FC = () => {
             rules={editing ? [] : [{ required: true, message: t('payment.privateKey_required') }]}>
             <TextArea rows={6}
               placeholder={editing ? t('payment.privateKey_edit_placeholder') : t('wechatConfig.privateKey_placeholder')} />
+          </Form.Item>
+
+          <Divider plain>{t('wechatConfig.publicKeyTitle')}</Divider>
+
+          <Form.Item name="wechatPayPublicKeyId" label={t('wechatConfig.wechatPayPublicKeyId')}
+            extra={t('wechatConfig.wechatPayPublicKeyId_extra')}>
+            <Input placeholder={t('wechatConfig.wechatPayPublicKeyId_placeholder')} />
+          </Form.Item>
+
+          <Form.Item name="wechatPayPublicKey" label={t('wechatConfig.wechatPayPublicKey')}
+            extra={t('wechatConfig.wechatPayPublicKey_extra')}>
+            <TextArea rows={4}
+              placeholder={editing ? t('payment.privateKey_edit_placeholder') : t('wechatConfig.wechatPayPublicKey_placeholder')} />
           </Form.Item>
 
           <Divider plain>{t('wechatConfig.callbackTitle')}</Divider>

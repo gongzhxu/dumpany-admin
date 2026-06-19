@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Button, Modal, Form, Input, message, Typography, Card, Descriptions, Tag, Divider } from 'antd';
+import { Button, Modal, Form, Input, Switch, message, Typography, Card, Descriptions, Tag, Divider } from 'antd';
 import { EditOutlined, CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
 import request from '../../api/request';
@@ -41,7 +41,7 @@ const AlipayConfig: React.FC = () => {
 
   useEffect(() => {
     if (modalOpen) {
-      const vals: Record<string, string> = {};
+      const vals: Record<string, any> = {};
       if (data) {
         vals.appId = data.appId || '';
         vals.privateKey = data.privateKey || '';
@@ -50,12 +50,14 @@ const AlipayConfig: React.FC = () => {
         vals.notifyUrl = data.notifyUrl || 'https://api.dumpany.cn/api/v1/backend/payments/alipay/webhook';
         vals.returnUrl = data.returnUrl || 'https://dumpany.cn/account?tab=orders';
         vals.currency = data.currency || 'CNY';
+        vals.enabled = data.enabled !== false;
         setEditing(true);
       } else {
         vals.gatewayUrl = 'https://openapi.alipay.com/gateway.do';
         vals.notifyUrl = 'https://api.dumpany.cn/api/v1/backend/payments/alipay/webhook';
         vals.returnUrl = 'https://dumpany.cn/account?tab=orders';
         vals.currency = 'CNY';
+        vals.enabled = false;
         setEditing(false);
       }
       form.setFieldsValue(vals);
@@ -79,6 +81,11 @@ const AlipayConfig: React.FC = () => {
   };
 
   const configItems = data ? [
+    { label: t('payment.enabled'), content: data.enabled !== false ? (
+      <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('payment.enabled_on')}</Tag>
+    ) : (
+      <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('payment.enabled_off')}</Tag>
+    )},
     { label: t('alipayConfig.appId'), content: <Tag color="blue">{data.appId}</Tag> },
     { label: t('payment.currency'), content: data.currency || 'CNY' },
     { label: t('payment.gatewayUrl'), content: data.gatewayUrl || '-' },
@@ -143,6 +150,10 @@ const AlipayConfig: React.FC = () => {
       >
         <Form form={form} layout="vertical" onFinish={handleSubmit}
           onValuesChange={() => {}}>
+          <Form.Item name="enabled" label={t('payment.enabled')} valuePropName="checked">
+            <Switch checkedChildren={t('payment.enabled_on')} unCheckedChildren={t('payment.enabled_off')} />
+          </Form.Item>
+
           <Form.Item name="appId" label={t('alipayConfig.appId')}
             extra={t('alipayConfig.appId_extra')}
             rules={[{ required: true, message: t('alipayConfig.appId_required') }]}>
