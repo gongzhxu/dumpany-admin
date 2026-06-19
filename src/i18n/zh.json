@@ -31,6 +31,7 @@
     "swagger": "Swagger 管理",
     "all_apps": "全部应用",
     "created_at": "创建时间",
+    "copied": "已复制",
     "updated_at": "修改时间",
     "system_config": "系统配置",
     "system_config_general": "通用配置",

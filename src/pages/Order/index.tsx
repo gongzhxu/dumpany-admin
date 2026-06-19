@@ -2,7 +2,7 @@ import type { Order } from "../../api/orders";
 import React, { useEffect, useState, useCallback } from 'react';
 import {
   Table, Button, Input, Select, Modal, message, Tag,
-  Popconfirm, Typography, Card, Descriptions,
+  Popconfirm, Typography, Card, Descriptions, Tooltip,
 } from 'antd';
 import { SearchOutlined, ReloadOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
@@ -76,7 +76,7 @@ const OrderPage: React.FC = () => {
         <Button type="link" size="small" onClick={() => showDetail(record.orderId)}>{text}</Button>
       ),
     },
-    { title: t('license.subscriber'), dataIndex: 'subscriber', key: 'subscriber' },
+    { title: t('license.subscriber'), dataIndex: 'subscriber', key: 'subscriber', width: 120, ellipsis: true },
     { title: t('order.product'), dataIndex: 'product', key: 'product' },
     {
       title: t('order.amount'),
@@ -94,10 +94,31 @@ const OrderPage: React.FC = () => {
       ),
     },
     {
-      title: t('license.licenseKey'),
-      dataIndex: 'licenseKey',
-      key: 'licenseKey',
+      title: t('order.failReason'),
+      key: 'failReason',
       ellipsis: true,
+      width: 200,
+      render: (_: any, record: any) => (
+        record.status === 'failed' && record.failReason ? (
+          <Tooltip title={record.failReason} placement="topLeft">
+            <span style={{ color: '#e53935', fontSize: 12 }}>{record.failReason}</span>
+          </Tooltip>
+        ) : null
+      ),
+    },
+    {
+      title: t("license.licenseKey"),
+      dataIndex: "licenseKey",
+      key: "licenseKey",
+      width: 280,
+      render: (text: string) => text ? (
+        <span
+          style={{ cursor: "pointer", fontFamily: "monospace", fontSize: 12, whiteSpace: "nowrap" }}
+          onClick={() => { navigator.clipboard.writeText(text); message.success(t("app.copied")); }}
+        >
+          {text}
+        </span>
+      ) : "-",
     },
     {
       title: t('app.created_at'),
@@ -171,7 +192,7 @@ const OrderPage: React.FC = () => {
             onChange: (p, ps) => { setPage(p); setPageSize(ps); },
           }}
           scroll={{ x: 900 }}
-          size="small"
+          size="middle"
         />
       </Card>
 
@@ -192,9 +213,9 @@ const OrderPage: React.FC = () => {
             <Descriptions.Item label={t('app.status')}>
               <Tag color={statusColorMap[detail.status] || 'default'}>{t(`order.${detail.status}`)}</Tag>
             </Descriptions.Item>
-            {detail.status === 'failed' && detail.failReason && (
+            {(detail as any).status === 'failed' && (detail as any).failReason && (
               <Descriptions.Item label={t('order.failReason')} span={2}>
-                <span style={{ color: '#e53935' }}>{detail.failReason}</span>
+                <span style={{ color: '#e53935' }}>{(detail as any).failReason}</span>
               </Descriptions.Item>
             )}
             <Descriptions.Item label={t('license.licenseKey')} span={2}>{detail.licenseKey || '-'}</Descriptions.Item>
