@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <g transform="translate(102.4, 102.4) scale(0.8)">
+    <rect width="1024" height="1024" rx="216" fill="#0D47A1"/>
+    <ellipse cx="512" cy="240" rx="240" ry="110" fill="#ffffff" opacity="0.04"/>
+
+    <!-- 水母伞部 -->
+    <path d="M200 440 Q200 150 512 150 Q824 150 824 440 Q824 520 512 520 Q200 520 200 440Z" fill="#ffffff"/>
+
+    <!-- 触手 × 3 -->
+    <path d="M280 500 Q260 610 290 720 Q310 780 280 820"
+          fill="none" stroke="#ffffff" stroke-width="22" stroke-linecap="round"/>
+    <path d="M512 510 Q500 650 520 770 Q525 820 512 860"
+          fill="none" stroke="#ffffff" stroke-width="20" stroke-linecap="round"/>
+    <path d="M744 500 Q764 610 734 720 Q714 780 744 820"
+          fill="none" stroke="#ffffff" stroke-width="22" stroke-linecap="round"/>
+
+    <!-- 光点 -->
+    <circle cx="280" cy="280" r="5" fill="#ffffff" opacity="0.10"/>
+    <circle cx="740" cy="280" r="5" fill="#ffffff" opacity="0.10"/>
+    <circle cx="512" cy="200" r="6" fill="#ffffff" opacity="0.08"/>
+  </g>
+</svg>
