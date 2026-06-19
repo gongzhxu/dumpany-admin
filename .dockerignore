@@ -1,3 +1,108 @@
-node_modules/
-dist/
+# === 版本控制系统 ===
 .git/
+.gitignore
+.gitmodules
+
+# === Go 相关 ===
+# 编译产物
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go 工作区文件
+go.work
+go.work.sum
+
+# 依赖管理工具 (如果使用 vendor)
+vendor/
+
+# === Wails 相关 ===
+# Wails 构建和缓存目录
+build/
+bin/
+dist/
+frontend/dist/
+frontend/build/
+
+# Wails 生成的 JS 绑定
+frontend/wailsjs/
+
+# Wails 开发临时文件
+tmp/
+*.wails
+
+# === 前端 (React / Node.js) 相关 ===
+# 依赖目录
+node_modules/
+frontend/node_modules/
+
+# 构建缓存
+.npm/
+.yarn/
+.yarn-cache/
+.pnpm-store/
+
+# 环境变量文件 (敏感信息!)
+.env
+.env.local
+.env.*.local
+
+# === 日志文件 ===
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# === 操作系统和 IDE ===
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Linux
+.directory
+
+# 各种 IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# === 测试与覆盖率 ===
+*.test
+*.out
+coverage.out
+coverage.html
+*.coverprofile
+
+# === 文档 (可选) ===
+# README.md
+# CHANGELOG.md
+# CONTRIBUTING.md
+
+# === Docker 相关 ===
+# Dockerfile 本身不需要作为构建上下文
+Dockerfile
+.dockerignore
+docker-compose*.yml
+
+# === 其他临时文件 ===
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
