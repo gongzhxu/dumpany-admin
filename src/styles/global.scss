@@ -59,3 +59,13 @@ body {
     gap: 8px;
   }
 }
+
+// 操作列按钮溢出时自动撑开并启用横向滚动
+.ant-table-wrapper {
+  overflow-x: auto;
+}
+
+.ant-table-cell .ant-space,
+td:last-child {
+  white-space: nowrap;
+}

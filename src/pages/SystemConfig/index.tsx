@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import {
-  Table, Button, Modal, Form, Input, InputNumber, Select, message, Typography, Card, Tag, Space, Popconfirm,
+  Table, Button, Modal, Form, Input, InputNumber, Select, message, Typography, Card, Tag, Space, Popconfirm, Tooltip,
 } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import { useTranslation } from 'react-i18next';
@@ -115,18 +115,24 @@ const SystemConfigPage: React.FC = () => {
     { title: t('system_config.config_key'), dataIndex: 'configKey', key: 'configKey', width: 160 },
     {
       title: t('system_config.config_value'), dataIndex: 'configValue', key: 'configValue',
-      ellipsis: true,
-      render: (text: string) => (
-        <Typography.Paragraph copyable ellipsis={{ rows: 1 }} style={{ margin: 0, maxWidth: 200 }}>
-          {text}
-        </Typography.Paragraph>
-      ),
+      render: (text: string) => text ? (
+        <Tooltip title={text}>
+          <Typography.Text copyable ellipsis style={{ maxWidth: 160, margin: 0 }}>{text}</Typography.Text>
+        </Tooltip>
+      ) : '-',
     },
     {
       title: t('system_config.config_type'), dataIndex: 'configType', key: 'configType', width: 65,
       render: (text: string) => <Tag color={typeColor[text] || 'default'}>{text}</Tag>,
     },
-    { title: t('system_config.description'), dataIndex: 'description', key: 'description', ellipsis: true },
+    {
+      title: t('system_config.description'), dataIndex: 'description', key: 'description', width: 120,
+      render: (text: string) => text ? (
+        <Tooltip title={text}>
+          <span style={{ cursor: 'help' }}>{text.length > 20 ? text.slice(0, 20) + '...' : text}</span>
+        </Tooltip>
+      ) : '-',
+    },
     {
       title: t('system_config.cache_ttl'), dataIndex: 'cacheTTL', key: 'cacheTTL', width: 80,
       render: (val: number) => {

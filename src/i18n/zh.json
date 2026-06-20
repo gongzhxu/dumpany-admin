@@ -24,6 +24,7 @@
     "action": "操作",
     "total": "总计",
     "active": "活跃",
+    "disabled": "禁用",
     "license": "授权管理",
     "order": "订单管理",
     "plan": "套餐管理",

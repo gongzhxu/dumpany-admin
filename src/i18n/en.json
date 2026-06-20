@@ -24,6 +24,7 @@
     "action": "Action",
     "total": "Total",
     "active": "Active",
+    "disabled": "Disabled",
     "license": "Licenses",
     "order": "Orders",
     "plan": "Plans",
