@@ -37,7 +37,7 @@ function isVideo(url: string) {
   return /\.(mp4|mov|avi|mkv|webm)(\?|$)/i.test(url);
 }
 
-const FeedbackPage: React.FC = () => {
+const WebFeedbackPage: React.FC = () => {
   const { t } = useTranslation();
   const [data, setData] = useState<Feedback[]>([]);
   const [loading, setLoading] = useState(false);
@@ -46,8 +46,6 @@ const FeedbackPage: React.FC = () => {
   const [keyword, setKeyword] = useState('');
   const [previewIndex, setPreviewIndex] = useState<number>(-1);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
-
-  // Mark handled modal
   const [markModalOpen, setMarkModalOpen] = useState(false);
   const [markId, setMarkId] = useState<number | null>(null);
   const [handleResult, setHandleResult] = useState('');
@@ -58,7 +56,7 @@ const FeedbackPage: React.FC = () => {
     setPage(p);
     try {
       const params = `page=${p}&pageSize=20${keyword ? `&keyword=${encodeURIComponent(keyword)}` : ''}`;
-      const res: any = await request.get(`/feedback/list?${params}`);
+      const res: any = await request.get(`/feedback/web/list?${params}`);
       if (res.data) {
         setData(res.data.list || []);
         setTotal(res.data.total || 0);
@@ -86,7 +84,7 @@ const FeedbackPage: React.FC = () => {
     if (markId === null) return;
     setMarking(true);
     try {
-      await request.put(`/feedback/mark-handled/${markId}`, { handleResult: handleResult.trim() });
+      await request.put(`/feedback/web/mark-handled/${markId}`, { handleResult: handleResult.trim() });
       message.success(t('feedback.marked'));
       setMarkModalOpen(false);
       fetchData(page);
@@ -177,7 +175,7 @@ const FeedbackPage: React.FC = () => {
   return (
     <div className="page-container">
       <div className="page-header">
-        <Title level={4}>{t('feedback.title')}</Title>
+        <Title level={4}>{t('feedback.title')} - {t('feedback.webFeedback')}</Title>
       </div>
       <Card>
         <div style={{ marginBottom: 16, display: 'flex', gap: 8 }}>
@@ -237,4 +235,4 @@ const FeedbackPage: React.FC = () => {
   );
 };
 
-export default FeedbackPage;
+export default WebFeedbackPage;

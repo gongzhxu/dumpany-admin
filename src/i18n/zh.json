@@ -40,7 +40,12 @@
     "system_config_smtp": "邮件配置",
     "system_config_tencent": "腾讯云服务",
     "system_config_aliyun": "阿里云服务",
-    "system_config_jwt": "JWT 配置"
+    "system_config_jwt": "JWT 配置",
+    "os": "操作系统",
+    "version": "版本",
+    "licenseType": "License",
+    "fileSize": "大小",
+    "fileName": "文件名"
   },
   "login": {
     "title": "管理员登录",
@@ -303,7 +308,9 @@
     "regTime": "注册时间",
     "handleResult": "处理结果",
     "handleResultPlaceholder": "请输入处理结果说明",
-    "handleResultRequired": "请输入处理结果"
+    "handleResultRequired": "请输入处理结果",
+    "webFeedback": "Web 反馈",
+    "appFeedback": "App 反馈"
   },
   "downloadConfig": {
     "title": "下载配置",

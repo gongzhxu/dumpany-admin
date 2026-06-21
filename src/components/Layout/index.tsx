@@ -62,7 +62,15 @@ const AdminLayout: React.FC = () => {
     { key: '/', icon: <DashboardOutlined />, label: t('app.dashboard') },
     { key: '/order', icon: <ShoppingCartOutlined />, label: t('app.order') },
     { key: '/license', icon: <KeyOutlined />, label: t('app.license') },
-    { key: '/feedback', icon: <MessageOutlined />, label: t('layout.feedback') },
+    {
+      key: 'feedback',
+      icon: <MessageOutlined />,
+      label: t('layout.feedback'),
+      children: [
+        { key: '/feedback/web', label: t('feedback.webFeedback') },
+        { key: '/feedback/app', label: t('feedback.appFeedback') },
+      ],
+    },
     {
       key: 'payment',
       icon: <DollarOutlined />,

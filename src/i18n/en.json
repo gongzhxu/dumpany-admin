@@ -40,7 +40,12 @@
     "system_config_smtp": "Email (SMTP)",
     "system_config_tencent": "Tencent Cloud",
     "system_config_aliyun": "Aliyun Cloud",
-    "system_config_jwt": "JWT Config"
+    "system_config_jwt": "JWT Config",
+    "os": "OS",
+    "version": "Version",
+    "licenseType": "License",
+    "fileSize": "Size",
+    "fileName": "Filename"
   },
   "login": {
     "title": "Admin Login",
@@ -303,7 +308,9 @@
     "regTime": "Registered At",
     "handleResult": "Handle Result",
     "handleResultPlaceholder": "Enter handle result",
-    "handleResultRequired": "Please enter handle result"
+    "handleResultRequired": "Please enter handle result",
+    "webFeedback": "Web Feedback",
+    "appFeedback": "App Feedback"
   },
   "downloadConfig": {
     "title": "Download Config",
