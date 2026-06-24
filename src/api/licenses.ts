@@ -1,40 +1,49 @@
 import request from './request';
 
 export interface License {
-  licenseId: string;
+  id: number;
   licenseKey: string;
-  type: string;
   subscriber: string;
   tier: string;
   maxDevices: number;
+  usedDevices: number;
   issuedAt: number;
   expiresAt: number;
-  machineId: string;
-  status: string;
-  signature: string;
+  status: number;
   createdAt: string;
   updatedAt: string;
 }
 
-export interface CreateLicenseParams {
-  type: string;
-  subscriber: string;
+export interface Quota {
+  id: number;
+  userId: number;
+  orderNo: string;
   tier: string;
-  maxDevices: number;
-  durationDays: number;
+  totalQuota: number;
+  usedQuota: number;
+  expiresAt: number;
+  status: number;
+  createdAt: number;
+  licenses?: License[];
 }
 
 const licenseApi = {
-  list: (params: { page: number; pageSize: number; keyword?: string; type?: string; status?: string }) =>
+  list: (params: { page: number; pageSize: number; keyword?: string; status?: string }) =>
     request.get('/license/list', { params }),
 
   get: (key: string) => request.get('/license/get', { params: { key } }),
 
-  create: (data: CreateLicenseParams) => request.post('/license/create', data),
-
-  renew: (key: string, days: number) => request.put('/license/renew', { licenseKey: key, days }),
-
   revoke: (key: string) => request.put('/license/revoke', { licenseKey: key }),
+
+  // Quota API
+  quotaList: (params: { page?: number; pageSize?: number }) =>
+    request.get('/quota/list', { params }),
+
+  quotaDetail: (id: number) =>
+    request.get('/quota/detail', { params: { id } }),
+
+  adjustQuota: (data: { quotaId: number; delta: number }) =>
+    request.post('/quota/adjust', data),
 };
 
 export default licenseApi;

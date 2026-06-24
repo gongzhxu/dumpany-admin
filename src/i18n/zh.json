@@ -34,6 +34,7 @@
     "created_at": "创建时间",
     "copied": "已复制",
     "updated_at": "修改时间",
+    "userId": "用户",
     "system_config": "系统配置",
     "system_config_general": "通用配置",
     "system_config_sms": "SMS 配置",
@@ -87,7 +88,8 @@
     "expiresAt": "过期时间",
     "issuedAt": "签发时间",
     "maxDevices": "最大设备",
-    "type": "类型"
+    "type": "类型",
+    "quota": "配额"
   },
   "order": {
     "title": "订单管理",

@@ -34,6 +34,7 @@
     "created_at": "Created At",
     "copied": "Copied",
     "updated_at": "Updated At",
+    "userId": "User",
     "system_config": "System Config",
     "system_config_general": "General",
     "system_config_sms": "SMS",
@@ -87,7 +88,8 @@
     "expiresAt": "Expires At",
     "issuedAt": "Issued At",
     "maxDevices": "Max Devices",
-    "type": "Type"
+    "type": "Type",
+    "quota": "Quota"
   },
   "order": {
     "title": "Order Management",
