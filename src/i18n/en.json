@@ -441,7 +441,14 @@
     "wechatPayPublicKeyId_placeholder": "Public Key ID, e.g. PUB_KEY_ID_xxxxxxxx",
     "wechatPayPublicKeyId_extra": "Obtained after applying for WeChat Pay public key, format: PUB_KEY_ID_xxxxxxxx",
     "callbackTitle": "Callback URL",
-    "currency": "Currency (CNY)"
+    "currency": "Currency (CNY)",
+    "miniAppTitle": "Mini Program Payment Config",
+    "miniAppId": "Mini Program AppID",
+    "miniAppId_placeholder": "WeChat Mini Program AppID",
+    "miniAppId_extra": "Required for JSAPI payment in mini programs. Leave empty to disable mini program payment",
+    "miniAppSecret": "Mini Program AppSecret",
+    "miniAppSecret_placeholder": "WeChat Mini Program AppSecret",
+    "miniAppSecret_extra": "Used to get user openid. Keep this secret."
   },
   "systemConfig": {
     "deleteConfirm": "Confirm delete this config?",

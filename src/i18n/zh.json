@@ -441,7 +441,14 @@
     "wechatPayPublicKeyId_placeholder": "公钥 ID，如 PUB_KEY_ID_xxxxxxxx",
     "wechatPayPublicKeyId_extra": "申请微信支付公钥后获得，格式为 PUB_KEY_ID_xxxxxxxx",
     "callbackTitle": "回调地址配置",
-    "currency": "币种(CNY)"
+    "currency": "币种(CNY)",
+    "miniAppTitle": "小程序支付配置",
+    "miniAppId": "小程序 AppID",
+    "miniAppId_placeholder": "微信小程序的 AppID",
+    "miniAppId_extra": "小程序 JSAPI 支付需要，留空则不支持小程序支付",
+    "miniAppSecret": "小程序 AppSecret",
+    "miniAppSecret_placeholder": "微信小程序的 AppSecret",
+    "miniAppSecret_extra": "用于获取用户 openid，请妥善保管"
   },
   "systemConfig": {
     "deleteConfirm": "确认删除此配置？",

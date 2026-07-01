@@ -54,6 +54,8 @@ const WeChatConfig: React.FC = () => {
         vals.returnUrl = data.returnUrl || 'https://dumpany.cn/account?tab=orders';
         vals.currency = data.currency || 'CNY';
         vals.enabled = data.enabled !== false;
+        vals.miniAppId = data.miniAppId || '';
+        vals.miniAppSecret = data.miniAppSecret || '';
         setEditing(true);
       } else {
         vals.notifyUrl = 'https://api.dumpany.cn/api/v1/backend/payment/wechat/webhook';
@@ -110,6 +112,12 @@ const WeChatConfig: React.FC = () => {
     { label: t('payment.currency'), content: data.currency || 'CNY' },
     { label: t('payment.notifyUrl'), content: data.notifyUrl || '-' },
     { label: t('payment.returnUrl'), content: data.returnUrl || '-' },
+    { label: t('wechatConfig.miniAppId'), content: <Tag color="blue">{data.miniAppId || '-'}</Tag> },
+    { label: t('wechatConfig.miniAppSecret'), content: data.miniAppSecret ? (
+      <Tag icon={<CheckCircleOutlined />} color="success" style={{ margin: 0 }}>{t('wechatConfig.configured')}</Tag>
+    ) : (
+      <Tag icon={<CloseCircleOutlined />} color="error" style={{ margin: 0 }}>{t('wechatConfig.notConfigured')}</Tag>
+    )},
   ] : [];
 
   return (
@@ -218,6 +226,18 @@ const WeChatConfig: React.FC = () => {
 
           <Form.Item name="currency" label={t('wechatConfig.currency')} initialValue="CNY">
             <Input placeholder="CNY" disabled />
+          </Form.Item>
+
+          <Divider plain>{t('wechatConfig.miniAppTitle')}</Divider>
+
+          <Form.Item name="miniAppId" label={t('wechatConfig.miniAppId')}
+            extra={t('wechatConfig.miniAppId_extra')}>
+            <Input placeholder={t('wechatConfig.miniAppId_placeholder')} />
+          </Form.Item>
+
+          <Form.Item name="miniAppSecret" label={t('wechatConfig.miniAppSecret')}
+            extra={t('wechatConfig.miniAppSecret_extra')}>
+            <Input.Password placeholder={t('wechatConfig.miniAppSecret_placeholder')} />
           </Form.Item>
 
           <Form.Item>
